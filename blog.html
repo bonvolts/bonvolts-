@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intel // Blog — BONVOLTS</title>
+    <meta name="description" content="Diário de campo da Bonvolts. Artigos táticos sobre elétrica industrial, OT security e infraestrutura crítica. Sem filtro de marketing.">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #00ffcc;
+            --red: #ff2d55;
+            --bg: #080808;
+            --bg2: #0f0f0f;
+            --border: #1e1e1e;
+            --text: #a0a8b0;
+            --text-bright: #d8dde3;
+            --mono: 'Share Tech Mono', monospace;
+            --display: 'Barlow Condensed', sans-serif;
+            --body: 'Barlow', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--text); font-family: var(--body); line-height: 1.6; overflow-x: hidden; }
+        body::before { content: ''; position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 4px); pointer-events: none; z-index: 9999; }
+
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(8,8,8,0.94); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 40px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+        .nav-logo { font-family: var(--mono); font-size: 1.1rem; color: var(--green); text-decoration: none; letter-spacing: 3px; }
+        .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+        .nav-links a { font-family: var(--mono); font-size: 0.75rem; color: var(--text); text-decoration: none; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--green); transition: width 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--green); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-cta { color: var(--green) !important; border: 1px solid var(--green); padding: 6px 14px !important; }
+        .nav-cta::after { display: none !important; }
+        .nav-cta:hover { background: var(--green); color: var(--bg) !important; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+        .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--green); }
+
+        /* HERO BLOG */
+        .blog-hero { padding: 120px 40px 60px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+        .blog-hero::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(0,255,204,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,204,0.02) 1px, transparent 1px); background-size: 60px 60px; }
+        .blog-hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+        .blog-hero-tag { font-family: var(--mono); font-size: 0.72rem; color: var(--green); letter-spacing: 3px; margin-bottom: 18px; }
+        .blog-hero-title { font-family: var(--display); font-size: clamp(3rem, 7vw, 6rem); font-weight: 900; color: #fff; text-transform: uppercase; line-height: 0.9; letter-spacing: -2px; margin-bottom: 20px; }
+        .blog-hero-title span { color: var(--green); }
+        .blog-hero-sub { font-size: 1.05rem; color: var(--text); max-width: 500px; line-height: 1.75; }
+
+        /* FILTROS */
+        .filters { padding: 28px 40px; border-bottom: 1px solid var(--border); background: #0a0a0a; }
+        .filters-inner { max-width: 1100px; margin: 0 auto; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+        .filter-label { font-family: var(--mono); font-size: 0.68rem; color: var(--text); letter-spacing: 2px; margin-right: 4px; }
+        .filter-btn { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 14px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; transition: all 0.2s; }
+        .filter-btn:hover, .filter-btn.active { border-color: var(--green); color: var(--green); }
+        .filter-btn.active { background: rgba(0,255,204,0.05); }
+
+        /* CONTAINER */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+
+        /* FEATURED POST */
+        .featured { margin: 60px 0 2px; }
+        .featured-post { background: #0f0f0f; border: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 0; text-decoration: none; color: inherit; transition: border-color 0.3s; overflow: hidden; }
+        .featured-post:hover { border-color: rgba(0,255,204,0.25); }
+        .featured-visual { background: linear-gradient(135deg, #0f1a14 0%, #080808 100%); padding: 60px 50px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; border-right: 1px solid var(--border); }
+        .featured-visual::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(0,255,204,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,204,0.04) 1px, transparent 1px); background-size: 30px 30px; }
+        .feat-symbol { font-family: var(--mono); font-size: 5rem; color: var(--green); opacity: 0.15; position: relative; z-index: 1; line-height: 1; }
+        .featured-body { padding: 50px 48px; display: flex; flex-direction: column; justify-content: center; }
+        .feat-badge { font-family: var(--mono); font-size: 0.65rem; color: var(--red); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        .feat-badge::before { content: '●'; }
+        .featured-post h2 { font-family: var(--display); font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 900; color: #fff; text-transform: uppercase; line-height: 1.0; margin-bottom: 18px; letter-spacing: -0.5px; }
+        .featured-post p { font-size: 0.95rem; color: var(--text); line-height: 1.75; margin-bottom: 28px; }
+        .feat-meta { font-family: var(--mono); font-size: 0.67rem; color: #444; letter-spacing: 1.5px; display: flex; gap: 20px; }
+
+        /* POST LIST */
+        .posts-grid { display: grid; gap: 2px; margin-bottom: 2px; }
+        .pg2 { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+
+        .post-card { background: #0f0f0f; border: 1px solid var(--border); padding: 36px 32px; text-decoration: none; color: inherit; transition: border-color 0.3s, transform 0.3s; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+        .post-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--green); transition: height 0.4s; }
+        .post-card:hover { border-color: rgba(0,255,204,0.2); transform: translateY(-2px); }
+        .post-card:hover::before { height: 100%; }
+        .pc-tag { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; display: inline-flex; align-items: center; gap: 7px; }
+        .pc-tag::before { content: '●'; }
+        .pc-tag.green { color: var(--green); }
+        .pc-tag.red { color: var(--red); }
+        .pc-tag.yellow { color: #f5c400; }
+        .post-card h3 { font-family: var(--display); font-size: 1.5rem; font-weight: 700; color: #fff; text-transform: uppercase; line-height: 1.05; margin-bottom: 12px; letter-spacing: -0.3px; flex: 1; }
+        .post-card p { font-size: 0.88rem; color: var(--text); line-height: 1.7; margin-bottom: 24px; }
+        .pc-footer { display: flex; justify-content: space-between; align-items: center; }
+        .pc-meta { font-family: var(--mono); font-size: 0.63rem; color: #3a3a3a; letter-spacing: 1.5px; }
+        .pc-arrow { font-family: var(--mono); color: var(--green); opacity: 0; transition: opacity 0.3s; }
+        .post-card:hover .pc-arrow { opacity: 1; }
+
+        /* NEWSLETTER */
+        .newsletter { background: #0f0f0f; border: 1px solid var(--border); padding: 60px; margin: 60px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .newsletter h3 { font-family: var(--display); font-size: 2rem; font-weight: 700; color: #fff; text-transform: uppercase; line-height: 1; margin-bottom: 14px; }
+        .newsletter p { font-size: 0.9rem; color: var(--text); line-height: 1.7; }
+        .nl-form { display: flex; gap: 0; }
+        .nl-input { flex: 1; background: #080808; border: 1px solid var(--border); border-right: none; padding: 13px 18px; font-family: var(--mono); font-size: 0.8rem; color: var(--text-bright); outline: none; transition: border-color 0.3s; }
+        .nl-input::placeholder { color: #333; }
+        .nl-input:focus { border-color: rgba(0,255,204,0.3); }
+        .nl-btn { background: var(--green); color: var(--bg); border: none; padding: 13px 22px; font-family: var(--mono); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: background 0.3s; white-space: nowrap; }
+        .nl-btn:hover { background: #fff; }
+        .nl-note { font-family: var(--mono); font-size: 0.62rem; color: #2a2a2a; letter-spacing: 1px; margin-top: 12px; }
+
+        /* SIDEBAR TAGS */
+        .blog-layout { display: grid; grid-template-columns: 1fr 260px; gap: 40px; padding: 60px 0; }
+        .sidebar { }
+        .sidebar-box { background: #0f0f0f; border: 1px solid var(--border); padding: 28px; margin-bottom: 2px; }
+        .sidebar-title { font-family: var(--mono); font-size: 0.68rem; color: var(--green); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag-pill { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 1px; text-transform: uppercase; padding: 5px 10px; border: 1px solid var(--border); color: var(--text); cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
+        .tag-pill:hover { border-color: var(--green); color: var(--green); }
+        .sidebar-links { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+        .sidebar-links a { font-family: var(--mono); font-size: 0.7rem; color: var(--text); text-decoration: none; letter-spacing: 1px; transition: color 0.2s; display: flex; align-items: center; gap: 8px; }
+        .sidebar-links a::before { content: '→'; color: var(--green); opacity: 0; transition: opacity 0.2s; }
+        .sidebar-links a:hover { color: var(--text-bright); }
+        .sidebar-links a:hover::before { opacity: 1; }
+
+        /* FOOTER */
+        footer { padding: 36px 40px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+        .flogo { font-family: var(--mono); font-size: 1rem; color: var(--green); letter-spacing: 3px; }
+        .flinks { display: flex; gap: 24px; list-style: none; }
+        .flinks a { font-family: var(--mono); font-size: 0.67rem; color: #333; text-decoration: none; letter-spacing: 1.5px; transition: color 0.2s; }
+        .flinks a:hover { color: var(--green); }
+        footer p { font-family: var(--mono); font-size: 0.65rem; color: #252525; letter-spacing: 1px; }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border); padding: 24px 20px; gap: 20px; }
+            .nav-links.open { display: flex; }
+            .hamburger { display: flex; }
+            .blog-hero, .filters { padding-left: 20px; padding-right: 20px; }
+            .container { padding: 0 20px; }
+            .featured-post { grid-template-columns: 1fr; }
+            .featured-visual { display: none; }
+            .featured-body { padding: 36px 28px; }
+            .blog-layout { grid-template-columns: 1fr; }
+            .sidebar { order: -1; }
+            .newsletter { grid-template-columns: 1fr; padding: 36px 28px; gap: 28px; }
+            .nl-form { flex-direction: column; }
+            .nl-input { border-right: 1px solid var(--border); border-bottom: none; }
+            footer { padding: 28px 20px; flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+<nav id="nav">
+    <a href="index.html" class="nav-logo">BON<span style="color:var(--green)">VOLTS</span></a>
+    <ul class="nav-links" id="nl">
+        <li><a href="index.html#energia">Energia</a></li>
+        <li><a href="index.html#tecnologia">TI/TO</a></li>
+        <li><a href="index.html#sobre">Sobre</a></li>
+        <li><a href="blog.html" class="active">Intel // Blog</a></li>
+        <li><a href="index.html#contato" class="nav-cta">Consultoria</a></li>
+    </ul>
+    <button class="hamburger" id="hb" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<!-- HERO -->
+<div class="blog-hero">
+    <div class="blog-hero-inner">
+        <div class="blog-hero-tag">// BONVOLTS INTEL — DIÁRIO DE CAMPO</div>
+        <h1 class="blog-hero-title">INTEL //<br><span>FIELD LOG</span></h1>
+        <p class="blog-hero-sub">Informação tática sobre energia, automação e segurança. Do campo para você. Sem filtro de marketing, sem papo de consultor.</p>
+    </div>
+</div>
+
+<!-- FILTROS -->
+<div class="filters">
+    <div class="filters-inner">
+        <span class="filter-label">FILTRAR:</span>
+        <button class="filter-btn active" data-cat="all">Todos</button>
+        <button class="filter-btn" data-cat="eletrica">Elétrica</button>
+        <button class="filter-btn" data-cat="ot">OT Security</button>
+        <button class="filter-btn" data-cat="normas">Normas</button>
+        <button class="filter-btn" data-cat="ti-to">TI/TO</button>
+        <button class="filter-btn" data-cat="solar">Solar</button>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- DESTAQUE -->
+    <div class="featured">
+        <a href="#harmonica" class="featured-post" id="harmonica">
+            <div class="featured-visual">
+                <div class="feat-symbol">~Hz</div>
+            </div>
+            <div class="featured-body">
+                <div class="feat-badge">DESTAQUE DA SEMANA</div>
+                <h2>O que a TI ignora sobre harmônicas e Data Centers</h2>
+                <p>Muitos focam no firewall, mas esquecem que uma rede elétrica mal dimensionada destrói servidores silenciosamente. Correntes harmônicas superaquecem transformadores, queimam neutros e causam falhas intermitentes impossíveis de rastrear. Como identificar e corrigir antes do colapso.</p>
+                <div class="feat-meta">
+                    <span>15 JAN 2026</span>
+                    <span>8 MIN LEITURA</span>
+                    <span>ELÉTRICA INDUSTRIAL</span>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- LAYOUT COM SIDEBAR -->
+    <div class="blog-layout">
+        <div>
+            <!-- GRID DE POSTS -->
+            <div class="posts-grid pg2" id="postsGrid">
+
+                <a href="#ot-scada" class="post-card" id="ot-scada" data-cat="ot">
+                    <div class="pc-tag green">OT Security</div>
+                    <h3>CLP na rede corporativa: o erro que ninguém assume</h3>
+                    <p>A maior vulnerabilidade industrial não é zero-day. É o CLP conectado direto na rede de escritório porque "sempre foi assim". Casos reais de Goiás.</p>
+                    <div class="pc-footer">
+                        <span class="pc-meta">08 JAN 2026 · 6 MIN</span>
+                        <span class="pc-arrow">→</span>
+                    </div>
+                </a>
+
+                <a href="#nr10" class="post-card" id="nr10" data-cat="normas">
+                    <div class="pc-tag yellow">Normas</div>
+                    <h3>NR-10 na prática: o que o fiscal vai olhar primeiro</h3>
+                    <p>Após fiscalização em Anápolis-GO, listamos os 7 pontos que geraram autuação. Checklist gratuito no final do artigo.</p>
+                    <div class="pc-footer">
+                        <span class="pc-meta">02 JAN 2026 · 5 MIN</span>
+                        <span class="pc-arrow">→</span>
+                    </div>
+                </a>
+
+                <a href="#subestacao" class="post-card" id="subestacao" data-cat="eletrica">
+                    <div class="pc-tag red">Elétrica Industrial</div>
+                    <h3>Como dimensionar uma subestação sem superdimensionar o custo</h3>
+                    <p>O erro mais caro no projeto elétrico industrial é o conservadorismo excessivo. Metodologia de cálculo de demanda real vs. demanda instalada.</p>
+                    <div class="pc-footer">
+                        <span class="pc-meta">28 DEZ 2025 · 10 MIN</span>
+                        <span class="pc-arrow">→</span>
+                    </div>
+                </a>
+
+                <a href="#scada-seg" class="post-card" id="scada-seg" data-cat="ti-to">
+                    <div class="pc-tag green">TI/TO</div>
+                    <h3>Segmentação de rede OT: do papel à execução em 3 etapas</h3>
+                    <p>Purdue Model na prática, sem precisar de budget de multinacional. Como criar zonas de segurança em indústrias com infraestrutura legada.</p>
+                    <div class="pc-footer">
+                        <span class="pc-meta">20 DEZ 2025 · 7 MIN</span>
+                        <span class="pc-arrow">→</span>
+                    </div>
+                </a>
+
+                <a href="#ups" class="post-card" id="ups" data-cat="eletrica">
+                    <div class="pc-tag red">Elétrica Industrial</div>
+                    <h3>UPS industrial: quando o nobreak virou problema e não solução</h3>
+                    <p>UPS subdimensionado, bateria vencida, bypass nunca testado. Os três erros que transformam a proteção em ponto único de falha.</p>
+                    <div class="pc-footer">
+                        <span class="pc-meta">14 DEZ 2025 · 6 MIN</span>
+                        <span class="pc-arrow">→</span>
+                    </div>
+                </a>
+
+                <a href="#solar-retorno" class="post-card" id="solar-retorno" data-cat="solar">
+                    <div class="pc-tag yellow">Solar</div>
+                    <h3>Retorno real de solar em Goiás: os números que o vendedor não mostra</h3>
+                    <p>Irradiação solar de Goiás é excepcional. Mas o payback real depende de outras variáveis que a maioria dos projetos ignora deliberadamente.</p>
+                    <div class="pc-footer">
+                        <span class="pc-meta">08 DEZ 2025 · 9 MIN</span>
+                        <span class="pc-arrow">→</span>
+                    </div>
+                </a>
+
+                <!-- POST TEMPLATE — ADICIONE NOVOS AQUI -->
+                <!-- 
+                <a href="#seu-post" class="post-card" id="seu-post" data-cat="eletrica">
+                    <div class="pc-tag red">Categoria</div>
+                    <h3>Título do seu artigo</h3>
+                    <p>Resumo do conteúdo em 2-3 linhas.</p>
+                    <div class="pc-footer">
+                        <span class="pc-meta">DD MMM AAAA · X MIN</span>
+                        <span class="pc-arrow">→</span>
+                    </div>
+                </a>
+                -->
+
+            </div>
+
+            <!-- NEWSLETTER -->
+            <div class="newsletter">
+                <div>
+                    <h3>Intel direto no seu email</h3>
+                    <p>Novo artigo toda semana. Sem spam, sem papo de consultoria, só conteúdo tático de quem está no campo.</p>
+                </div>
+                <div>
+                    <div class="nl-form">
+                        <input type="email" class="nl-input" placeholder="seu@email.com">
+                        <button class="nl-btn">Assinar →</button>
+                    </div>
+                    <p class="nl-note">Sem spam. Cancela quando quiser.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-box">
+                <div class="sidebar-title">Categorias</div>
+                <div class="tag-cloud">
+                    <a href="#" class="tag-pill" data-cat="eletrica">Elétrica</a>
+                    <a href="#" class="tag-pill" data-cat="ot">OT Security</a>
+                    <a href="#" class="tag-pill" data-cat="normas">Normas</a>
+                    <a href="#" class="tag-pill" data-cat="ti-to">TI/TO</a>
+                    <a href="#" class="tag-pill" data-cat="solar">Solar</a>
+                    <a href="#" class="tag-pill" data-cat="all">Ver todos</a>
+                </div>
+            </div>
+
+            <div class="sidebar-box">
+                <div class="sidebar-title">Mais lidos</div>
+                <ul class="sidebar-links">
+                    <li><a href="#harmonica">Harmônicas e Data Centers</a></li>
+                    <li><a href="#ot-scada">CLP na rede corporativa</a></li>
+                    <li><a href="#subestacao">Dimensionar subestação</a></li>
+                    <li><a href="#solar-retorno">Retorno real do solar GO</a></li>
+                    <li><a href="#nr10">NR-10 na prática</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-box">
+                <div class="sidebar-title">Serviços</div>
+                <ul class="sidebar-links">
+                    <li><a href="index.html#energia">Projetos Elétricos</a></li>
+                    <li><a href="index.html#tecnologia">OT Security</a></li>
+                    <li><a href="index.html#tecnologia">Data Centers</a></li>
+                    <li><a href="index.html#contato">Consultoria →</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+</div>
+
+<footer>
+    <div class="flogo">BONVOLTS</div>
+    <ul class="flinks">
+        <li><a href="index.html#energia">Energia</a></li>
+        <li><a href="index.html#tecnologia">TI/TO</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+    <p>&copy; 2026 BONVOLTS — Sistema Operacional Seguro.</p>
+</footer>
+
+<script>
+    // Nav hamburger
+    document.getElementById('hb').addEventListener('click', () => document.getElementById('nl').classList.toggle('open'));
+    document.querySelectorAll('#nl a').forEach(a => a.addEventListener('click', () => document.getElementById('nl').classList.remove('open')));
+
+    // Filtros
+    function filterPosts(cat) {
+        document.querySelectorAll('.post-card').forEach(card => {
+            card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'flex' : 'none';
+        });
+        document.querySelectorAll('.filter-btn, .tag-pill').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.cat === cat);
+        });
+    }
+
+    document.querySelectorAll('.filter-btn, .tag-pill').forEach(btn => {
+        btn.addEventListener('click', (e) => { e.preventDefault(); filterPosts(btn.dataset.cat); });
+    });
+
+    // Newsletter submit
+    document.querySelector('.nl-btn').addEventListener('click', () => {
+        const input = document.querySelector('.nl-input');
+        if (input.value.includes('@')) {
+            input.value = '';
+            input.placeholder = 'Cadastrado! Em breve o primeiro artigo.';
+            input.style.borderColor = 'rgba(0,255,204,0.4)';
+        }
+    });
+</script>
+</body>
+</html>
