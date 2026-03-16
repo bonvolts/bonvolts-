@@ -19,7 +19,7 @@
         .nl a:hover{color:var(--green);}.nl a:hover::after{width:100%;}
         .nav-cta{color:var(--green)!important;border:1px solid var(--green);padding:6px 14px!important;}
         .nav-cta::after{display:none!important;}.nav-cta:hover{background:var(--green)!important;color:var(--bg)!important;}
-        .hb{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+        .hb{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;z-index:1001;}
         .hb span{display:block;width:22px;height:1.5px;background:var(--green);}
         header{min-height:100vh;display:flex;align-items:center;padding:100px 40px 60px;position:relative;overflow:hidden;}
         header::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,204,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,204,0.025) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%);}
@@ -318,5 +318,23 @@
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    var hbBtn = document.getElementById('hb');
+    var nlMenu = document.getElementById('nl');
+    if(hbBtn){
+        hbBtn.addEventListener('click', function(e){
+            e.stopPropagation();
+            nlMenu.classList.toggle('open');
+        });
+    }
+    document.querySelectorAll('#nl a').forEach(function(a){
+        a.addEventListener('click', function(){ nlMenu.classList.remove('open'); });
+    });
+    document.addEventListener('click', function(e){
+        if(!e.target.closest('nav')){ nlMenu.classList.remove('open'); }
+    });
+    window.addEventListener('scroll',function(){
+        document.getElementById('nav').style.borderBottomColor=window.scrollY>50?'rgba(0,255,204,0.12)':'var(--border)';
+    });
+</script><script>
     document.getElementById('hb').addEventListener('click',()=>document.getElementById('nl').classList.toggle('open'));
     document.querySelectorAll('#nl a').forEach(a=>a.addEventListener
