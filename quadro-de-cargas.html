@@ -262,44 +262,48 @@ function proxDJ(i){
 function calcCircuito(nome, tipo, pot, faseIn){
     var fp, i, dj, bit, dr;
     var n = nome.toLowerCase();
+    var BITOLAS = [['1,5',17.5],['2,5',24],['4',32],['6',41],['10',57],['16',76],['25',101],['35',131],['50',158]];
+
+    function bitola(ic, minBit){
+        minBit = minBit || '1,5';
+        var ordem = ['1,5','2,5','4','6','10','16','25','35','50'];
+        var b = '50';
+        for(var j=0;j<BITOLAS.length;j++){ if(BITOLAS[j][1]>=ic){b=BITOLAS[j][0];break;} }
+        return ordem.indexOf(b)>=ordem.indexOf(minBit)?b:minBit;
+    }
 
     if(tipo === 'ILUM'){
-        fp = 0.92; i = pot/(V*fp);
-        dj = 16; bit = '1,5'; dr = false;
+        i = pot/(V*0.92); dj = 16; bit = '1,5'; dr = false;
     } else if(tipo === 'TUG'){
-        fp = 1.0; i = pot/(V*fp);
+        i = pot/(V*1.0);
         if(i <= 16){ dj = 20; bit = '2,5'; }
-        else { dj = proxDJ(i*1.25); bit = i/0.8 <= 24 ? '2,5' : i/0.8 <= 32 ? '4' : '6'; }
+        else { dj = proxDJ(i*1.25); bit = bitola(i/0.8,'2,5'); }
         dr = false;
-    } else { // TUE
-        if(n.includes('chuveiro')||n.includes('banheiro')||n.includes('ducha')) fp = 1.0;
-        else if(n.includes('fogão')||n.includes('fogao')||n.includes('inducao')||n.includes('indução')) fp = 0.95;
-        else if(n.includes('ar cond')||n.includes('split')||n.includes('hvac')) fp = 0.92;
-        else if(n.includes('piscina')||n.includes('motor')||n.includes('bomba')) fp = 0.85;
-        else fp = 0.92;
+    } else {
+        if(n.includes('chuveiro')||n.includes('banheiro')||n.includes('ducha')) fp=1.0;
+        else if(n.includes('fogão')||n.includes('fogao')||n.includes('inducao')||n.includes('indução')) fp=0.95;
+        else if(n.includes('ar cond')||n.includes('split')||n.includes('hvac')) fp=0.92;
+        else if(n.includes('piscina')||n.includes('motor')||n.includes('bomba')) fp=0.85;
+        else fp=0.92;
         i = pot/(V*fp);
-        dj = Math.max(proxDJ(i*1.25), 16);
-        var ic = i/0.8;
-        bit = ic<=17.5?'1,5':ic<=24?'2,5':ic<=32?'4':ic<=41?'6':ic<=57?'10':'16';
+        dj = Math.max(proxDJ(i*1.25), 20);
+        bit = bitola(i/0.8,'2,5');
         dr = false;
     }
 
-    // DR obrigatório por ambiente
-    var drAmb = ['garagem','cozinha','banheiro','lavabo','serviço','servico','piscina','gourmet','externa','lavoura'];
+    var drAmb = ['garagem','cozinha','banheiro','lavabo','serviço','servico','piscina','gourmet','externa'];
     dr = drAmb.some(function(a){ return n.includes(a); });
 
-    // Fase auto = balancear
     var fase = faseIn;
     if(fase === 'auto'){
-        var pA = circuitos.filter(function(c){return c.fase==='A';}).reduce(function(s,c){return s+c.pot;},0);
-        var pB = circuitos.filter(function(c){return c.fase==='B';}).reduce(function(s,c){return s+c.pot;},0);
-        var pC = circuitos.filter(function(c){return c.fase==='C';}).reduce(function(s,c){return s+c.pot;},0);
-        fase = pA<=pB && pA<=pC ? 'A' : pB<=pC ? 'B' : 'C';
+        var pA=circuitos.filter(function(c){return c.fase==='A';}).reduce(function(s,c){return s+c.pot;},0);
+        var pB=circuitos.filter(function(c){return c.fase==='B';}).reduce(function(s,c){return s+c.pot;},0);
+        var pC=circuitos.filter(function(c){return c.fase==='C';}).reduce(function(s,c){return s+c.pot;},0);
+        fase = pA<=pB&&pA<=pC?'A':pB<=pC?'B':'C';
     }
 
     return {id:nextId++,nome:nome,tipo:tipo,pot:pot,fase:fase,i:i,dj:dj,bit:bit,dr:dr};
 }
-
 function addCircuito(){
     var nome = document.getElementById('fNome').value.trim();
     var tipo = document.getElementById('fTipo').value;
@@ -393,7 +397,7 @@ function render(){
     if(sis==='220tri'){ vAlim=380; iAlim=tot2/(Math.sqrt(3)*vAlim*0.92); }
     else { vAlim=220; iAlim=tot2/(vAlim*0.92); }
     var djGeral = proxDJ(iAlim*1.25);
-    var bitAlim = iAlim/0.8<=57?'10':iAlim/0.8<=76?'16':iAlim/0.8<=101?'25':iAlim/0.8<=131?'35':'50';
+    var djAux=proxDJ(iAlim*1.25); var bitAlim=djAux<=40?'10':djAux<=63?'10':djAux<=80?'16':djAux<=100?'25':djAux<=125?'50':djAux<=160?'70':'95';
 
     document.getElementById('alimI').textContent = iAlim.toFixed(2)+'A';
     document.getElementById('alimDJ').textContent = djGeral+'A';
@@ -422,7 +426,7 @@ function gerarPDF(){
     var vAlim = document.getElementById('projSistema').value==='220tri'?380:220;
     var iAlim = document.getElementById('projSistema').value==='220tri'?tot2/(Math.sqrt(3)*vAlim*0.92):tot2/(vAlim*0.92);
     var djGeral = proxDJ(iAlim*1.25);
-    var bitAlim = iAlim/0.8<=57?'10':iAlim/0.8<=76?'16':iAlim/0.8<=101?'25':iAlim/0.8<=131?'35':'50';
+    var djAux=proxDJ(iAlim*1.25); var bitAlim=djAux<=40?'10':djAux<=63?'10':djAux<=80?'16':djAux<=100?'25':djAux<=125?'50':djAux<=160?'70':'95';
     var deseq = tot2>0?((Math.max(pA,pB,pC)-Math.min(pA,pB,pC))/(tot2/3)*100):0;
 
     // Header
