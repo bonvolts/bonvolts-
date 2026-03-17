@@ -7,11 +7,11 @@
     <meta name="description" content="Soluções integradas em instalações elétricas, automação com CLPs, quadros QGBT/QDC/CCM, sensores industriais, energia solar e monitoramento remoto. Goiás e nacional.">
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        :root{--green:#00ffcc;--red:#ff2d55;--bg:#080808;--bg2:#0f0f0f;--border:#1e1e1e;--text:#a0a8b0;--bright:#d8dde3;--mono:'Share Tech Mono',monospace;--display:'Barlow Condensed',sans-serif;--body:'Barlow',sans-serif;}
+        :root{--green:#00ffcc;--red:#ff2d55;--bg:#050507;--bg2:#0a0a0e;--border:#1a1a2e;--text:#a0a8b0;--bright:#d8dde3;--mono:'Share Tech Mono',monospace;--display:'Barlow Condensed',sans-serif;--body:'Barlow',sans-serif;}
         *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
-        body{background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden;}
-        body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.07) 2px,rgba(0,0,0,0.07) 4px);pointer-events:none;z-index:9999;}
-        nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);height:60px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;transition:border-color 0.4s;}
+        body{background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden;background-image:radial-gradient(ellipse at 20% 50%,rgba(0,255,204,0.03) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(0,200,160,0.02) 0%,transparent 50%);}
+        body::before{display:none;}
+        nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(5,5,7,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,255,204,0.15);box-shadow:0 1px 30px rgba(0,255,204,0.05);height:60px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;transition:border-color 0.4s;}
         .logo{font-family:var(--mono);font-size:1.1rem;color:var(--green);text-decoration:none;letter-spacing:3px;}
         .nl{display:flex;gap:28px;list-style:none;align-items:center;}
         .nl a{font-family:var(--mono);font-size:0.73rem;color:var(--text);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;position:relative;}
@@ -28,13 +28,17 @@
         .htag{font-family:var(--mono);font-size:0.73rem;color:var(--green);letter-spacing:3px;margin-bottom:22px;opacity:0;animation:fu 0.6s ease 0.2s forwards;}
         .htitle{font-family:var(--display);font-size:clamp(4.5rem,11vw,10rem);font-weight:900;color:#fff;line-height:0.88;letter-spacing:-3px;text-transform:uppercase;margin-bottom:12px;opacity:0;animation:fu 0.7s ease 0.35s forwards;}
         .htitle .g{color:var(--green);}
+        .htitle{color:#fff;}
+        .g-metal{display:inline;background:linear-gradient(180deg,#00ffcc 0%,#00c9a0 30%,#ffffff 55%,#00a884 75%,#00ffcc 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+        
+        .htitle .g{background:linear-gradient(180deg,#00ffcc 0%,#00c9a0 35%,#ffffff 55%,#00a884 80%,#00ffcc 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
         .hsub{font-family:var(--display);font-size:clamp(0.9rem,2vw,1.4rem);font-weight:300;color:var(--text);letter-spacing:5px;text-transform:uppercase;margin-bottom:36px;opacity:0;animation:fu 0.7s ease 0.5s forwards;}
         .hdesc{max-width:580px;font-size:1.05rem;color:var(--text);line-height:1.85;margin-bottom:48px;opacity:0;animation:fu 0.7s ease 0.65s forwards;}
         .hdesc strong{color:var(--bright);}
         .hact{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fu 0.7s ease 0.8s forwards;}
         .status{background:#0a0a0a;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:13px 40px;display:flex;gap:36px;overflow-x:auto;}
         .si{display:flex;align-items:center;gap:9px;white-space:nowrap;font-family:var(--mono);font-size:0.7rem;color:var(--text);letter-spacing:1px;}
-        .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 2s infinite;}
+        .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green),0 0 16px rgba(0,255,204,0.4);animation:pulse 2s infinite;}
         .dot.r{background:var(--red);box-shadow:0 0 6px var(--red);}
         .wrap{max-width:1100px;margin:0 auto;padding:0 40px;}
         section{padding:100px 0;border-bottom:1px solid var(--border);}
@@ -42,7 +46,7 @@
         .stitle{font-family:var(--display);font-size:clamp(2rem,5vw,3.5rem);font-weight:700;color:#fff;text-transform:uppercase;line-height:1;margin-bottom:20px;letter-spacing:-0.5px;}
         .slead{font-size:1.05rem;color:var(--text);max-width:560px;line-height:1.8;margin-bottom:56px;}
         .btn{display:inline-block;font-family:var(--mono);font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;padding:13px 26px;transition:all 0.3s;border:none;cursor:pointer;}
-        .btn-p{background:var(--green);color:var(--bg);}.btn-p:hover{background:#fff;box-shadow:0 0 30px rgba(0,255,204,0.3);}
+        .btn-p{background:linear-gradient(135deg,#00ffcc 0%,#00c9a0 50%,#00ffcc 100%);background-size:200%;color:#050507;font-weight:700;}.btn-p:hover{background-position:right;box-shadow:0 0 40px rgba(0,255,204,0.5),0 0 80px rgba(0,255,204,0.2);}
         .btn-o{background:transparent;color:var(--green);border:1px solid var(--green);}.btn-o:hover{background:rgba(0,255,204,0.07);}
         .srow{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px;}
         .sbig{background:var(--bg2);border:1px solid var(--border);padding:46px 42px;position:relative;overflow:hidden;transition:border-color 0.3s;}
@@ -70,7 +74,7 @@
         .seg p{font-size:0.82rem;color:var(--text);line-height:1.55;}
         .diff-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;}
         .diff{background:var(--bg2);border:1px solid var(--border);padding:34px 28px;text-align:center;}
-        .diff-ico{font-family:var(--display);font-size:3rem;font-weight:900;color:var(--green);line-height:1;margin-bottom:10px;}
+        .diff-ico{font-family:var(--display);font-size:3rem;font-weight:900;color:var(--green);text-shadow:0 0 20px rgba(0,255,204,0.5),0 0 40px rgba(0,255,204,0.2);line-height:1;margin-bottom:10px;}
         .diff-label{font-family:var(--mono);font-size:0.65rem;color:var(--text);letter-spacing:2px;text-transform:uppercase;line-height:1.5;}
         .ipost{background:var(--bg2);border:1px solid var(--border);padding:28px 32px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;text-decoration:none;color:inherit;transition:border-color 0.3s;margin-top:2px;}
         .ipost:first-of-type{margin-top:0;}.ipost:hover{border-color:rgba(0,255,204,0.22);}
@@ -129,7 +133,7 @@
 <header>
     <div class="hw">
         <div class="htag" id="fomo">root@bonvolts:~# ./iniciar_sistema.sh ▮</div>
-        <h1 class="htitle">BON<span class="g">VOLTS</span></h1>
+        <h1 class="htitle"><span class="g-metal">B</span>ON<span class="g-metal">VOLTS</span></h1>
         <div class="hsub">Energia · Automação · Monitoramento</div>
         <p class="hdesc">Do campo à indústria — instalações elétricas, automação com <strong>CLPs e IHMs</strong>, quadros <strong>QGBT / QDC / CCM</strong>, sensores industriais, energia solar e <strong>monitoramento remoto</strong>. Tudo integrado, tudo documentado.</p>
         <div class="hact">
