@@ -308,16 +308,33 @@ function calcCircuito(nome, tipo, pot, faseIn){
                  'varanda','terraço','terraco','piscina','área molhada'];
     dr = drAmb.some(function(a){ return n.includes(a); });
 
-    // Fase automática — balancear
-    var fase = faseIn;
-    if(fase === 'auto'){
-        var pA=circuitos.filter(function(c){return c.fase==='A';}).reduce(function(s,c){return s+c.pot;},0);
-        var pB=circuitos.filter(function(c){return c.fase==='B';}).reduce(function(s,c){return s+c.pot;},0);
-        var pC=circuitos.filter(function(c){return c.fase==='C';}).reduce(function(s,c){return s+c.pot;},0);
-        fase = pA<=pB&&pA<=pC?'A':pB<=pC?'B':'C';
-    }
+    // Fase: se 'auto', marca como auto para rebalancear depois
+    var fase = faseIn; // 'A','B','C' ou 'auto'
 
-    return {id:nextId++,nome:nome,tipo:tipo,pot:pot,fase:fase,i:i,dj:dj,bit:bit,dr:dr};
+    return {id:nextId++,nome:nome,tipo:tipo,pot:pot,fase:fase,faseAuto:(faseIn==='auto'),i:i,dj:dj,bit:bit,dr:dr};
+}
+
+function rebalancear(){
+    // Redistribui todos os circuitos com faseAuto=true pelo algoritmo greedy
+    // Ordena por potência decrescente para melhor distribuição
+    var autoCirc = circuitos.filter(function(c){return c.faseAuto;});
+    var fixoCirc = circuitos.filter(function(c){return !c.faseAuto;});
+
+    // Soma das fases fixas
+    var pA=fixoCirc.filter(function(c){return c.fase==='A';}).reduce(function(s,c){return s+c.pot;},0);
+    var pB=fixoCirc.filter(function(c){return c.fase==='B';}).reduce(function(s,c){return s+c.pot;},0);
+    var pC=fixoCirc.filter(function(c){return c.fase==='C';}).reduce(function(s,c){return s+c.pot;},0);
+
+    // Ordena os auto por potência decrescente (greedy melhor)
+    autoCirc.sort(function(a,b){return b.pot-a.pot;});
+
+    // Atribui fase para a mais leve no momento
+    autoCirc.forEach(function(c){
+        var minP = Math.min(pA,pB,pC);
+        if(pA===minP){ c.fase='A'; pA+=c.pot; }
+        else if(pB===minP){ c.fase='B'; pB+=c.pot; }
+        else { c.fase='C'; pC+=c.pot; }
+    });
 }
 function addCircuito(){
     var nome = document.getElementById('fNome').value.trim();
@@ -329,6 +346,7 @@ function addCircuito(){
     if(!nome || !pot || pot<=0){ alert('Preencha o nome e a potência.'); return; }
     var c = calcCircuito(nome, tipo, pot, fase);
     circuitos.push(c);
+    rebalancear();
     document.getElementById('fNome').value = '';
     document.getElementById('fPot').value = '';
     document.getElementById('fNome').focus();
@@ -337,6 +355,7 @@ function addCircuito(){
 
 function remover(id){
     circuitos = circuitos.filter(function(c){return c.id!==id;});
+    rebalancear();
     render();
 }
 
@@ -376,7 +395,8 @@ function render(){
         html += '<td class="nome">'+c.nome+'</td>';
         html += '<td><span class="tag-tipo '+tcl+'">'+c.tipo+'</span></td>';
         html += '<td>'+c.pot.toLocaleString('pt-BR')+'</td>';
-        html += '<td class="'+fcl+'">'+c.fase+'</td>';
+        var faseLabel = c.fase + (c.faseAuto ? '<span style="font-size:0.55rem;color:#333;margin-left:4px;letter-spacing:1px">AUTO</span>' : '');
+        html += '<td class="'+fcl+'">'+faseLabel+'</td>';
         html += '<td>'+c.i.toFixed(2)+'</td>';
         html += '<td>'+c.dj+'</td>';
         html += '<td>#'+c.bit+'</td>';
@@ -566,25 +586,26 @@ function gerarPDF(){
 function carregarExemplo(){
     circuitos=[]; nextId=1;
     var ex=[
-        ['Iluminacao Externa A','ILUM',130,'A'],['Iluminacao Externa B','ILUM',100,'B'],
-        ['Garagem Iluminacao','ILUM',100,'C'],['Garagem TUG','TUG',800,'B'],
-        ['Ambiente Iluminacao','ILUM',100,'C'],['Ambiente TUG','TUG',800,'A'],
-        ['Ambiente TUE Ar Condicionado','TUE',1500,'C'],['Sala/Jantar Iluminacao','ILUM',100,'B'],
-        ['Sala/Jantar TUG','TUG',800,'A'],['Sala/Jantar TUE Ar Condicionado','TUE',1500,'B'],
-        ['Cozinha Iluminacao','ILUM',100,'C'],['Cozinha TUE Fogao Inducao','TUE',9500,'A'],
-        ['Cozinha TUG','TUG',3000,'C'],['Banheiro TUE','TUE',7500,'B'],
-        ['Banheiro TUG','TUG',800,'C'],['Banheiro Iluminacao','ILUM',100,'C'],
-        ['Circ Corredor Iluminacao','ILUM',100,'C'],['Escritorio Iluminacao','ILUM',100,'C'],
-        ['Escritorio TUE Ar Condicionado','TUE',1500,'C'],['Escritorio TUG','TUG',800,'C'],
-        ['Area Gourmet Iluminacao','ILUM',100,'C'],['Area Gourmet TUG','TUG',1800,'C'],
-        ['Suite Iluminacao','ILUM',100,'B'],['Suite TUG','TUG',800,'B'],
-        ['Suite TUE Ar Condicionado','TUE',1500,'C'],['Banheiro Suite Iluminacao','ILUM',100,'B'],
-        ['Banheiro Suite TUE 1','TUE',7500,'B'],['Banheiro Suite TUE 2','TUE',7500,'A'],
-        ['Banheiro Suite TUG','TUG',300,'C'],['Lavabo TUG','TUG',800,'B'],
-        ['Lavabo Iluminacao','ILUM',100,'B'],['Area de Servico Iluminacao','ILUM',100,'C'],
-        ['Area de Servico TUG','TUG',1800,'C'],['Casa de Maquina Piscina','TUE',5000,'C'],
+        ['Iluminacao Externa A','ILUM',130,'auto'],['Iluminacao Externa B','ILUM',100,'auto'],
+        ['Garagem Iluminacao','ILUM',100,'auto'],['Garagem TUG','TUG',800,'auto'],
+        ['Ambiente Iluminacao','ILUM',100,'auto'],['Ambiente TUG','TUG',800,'auto'],
+        ['Ambiente TUE Ar Condicionado','TUE',1500,'auto'],['Sala/Jantar Iluminacao','ILUM',100,'auto'],
+        ['Sala/Jantar TUG','TUG',800,'auto'],['Sala/Jantar TUE Ar Condicionado','TUE',1500,'auto'],
+        ['Cozinha Iluminacao','ILUM',100,'auto'],['Cozinha TUE Fogao Inducao','TUE',9500,'auto'],
+        ['Cozinha TUG','TUG',3000,'auto'],['Banheiro TUE','TUE',7500,'auto'],
+        ['Banheiro TUG','TUG',800,'auto'],['Banheiro Iluminacao','ILUM',100,'auto'],
+        ['Circ Corredor Iluminacao','ILUM',100,'auto'],['Escritorio Iluminacao','ILUM',100,'auto'],
+        ['Escritorio TUE Ar Condicionado','TUE',1500,'auto'],['Escritorio TUG','TUG',800,'auto'],
+        ['Area Gourmet Iluminacao','ILUM',100,'auto'],['Area Gourmet TUG','TUG',1800,'auto'],
+        ['Suite Iluminacao','ILUM',100,'auto'],['Suite TUG','TUG',800,'auto'],
+        ['Suite TUE Ar Condicionado','TUE',1500,'auto'],['Banheiro Suite Iluminacao','ILUM',100,'auto'],
+        ['Banheiro Suite TUE 1','TUE',7500,'auto'],['Banheiro Suite TUE 2','TUE',7500,'auto'],
+        ['Banheiro Suite TUG','TUG',300,'auto'],['Lavabo TUG','TUG',800,'auto'],
+        ['Lavabo Iluminacao','ILUM',100,'auto'],['Area de Servico Iluminacao','ILUM',100,'auto'],
+        ['Area de Servico TUG','TUG',1800,'auto'],['Casa de Maquina Piscina','TUE',5000,'auto'],
     ];
     ex.forEach(function(e){ circuitos.push(calcCircuito(e[0],e[1],e[2],e[3])); });
+    rebalancear();
     render();
 }
 
