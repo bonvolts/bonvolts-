@@ -162,7 +162,9 @@ footer p{font-family:var(--mono);font-size:0.62rem;color:#222;letter-spacing:1px
                     <option value="ILUM">ILUM — Iluminação</option>
                     <option value="TUG">TUG — Tomada Geral</option>
                     <option value="TUE">TUE — Tomada Específica</option>
+                    <option value="OUTRO">Outro (personalizado)</option>
                 </select>
+                <input type="text" id="fTipoCustom" placeholder="Ex: QF, SUB, AR" style="display:none;margin-top:6px;background:#080810;border:1px solid var(--border);color:var(--bright);font-family:var(--mono);font-size:0.82rem;padding:10px 12px;outline:none;width:100%;">
             </div>
             <div class="form-field">
                 <label>Potência (W)</label>
@@ -272,6 +274,8 @@ function calcCircuito(nome, tipo, pot, faseIn){
         return ordem.indexOf(b)>=ordem.indexOf(minBit)?b:minBit;
     }
 
+    var tipoLabel = tipo;
+    if(tipo === 'OUTRO') tipo = 'TUE'; // calcula como TUE
     if(tipo === 'ILUM'){
         i = pot/(V*0.92); dj = 16; bit = '1,5'; dr = false;
     } else if(tipo === 'TUG'){
@@ -306,7 +310,9 @@ function calcCircuito(nome, tipo, pot, faseIn){
 }
 function addCircuito(){
     var nome = document.getElementById('fNome').value.trim();
-    var tipo = document.getElementById('fTipo').value;
+    var tipoSel = document.getElementById('fTipo').value;
+    var tipoCustom = document.getElementById('fTipoCustom').value.trim();
+    var tipo = tipoSel==='OUTRO' ? (tipoCustom||'OUTRO') : tipoSel;
     var pot  = parseFloat(document.getElementById('fPot').value);
     var fase = document.getElementById('fFase').value;
     if(!nome || !pot || pot<=0){ alert('Preencha o nome e a potência.'); return; }
@@ -329,8 +335,11 @@ function limparTudo(){
 
 function onTipoChange(){
     var t = document.getElementById('fTipo').value;
-    var ph = t==='ILUM'?'Ex: 200':t==='TUG'?'Ex: 800':'Ex: 7500';
+    var ph = t==='ILUM'?'Ex: 200':t==='TUG'?'Ex: 800':t==='TUE'?'Ex: 7500':'Ex: 1500';
     document.getElementById('fPot').placeholder = ph;
+    var custom = document.getElementById('fTipoCustom');
+    custom.style.display = t==='OUTRO' ? 'block' : 'none';
+    if(t!=='OUTRO') custom.value='';
 }
 
 // ── RENDER ───────────────────────────────────────────────────
