@@ -128,7 +128,7 @@
 
 <header>
     <div class="hw">
-        <div class="htag">root@bonvolts:~# ./iniciar_sistema.sh ▮</div>
+        <div class="htag" id="fomo">root@bonvolts:~# ./iniciar_sistema.sh ▮</div>
         <h1 class="htitle">BON<span class="g">VOLTS</span></h1>
         <div class="hsub">Energia · Automação · Monitoramento</div>
         <p class="hdesc">Do campo à indústria — instalações elétricas, automação com <strong>CLPs e IHMs</strong>, quadros <strong>QGBT / QDC / CCM</strong>, sensores industriais, energia solar e <strong>monitoramento remoto</strong>. Tudo integrado, tudo documentado.</p>
@@ -316,6 +316,29 @@
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // FOMO rotativo
+    var msgs = [
+        "⚠ Sua instalação está dentro da norma? A maioria não está.",
+        "🔴 Problema elétrico não avisa — aparece como prejuízo.",
+        "⚡ Cada dia sem automação é eficiência que seu concorrente já tem.",
+        "⚠ Você sabe exatamente o que está conectado na sua rede agora?",
+        "📉 Energia desperdiçada não some — vira lucro perdido.",
+        "./iniciar_sistema.sh ▮"
+    ];
+    var fi = 0;
+    var fomoEl = document.getElementById('fomo');
+    if(fomoEl){
+        setInterval(function(){
+            fi = (fi + 1) % msgs.length;
+            fomoEl.style.opacity = '0';
+            setTimeout(function(){
+                fomoEl.textContent = msgs[fi];
+                fomoEl.style.opacity = '1';
+            }, 400);
+        }, 3500);
+        fomoEl.style.transition = 'opacity 0.4s ease';
+    }
+
     var hbBtn = document.getElementById('hb');
     var nlMenu = document.getElementById('nl');
     if(hbBtn){
