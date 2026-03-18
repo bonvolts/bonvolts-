@@ -11,7 +11,7 @@
         :root{--green:#00ffcc;--red:#ff2d55;--amber:#f5a623;--bg:#080808;--bg2:#0f0f0f;--border:#1e1e1e;--text:#a0a8b0;--bright:#d8dde3;--mono:'Share Tech Mono',monospace;--display:'Barlow Condensed',sans-serif;--body:'Barlow',sans-serif;}
         *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
         body{background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden;line-height:1.6;}
-        body::before{display:none;}
+        body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.07) 2px,rgba(0,0,0,0.07) 4px);pointer-events:none;z-index:9999;}
 
         nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);height:60px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;}
         .logo{font-family:var(--mono);font-size:1.1rem;color:var(--green);text-decoration:none;letter-spacing:3px;}
@@ -211,7 +211,7 @@
 
             <div class="callout">
                 <div class="callout-label green">💡 Dica prática</div>
-                <p>A maioria das cidades de Goiás opera em <strong>220V bifásico</strong> (incluindo Anápolis). Mas instalações antigas podem ter circuitos de 127V ainda. Confirma sempre antes de comprar.</p>
+                <p>A tensão varia por cidade, concessionária e até por instalação. <strong>Não suponha — meça sempre com multímetro antes de comprar.</strong> Instalações antigas podem ter circuitos de 127V mesmo em regiões predominantemente 220V.</p>
             </div>
 
             <h2>Segundo passo: entenda a potência e o que ela exige</h2>
@@ -246,7 +246,7 @@
                             <td>127V</td>
                             <td>23,6A</td>
                             <td>32A</td>
-                            <td>4mm²</td>
+                            <td>6mm²</td>
                             <td><span class="warn">⚠ Muito comum em casas antigas</span></td>
                         </tr>
                         <tr>
@@ -254,7 +254,7 @@
                             <td>127V</td>
                             <td>31,5A</td>
                             <td>40A</td>
-                            <td>6mm²</td>
+                            <td>10mm²</td>
                             <td><span class="warn">⚠ Exige reforma da rede</span></td>
                         </tr>
                         <tr>
@@ -262,7 +262,7 @@
                             <td>220V</td>
                             <td>25A</td>
                             <td>32A</td>
-                            <td>4mm²</td>
+                            <td>6mm²</td>
                             <td><span class="ok">✓ Econômico e seguro em 220V</span></td>
                         </tr>
                         <tr>
@@ -270,7 +270,7 @@
                             <td>220V</td>
                             <td>27,3A</td>
                             <td>32A</td>
-                            <td>4mm²</td>
+                            <td>6mm²</td>
                             <td><span class="ok">✓ Bom custo-benefício</span></td>
                         </tr>
                         <tr>
@@ -278,7 +278,7 @@
                             <td>220V</td>
                             <td>34,1A</td>
                             <td>50A</td>
-                            <td>6mm²</td>
+                            <td>10mm²</td>
                             <td><span class="ok">✓ Água quente mesmo no inverno</span></td>
                         </tr>
                         <tr>
@@ -325,22 +325,22 @@
                         <tr>
                             <td><strong>2,5mm²</strong></td>
                             <td>até 21A</td>
-                            <td><span class="ok">Até 4.000W em 220V</span> / <span class="bad">Não use 7.500W</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>4mm²</strong></td>
-                            <td>até 28A</td>
-                            <td><span class="ok">Até 6.000W em 220V</span></td>
+                            <td><span class="bad">Não suporta chuveiro elétrico — somente iluminação</span></td>
                         </tr>
                         <tr>
                             <td><strong>6mm²</strong></td>
                             <td>até 36A</td>
-                            <td><span class="ok">7.500W em 220V com segurança</span></td>
+                            <td><span class="ok">Chuveiros até 6.000W em 220V (DJ32A)</span></td>
                         </tr>
                         <tr>
                             <td><strong>10mm²</strong></td>
                             <td>até 50A</td>
-                            <td><span class="ok">Ducha de alta potência ou duchas 9kW+</span></td>
+                            <td><span class="ok">Chuveiros 7.500W em 220V (DJ50A)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>16mm²</strong></td>
+                            <td>até 68A</td>
+                            <td><span class="ok">Duchas acima de 9kW ou chuveiros em 127V de alta potência</span></td>
                         </tr>
                     </tbody>
                 </table>
