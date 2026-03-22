@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segmentação de rede OT: do papel à execução em 3 etapas — BONVOLTS</title>
+    <meta name="description" content="Purdue Model na prática: como implementar segmentação de rede OT/IT em indústrias com infraestrutura legada, sem parar a produção e sem budget de multinacional.">
+    <meta name="keywords" content="segmentação rede OT, Purdue Model industrial, firewall OT IT, VLAN industrial, segurança OT Brasil, IEC 62443, DMZ industrial, jump server OT, proteção SCADA CLP">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root{--green:#00ffcc;--red:#ff2d55;--amber:#f5a623;--bg:#080808;--bg2:#0f0f0f;--border:#1e1e1e;--text:#a0a8b0;--bright:#d8dde3;--mono:'Share Tech Mono',monospace;--display:'Barlow Condensed',sans-serif;--body:'Barlow',sans-serif;}
+        *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+        body{background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden;line-height:1.6;}
+        body::before{display:none;}
+
+        nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);height:60px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;}
+        .logo{font-family:var(--mono);font-size:1.1rem;color:var(--green);text-decoration:none;letter-spacing:3px;}
+        .nl{display:flex;gap:28px;list-style:none;align-items:center;}
+        .nl a{font-family:var(--mono);font-size:0.73rem;color:var(--text);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;}
+        .nl a:hover{color:var(--green);}
+        .nav-cta{color:var(--green)!important;border:1px solid var(--green);padding:6px 14px!important;}
+        .nav-cta:hover{background:var(--green)!important;color:var(--bg)!important;}
+        .hb{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+        .hb span{display:block;width:22px;height:1.5px;background:var(--green);}
+
+        /* HERO */
+        .post-hero{padding:110px 40px 56px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+        .post-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,204,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,204,0.02) 1px,transparent 1px);background-size:60px 60px;}
+        .phi{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+        .breadcrumb{font-family:var(--mono);font-size:0.68rem;color:var(--text);letter-spacing:2px;margin-bottom:22px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+        .breadcrumb a{color:var(--green);text-decoration:none;}
+        .breadcrumb span{opacity:0.4;}
+        .post-cat{font-family:var(--mono);font-size:0.7rem;color:var(--red);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+        .post-cat::before{content:'●';}
+        .post-title{font-family:var(--display);font-size:clamp(2.2rem,6vw,4.5rem);font-weight:900;color:#fff;text-transform:uppercase;line-height:0.95;letter-spacing:-1px;margin-bottom:22px;}
+        .post-lead{font-size:1.15rem;color:var(--bright);line-height:1.75;max-width:680px;margin-bottom:30px;}
+        .post-meta{display:flex;gap:28px;align-items:center;flex-wrap:wrap;padding-top:22px;border-top:1px solid var(--border);}
+        .meta-item{font-family:var(--mono);font-size:0.67rem;color:#444;letter-spacing:2px;text-transform:uppercase;}
+        .meta-item strong{color:var(--text);}
+
+        /* LAYOUT */
+        .wrap{max-width:1100px;margin:0 auto;padding:0 40px;}
+        .post-layout{display:grid;grid-template-columns:1fr 300px;gap:60px;padding:60px 0 80px;}
+
+        /* CONTEÚDO */
+        .post-content h2{font-family:var(--display);font-size:2rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:-0.3px;margin:52px 0 18px;padding-bottom:14px;border-bottom:1px solid var(--border);line-height:1;}
+        .post-content h3{font-family:var(--display);font-size:1.4rem;font-weight:700;color:var(--bright);text-transform:uppercase;margin:34px 0 12px;}
+        .post-content p{font-size:1.05rem;color:var(--text);line-height:1.85;margin-bottom:20px;}
+        .post-content strong{color:var(--bright);}
+        .post-content em{color:var(--green);font-style:normal;font-family:var(--mono);font-size:0.9em;}
+        .post-content ul,.post-content ol{padding-left:0;margin:18px 0 22px;list-style:none;display:flex;flex-direction:column;gap:10px;}
+        .post-content li{font-size:1.05rem;color:var(--text);line-height:1.7;padding-left:22px;position:relative;}
+        .post-content ul li::before{content:'→';position:absolute;left:0;color:var(--green);font-family:var(--mono);}
+        .post-content ol{counter-reset:item;}
+        .post-content ol li{counter-increment:item;}
+        .post-content ol li::before{content:counter(item,decimal-leading-zero);position:absolute;left:0;color:var(--green);font-family:var(--mono);font-size:0.8rem;top:3px;}
+
+        /* CALLOUTS */
+        .callout{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--green);padding:22px 26px;margin:28px 0;}
+        .callout.red{border-left-color:var(--red);}
+        .callout.amber{border-left-color:var(--amber);}
+        .callout-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+        .callout-label.green{color:var(--green);}
+        .callout-label.red{color:var(--red);}
+        .callout-label.amber{color:var(--amber);}
+        .callout p{margin:0;font-size:1rem;}
+
+        /* TABELA */
+        .table-wrap{overflow-x:auto;margin:28px 0;}
+        table{width:100%;border-collapse:collapse;font-size:0.92rem;}
+        thead tr{background:var(--bg2);border-bottom:1px solid var(--border);}
+        thead th{font-family:var(--mono);font-size:0.67rem;letter-spacing:2px;text-transform:uppercase;color:var(--green);padding:14px 16px;text-align:left;font-weight:400;}
+        tbody tr{border-bottom:1px solid var(--border);transition:background 0.2s;}
+        tbody tr:hover{background:rgba(255,255,255,0.02);}
+        tbody td{padding:14px 16px;color:var(--text);line-height:1.5;}
+        tbody td strong{color:var(--bright);}
+        .ok{color:var(--green)!important;font-family:var(--mono);}
+        .warn{color:var(--amber)!important;font-family:var(--mono);}
+        .bad{color:var(--red)!important;font-family:var(--mono);}
+
+        /* DIVISOR */
+        .divider{border:none;border-top:1px solid var(--border);margin:44px 0;}
+
+        /* CHECKLIST */
+        .checklist{background:var(--bg2);border:1px solid var(--border);padding:30px;margin:28px 0;}
+        .checklist-title{font-family:var(--display);font-size:1.1rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+        .checklist-title::before{content:'☑';color:var(--green);}
+        .checklist ul{margin:0;}
+        .checklist li::before{content:'☐';color:var(--green);}
+
+        /* CTA INLINE */
+        .cta-inline{background:var(--bg2);border:1px solid rgba(0,255,204,0.15);padding:34px 30px;margin:44px 0;display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap;}
+        .cta-inline p{margin:0;font-size:1rem;color:var(--bright);flex:1;line-height:1.5;}
+        .btn{display:inline-block;font-family:var(--mono);font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;padding:12px 22px;transition:all 0.3s;cursor:pointer;border:none;}
+        .btn-p{background:var(--green);color:var(--bg);}
+        .btn-p:hover{background:#fff;}
+        .btn-o{background:transparent;color:var(--green);border:1px solid var(--green);}
+        .btn-o:hover{background:rgba(0,255,204,0.07);}
+
+        /* TAGS */
+        .post-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:44px;padding-top:26px;border-top:1px solid var(--border);}
+        .post-tag{font-family:var(--mono);font-size:0.62rem;letter-spacing:1.5px;text-transform:uppercase;padding:5px 11px;border:1px solid var(--border);color:var(--text);text-decoration:none;transition:all 0.2s;}
+        .post-tag:hover{border-color:var(--green);color:var(--green);}
+
+        /* SIDEBAR */
+        .sidebar{position:sticky;top:80px;align-self:start;display:flex;flex-direction:column;gap:2px;}
+        .sb{background:var(--bg2);border:1px solid var(--border);padding:24px;}
+        .sbt{font-family:var(--mono);font-size:0.67rem;color:var(--green);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+        .sbl{list-style:none;display:flex;flex-direction:column;gap:12px;}
+        .sbl a{font-family:var(--mono);font-size:0.68rem;color:var(--text);text-decoration:none;letter-spacing:1px;transition:color 0.2s;line-height:1.4;}
+        .sbl a:hover{color:var(--green);}
+        .progress-bar{height:2px;background:var(--border);margin-bottom:16px;overflow:hidden;}
+        .progress-fill{height:100%;background:var(--green);width:0%;transition:width 0.1s;}
+        .progress-label{font-family:var(--mono);font-size:0.62rem;color:#333;letter-spacing:2px;margin-bottom:8px;}
+
+        /* RELATED */
+        .related{padding:56px 0;border-top:1px solid var(--border);}
+        .related-title{font-family:var(--display);font-size:1.8rem;font-weight:700;color:#fff;text-transform:uppercase;margin-bottom:24px;}
+        .rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;}
+        .rc{background:var(--bg2);border:1px solid var(--border);padding:26px;text-decoration:none;color:inherit;transition:border-color 0.3s;display:block;}
+        .rc:hover{border-color:rgba(0,255,204,0.2);}
+        .rc-cat{font-family:var(--mono);font-size:0.63rem;color:var(--green);letter-spacing:2px;margin-bottom:10px;}
+        .rc h4{font-family:var(--display);font-size:1.2rem;font-weight:700;color:#fff;text-transform:uppercase;line-height:1.1;margin-bottom:8px;}
+        .rc p{font-size:0.85rem;color:var(--text);line-height:1.6;}
+
+        footer{padding:36px 40px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+        .flogo{font-family:var(--mono);font-size:1rem;color:var(--green);letter-spacing:3px;}
+        .flinks{display:flex;gap:22px;list-style:none;}
+        .flinks a{font-family:var(--mono);font-size:0.67rem;color:#333;text-decoration:none;letter-spacing:1.5px;transition:color 0.2s;}
+        .flinks a:hover{color:var(--green);}
+        footer p{font-family:var(--mono);font-size:0.65rem;color:#252525;letter-spacing:1px;}
+
+        @media(max-width:768px){
+            nav{padding:0 20px;}.nl{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--border);padding:24px 20px;gap:20px;}
+            .nl.open{display:flex;}.hb{display:flex;}
+            .post-hero{padding:100px 20px 48px;}.wrap{padding:0 20px;}
+            .post-layout{grid-template-columns:1fr;}.sidebar{position:static;}
+            .cta-inline{flex-direction:column;align-items:flex-start;}
+            footer{padding:28px 20px;flex-direction:column;align-items:flex-start;}
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="index.html" class="logo">BON<span style="color:var(--green)">VOLTS</span></a>
+    <ul class="nl" id="nl">
+        <li><a href="index.html#servicos">Serviços</a></li>
+        <li><a href="index.html#segmentos">Segmentos</a></li>
+        <li><a href="blog.html">Intel // Blog</a></li>
+        <li><a href="index.html#contato" class="nav-cta">Consultoria</a></li>
+    </ul>
+    <button class="hb" id="hb" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="post-hero">
+    <div class="phi">
+        <div class="breadcrumb"><a href="index.html">Bonvolts</a><span>/</span><a href="blog.html">Intel // Blog</a><span>/</span><span>Segmentação de rede OT</span></div>
+        <div class="post-cat">TI/TO</div>
+        <h1 class="post-title">Segmentação de rede OT:<br>do papel à execução<br>em 3 etapas</h1>
+        <p class="post-lead">Purdue Model na prática — sem precisar de budget de multinacional. Como criar zonas de segurança em ambientes industriais com infraestrutura legada, sem parar a produção e com documentação conforme IEC 62443.</p>
+        <div class="post-meta">
+            <div class="meta-item">DATA <strong>DEZ 2025</strong></div>
+            <div class="meta-item">LEITURA <strong>9 MIN</strong></div>
+            <div class="meta-item">POR <strong>BONVOLTS</strong></div>
+            <div class="meta-item">CATEGORIA <strong>TI/TO</strong></div>
+        </div>
+    </div>
+</div>
+<div class="wrap">
+    <div class="post-layout">
+        <article class="post-content">
+
+            <h2>Por que segmentação é a base de tudo em OT Security</h2>
+            <p>Imagine que um ransomware compromete o computador do financeiro. Se a rede de TI e a rede OT são a mesma — ou se há comunicação irrestrita entre elas — o atacante tem acesso direto aos CLPs, IHMs e sistemas SCADA da planta. Foi exatamente isso que aconteceu no caso do Colonial Pipeline em 2021.</p>
+            <p>Segmentação de rede OT não é paranoia. É a medida de segurança com maior custo-benefício disponível para ambientes industriais. E, ao contrário do que a maioria pensa, pode ser implementada em etapas, sem parar a produção e sem budget de multinacional.</p>
+            <div class="callout">
+                <div class="callout-label green">// O modelo de referência</div>
+                <p>O <strong>Purdue Model</strong> (também chamado de ISA-95) divide a arquitetura industrial em níveis hierárquicos. A segmentação de rede OT se baseia em criar barreiras entre esses níveis — especialmente entre o Nível 3 (sistemas de gestão de produção) e o Nível 4 (rede corporativa de TI).</p>
+            </div>
+
+            <h2>Entendendo o Purdue Model na prática</h2>
+            <p>O modelo divide a arquitetura em 5 níveis. Entender onde cada equipamento se encaixa é o pré-requisito para qualquer projeto de segmentação:</p>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Nível</th><th>O que fica aqui</th><th>Exemplos</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Nível 0</strong></td><td>Processo físico</td><td>Motores, válvulas, sensores, atuadores</td></tr>
+                        <tr><td><strong>Nível 1</strong></td><td>Controle básico</td><td>CLPs, controladores de processo, relés</td></tr>
+                        <tr><td><strong>Nível 2</strong></td><td>Supervisão</td><td>IHMs, SCADA local, DCS</td></tr>
+                        <tr><td><strong>Nível 3</strong></td><td>Gestão de operações</td><td>Historian, MES, servidor SCADA</td></tr>
+                        <tr><td><strong>Nível 3.5</strong></td><td>DMZ Industrial</td><td>Servidores de replicação, jump server</td></tr>
+                        <tr><td><strong>Nível 4</strong></td><td>TI Corporativa</td><td>ERP, e-mail, Active Directory, internet</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>O ponto crítico é a fronteira entre o Nível 3 e o Nível 4. Sem uma barreira bem definida nesse ponto, qualquer problema na rede corporativa pode se propagar diretamente para os sistemas de controle.</p>
+
+            <h2>Etapa 1 — Mapeamento e inventário de ativos OT</h2>
+            <p>Não é possível proteger o que você não sabe que existe. A primeira etapa é mapear todos os dispositivos conectados à rede OT: CLPs, IHMs, switches industriais, servidores SCADA, historians, conversores de protocolo, câmeras de processo e qualquer outro equipamento que se comunique pela rede.</p>
+            <p>Para cada dispositivo, documentar:</p>
+            <ul>
+                <li>Endereço IP e MAC address</li>
+                <li>Fabricante, modelo e versão de firmware</li>
+                <li>Protocolo de comunicação utilizado (Modbus, EtherNet/IP, PROFINET, DNP3...)</li>
+                <li>Portas abertas e serviços ativos</li>
+                <li>A qual nível do Purdue Model pertence</li>
+                <li>Quem acessa e com qual frequência</li>
+            </ul>
+            <div class="callout amber">
+                <div class="callout-label amber">// Descoberta comum</div>
+                <p>Em praticamente todo mapeamento, aparecem dispositivos que "ninguém sabia que existiam" — CLPs de projetos antigos ainda funcionando, conversores de protocolo esquecidos, switches não gerenciáveis com acesso irrestrito. Esses dispositivos são os mais perigosos porque ninguém os monitora.</p>
+            </div>
+
+            <h2>Etapa 2 — Segmentação com VLANs e firewall</h2>
+            <p>Com o inventário em mãos, a segmentação pode ser implementada em camadas:</p>
+            <h3>VLANs por zona funcional</h3>
+            <p>Criar VLANs separadas para cada grupo de dispositivos OT é o primeiro passo. Uma VLAN para CLPs e IHMs de linha de produção, outra para servidores SCADA, outra para redes de segurança (sensores de gás, sprinklers, CFTV). Switches gerenciáveis já existentes na maioria das plantas suportam VLANs — sem necessidade de novo hardware na maioria dos casos.</p>
+            <h3>Firewall industrial no perímetro IT/OT</h3>
+            <p>O firewall entre as redes IT e OT é a barreira principal. A regra de ouro é <strong>default deny</strong>: tudo bloqueado por padrão, apenas o necessário liberado explicitamente. As regras típicas permitem:</p>
+            <ul>
+                <li>Replicação de dados do Historian para servidores de relatório no Nível 4</li>
+                <li>Acesso de engenheiros de TI ao jump server na DMZ industrial (nunca diretamente ao CLP)</li>
+                <li>Monitoramento passivo por sistemas de detecção de intrusão (IDS)</li>
+            </ul>
+            <h3>DMZ industrial — o pulmão entre os mundos</h3>
+            <p>A DMZ industrial (Nível 3.5) é uma zona neutra entre TI e OT. Servidores de replicação, jump servers e proxies de comunicação ficam aqui. Nenhuma conexão direta entre Nível 4 e Nível 3 — toda comunicação passa pela DMZ. Isso isola o ambiente OT mesmo que a rede corporativa seja completamente comprometida.</p>
+
+            <h2>Etapa 3 — Controle de acesso remoto e monitoramento</h2>
+            <p>Acesso remoto não controlado é um dos vetores de ataque mais comuns em ambientes OT. Fornecedores de CLP com acesso via TeamViewer sem senha, técnicos com VPN permanente mesmo quando não estão trabalhando, portas de acesso remoto abertas que "todo mundo usa".</p>
+            <h3>VPN com autenticação de dois fatores</h3>
+            <p>Todo acesso remoto à rede OT deve passar por VPN com autenticação multifator. O acesso deve ser concedido por sessão — não permanente. Logs de acesso devem ser registrados e revisados periodicamente.</p>
+            <h3>Jump server como ponto único de entrada</h3>
+            <p>Um jump server (ou bastion host) é o único ponto de entrada para acesso remoto ao ambiente OT. Técnicos e fornecedores se conectam ao jump server — que está na DMZ — e de lá acessam os equipamentos específicos que precisam. Nenhum acesso direto externo ao CLP ou IHM.</p>
+            <h3>Monitoramento passivo de tráfego OT</h3>
+            <p>Ferramentas como Claroty, Dragos ou soluções open source como Zeek + Suricata podem monitorar o tráfego na rede OT sem interferir nas comunicações industriais. Qualquer desvio do comportamento normal — um CLP se comunicando com um endereço desconhecido, um volume de tráfego anormal, uma varredura de portas — gera alerta imediato.</p>
+
+            <div class="checklist">
+                <div class="checklist-title">Checklist de segmentação OT — por etapa</div>
+                <ul>
+                    <li><strong>Etapa 1:</strong> Inventário completo de ativos OT com IP, modelo e firmware</li>
+                    <li><strong>Etapa 1:</strong> Mapeamento de fluxos de comunicação entre dispositivos</li>
+                    <li><strong>Etapa 2:</strong> VLANs por zona funcional nos switches existentes</li>
+                    <li><strong>Etapa 2:</strong> Firewall industrial no perímetro IT/OT com política default deny</li>
+                    <li><strong>Etapa 2:</strong> DMZ industrial para comunicação segura entre os ambientes</li>
+                    <li><strong>Etapa 3:</strong> VPN com MFA para todo acesso remoto</li>
+                    <li><strong>Etapa 3:</strong> Jump server como único ponto de entrada externo</li>
+                    <li><strong>Etapa 3:</strong> Monitoramento passivo de tráfego OT com alertas</li>
+                </ul>
+            </div>
+
+            <div class="cta-inline">
+                <p>A Bonvolts implementa segmentação de rede OT do mapeamento ao firewall — com documentação conforme IEC 62443 e relatório técnico de evidências.</p>
+                <a href="https://wa.me/5562999050403" class="btn btn-p">Solicitar Diagnóstico OT →</a>
+            </div>
+
+            <div class="post-tags">
+                <a href="blog.html" class="post-tag">OT Security</a>
+                <a href="blog.html" class="post-tag">Segmentação de Rede</a>
+                <a href="blog.html" class="post-tag">Purdue Model</a>
+                <a href="blog.html" class="post-tag">IEC 62443</a>
+                <a href="blog.html" class="post-tag">VLAN Industrial</a>
+                <a href="blog.html" class="post-tag">Firewall OT</a>
+            </div>
+        </article>
+        <aside class="sidebar">
+            <div class="sb">
+                <div class="progress-label">PROGRESSO</div>
+                <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+                <div class="sbt">Neste artigo</div>
+                <ul class="sbl" id="toc"></ul>
+            </div>
+            <div class="sb">
+                <div class="sbt">Precisa de ajuda?</div>
+                <ul class="sbl">
+                    <li><a href="index.html#contato">Diagnóstico OT →</a></li>
+                    <li><a href="https://wa.me/5562999050403">WhatsApp direto →</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+    <div class="related">
+        <div class="related-title">Leia também</div>
+        <div class="rg">
+            <a href="clp-rede-corporativa.html" class="rc"><div class="rc-cat">OT SECURITY</div><h4>CLP na rede corporativa: o erro que ninguém assume</h4><p>A maior vulnerabilidade industrial não é zero-day.</p></a>
+            <a href="harmonicas-data-centers.html" class="rc"><div class="rc-cat">ELÉTRICA INDUSTRIAL</div><h4>Harmônicas e Data Centers: o que a TI ignora</h4><p>Rede elétrica mal dimensionada destrói servidores silenciosamente.</p></a>
+            <a href="nr10-pratica.html" class="rc"><div class="rc-cat">NORMAS</div><h4>NR-10 na prática: o que o fiscal vai olhar primeiro</h4><p>Os 7 pontos que mais geram autuação em fiscalizações.</p></a>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="flogo">BONVOLTS</div>
+    <ul class="flinks">
+        <li><a href="index.html#servicos">Serviços</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+    <p>&copy; 2026 BONVOLTS — Energia, Automação e Monitoramento.</p>
+</footer>
+<script>
+    document.getElementById('hb').addEventListener('click',()=>document.getElementById('nl').classList.toggle('open'));
+    document.querySelectorAll('#nl a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nl').classList.remove('open')));
+    window.addEventListener('scroll',()=>{
+        const el=document.documentElement;
+        document.getElementById('pf').style.width=(el.scrollTop/(el.scrollHeight-el.clientHeight)*100)+'%';
+    });
+    const toc=document.getElementById('toc');
+    document.querySelectorAll('.post-content h2').forEach((h,i)=>{
+        h.id='sec-'+i;
+        const li=document.createElement('li');
+        const a=document.createElement('a');
+        a.href='#sec-'+i;
+        a.textContent=h.textContent;
+        li.appendChild(a);
+        toc.appendChild(li);
+    });
+</script>
+</body>
+</html>

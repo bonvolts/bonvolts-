@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmônicas e Data Centers: o que a TI ignora — BONVOLTS</title>
+    <meta name="description" content="Correntes harmônicas destroem transformadores, sobrecarregam neutros e causam falhas intermitentes em servidores. Saiba identificar e corrigir antes do colapso.">
+    <meta name="keywords" content="harmônicas elétricas data center, distorção harmônica, qualidade de energia, THD, filtro harmônico, transformador K-rated, neutro sobrecarregado, instalação elétrica industrial">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root{--green:#00ffcc;--red:#ff2d55;--amber:#f5a623;--bg:#080808;--bg2:#0f0f0f;--border:#1e1e1e;--text:#a0a8b0;--bright:#d8dde3;--mono:'Share Tech Mono',monospace;--display:'Barlow Condensed',sans-serif;--body:'Barlow',sans-serif;}
+        *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+        body{background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden;line-height:1.6;}
+        body::before{display:none;}
+
+        nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);height:60px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;}
+        .logo{font-family:var(--mono);font-size:1.1rem;color:var(--green);text-decoration:none;letter-spacing:3px;}
+        .nl{display:flex;gap:28px;list-style:none;align-items:center;}
+        .nl a{font-family:var(--mono);font-size:0.73rem;color:var(--text);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;}
+        .nl a:hover{color:var(--green);}
+        .nav-cta{color:var(--green)!important;border:1px solid var(--green);padding:6px 14px!important;}
+        .nav-cta:hover{background:var(--green)!important;color:var(--bg)!important;}
+        .hb{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+        .hb span{display:block;width:22px;height:1.5px;background:var(--green);}
+
+        /* HERO */
+        .post-hero{padding:110px 40px 56px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+        .post-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,204,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,204,0.02) 1px,transparent 1px);background-size:60px 60px;}
+        .phi{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+        .breadcrumb{font-family:var(--mono);font-size:0.68rem;color:var(--text);letter-spacing:2px;margin-bottom:22px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+        .breadcrumb a{color:var(--green);text-decoration:none;}
+        .breadcrumb span{opacity:0.4;}
+        .post-cat{font-family:var(--mono);font-size:0.7rem;color:var(--red);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+        .post-cat::before{content:'●';}
+        .post-title{font-family:var(--display);font-size:clamp(2.2rem,6vw,4.5rem);font-weight:900;color:#fff;text-transform:uppercase;line-height:0.95;letter-spacing:-1px;margin-bottom:22px;}
+        .post-lead{font-size:1.15rem;color:var(--bright);line-height:1.75;max-width:680px;margin-bottom:30px;}
+        .post-meta{display:flex;gap:28px;align-items:center;flex-wrap:wrap;padding-top:22px;border-top:1px solid var(--border);}
+        .meta-item{font-family:var(--mono);font-size:0.67rem;color:#444;letter-spacing:2px;text-transform:uppercase;}
+        .meta-item strong{color:var(--text);}
+
+        /* LAYOUT */
+        .wrap{max-width:1100px;margin:0 auto;padding:0 40px;}
+        .post-layout{display:grid;grid-template-columns:1fr 300px;gap:60px;padding:60px 0 80px;}
+
+        /* CONTEÚDO */
+        .post-content h2{font-family:var(--display);font-size:2rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:-0.3px;margin:52px 0 18px;padding-bottom:14px;border-bottom:1px solid var(--border);line-height:1;}
+        .post-content h3{font-family:var(--display);font-size:1.4rem;font-weight:700;color:var(--bright);text-transform:uppercase;margin:34px 0 12px;}
+        .post-content p{font-size:1.05rem;color:var(--text);line-height:1.85;margin-bottom:20px;}
+        .post-content strong{color:var(--bright);}
+        .post-content em{color:var(--green);font-style:normal;font-family:var(--mono);font-size:0.9em;}
+        .post-content ul,.post-content ol{padding-left:0;margin:18px 0 22px;list-style:none;display:flex;flex-direction:column;gap:10px;}
+        .post-content li{font-size:1.05rem;color:var(--text);line-height:1.7;padding-left:22px;position:relative;}
+        .post-content ul li::before{content:'→';position:absolute;left:0;color:var(--green);font-family:var(--mono);}
+        .post-content ol{counter-reset:item;}
+        .post-content ol li{counter-increment:item;}
+        .post-content ol li::before{content:counter(item,decimal-leading-zero);position:absolute;left:0;color:var(--green);font-family:var(--mono);font-size:0.8rem;top:3px;}
+
+        /* CALLOUTS */
+        .callout{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--green);padding:22px 26px;margin:28px 0;}
+        .callout.red{border-left-color:var(--red);}
+        .callout.amber{border-left-color:var(--amber);}
+        .callout-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+        .callout-label.green{color:var(--green);}
+        .callout-label.red{color:var(--red);}
+        .callout-label.amber{color:var(--amber);}
+        .callout p{margin:0;font-size:1rem;}
+
+        /* TABELA */
+        .table-wrap{overflow-x:auto;margin:28px 0;}
+        table{width:100%;border-collapse:collapse;font-size:0.92rem;}
+        thead tr{background:var(--bg2);border-bottom:1px solid var(--border);}
+        thead th{font-family:var(--mono);font-size:0.67rem;letter-spacing:2px;text-transform:uppercase;color:var(--green);padding:14px 16px;text-align:left;font-weight:400;}
+        tbody tr{border-bottom:1px solid var(--border);transition:background 0.2s;}
+        tbody tr:hover{background:rgba(255,255,255,0.02);}
+        tbody td{padding:14px 16px;color:var(--text);line-height:1.5;}
+        tbody td strong{color:var(--bright);}
+        .ok{color:var(--green)!important;font-family:var(--mono);}
+        .warn{color:var(--amber)!important;font-family:var(--mono);}
+        .bad{color:var(--red)!important;font-family:var(--mono);}
+
+        /* DIVISOR */
+        .divider{border:none;border-top:1px solid var(--border);margin:44px 0;}
+
+        /* CHECKLIST */
+        .checklist{background:var(--bg2);border:1px solid var(--border);padding:30px;margin:28px 0;}
+        .checklist-title{font-family:var(--display);font-size:1.1rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+        .checklist-title::before{content:'☑';color:var(--green);}
+        .checklist ul{margin:0;}
+        .checklist li::before{content:'☐';color:var(--green);}
+
+        /* CTA INLINE */
+        .cta-inline{background:var(--bg2);border:1px solid rgba(0,255,204,0.15);padding:34px 30px;margin:44px 0;display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap;}
+        .cta-inline p{margin:0;font-size:1rem;color:var(--bright);flex:1;line-height:1.5;}
+        .btn{display:inline-block;font-family:var(--mono);font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;padding:12px 22px;transition:all 0.3s;cursor:pointer;border:none;}
+        .btn-p{background:var(--green);color:var(--bg);}
+        .btn-p:hover{background:#fff;}
+        .btn-o{background:transparent;color:var(--green);border:1px solid var(--green);}
+        .btn-o:hover{background:rgba(0,255,204,0.07);}
+
+        /* TAGS */
+        .post-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:44px;padding-top:26px;border-top:1px solid var(--border);}
+        .post-tag{font-family:var(--mono);font-size:0.62rem;letter-spacing:1.5px;text-transform:uppercase;padding:5px 11px;border:1px solid var(--border);color:var(--text);text-decoration:none;transition:all 0.2s;}
+        .post-tag:hover{border-color:var(--green);color:var(--green);}
+
+        /* SIDEBAR */
+        .sidebar{position:sticky;top:80px;align-self:start;display:flex;flex-direction:column;gap:2px;}
+        .sb{background:var(--bg2);border:1px solid var(--border);padding:24px;}
+        .sbt{font-family:var(--mono);font-size:0.67rem;color:var(--green);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+        .sbl{list-style:none;display:flex;flex-direction:column;gap:12px;}
+        .sbl a{font-family:var(--mono);font-size:0.68rem;color:var(--text);text-decoration:none;letter-spacing:1px;transition:color 0.2s;line-height:1.4;}
+        .sbl a:hover{color:var(--green);}
+        .progress-bar{height:2px;background:var(--border);margin-bottom:16px;overflow:hidden;}
+        .progress-fill{height:100%;background:var(--green);width:0%;transition:width 0.1s;}
+        .progress-label{font-family:var(--mono);font-size:0.62rem;color:#333;letter-spacing:2px;margin-bottom:8px;}
+
+        /* RELATED */
+        .related{padding:56px 0;border-top:1px solid var(--border);}
+        .related-title{font-family:var(--display);font-size:1.8rem;font-weight:700;color:#fff;text-transform:uppercase;margin-bottom:24px;}
+        .rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;}
+        .rc{background:var(--bg2);border:1px solid var(--border);padding:26px;text-decoration:none;color:inherit;transition:border-color 0.3s;display:block;}
+        .rc:hover{border-color:rgba(0,255,204,0.2);}
+        .rc-cat{font-family:var(--mono);font-size:0.63rem;color:var(--green);letter-spacing:2px;margin-bottom:10px;}
+        .rc h4{font-family:var(--display);font-size:1.2rem;font-weight:700;color:#fff;text-transform:uppercase;line-height:1.1;margin-bottom:8px;}
+        .rc p{font-size:0.85rem;color:var(--text);line-height:1.6;}
+
+        footer{padding:36px 40px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+        .flogo{font-family:var(--mono);font-size:1rem;color:var(--green);letter-spacing:3px;}
+        .flinks{display:flex;gap:22px;list-style:none;}
+        .flinks a{font-family:var(--mono);font-size:0.67rem;color:#333;text-decoration:none;letter-spacing:1.5px;transition:color 0.2s;}
+        .flinks a:hover{color:var(--green);}
+        footer p{font-family:var(--mono);font-size:0.65rem;color:#252525;letter-spacing:1px;}
+
+        @media(max-width:768px){
+            nav{padding:0 20px;}.nl{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--border);padding:24px 20px;gap:20px;}
+            .nl.open{display:flex;}.hb{display:flex;}
+            .post-hero{padding:100px 20px 48px;}.wrap{padding:0 20px;}
+            .post-layout{grid-template-columns:1fr;}.sidebar{position:static;}
+            .cta-inline{flex-direction:column;align-items:flex-start;}
+            footer{padding:28px 20px;flex-direction:column;align-items:flex-start;}
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="index.html" class="logo">BON<span style="color:var(--green)">VOLTS</span></a>
+    <ul class="nl" id="nl">
+        <li><a href="index.html#servicos">Serviços</a></li>
+        <li><a href="index.html#segmentos">Segmentos</a></li>
+        <li><a href="blog.html">Intel // Blog</a></li>
+        <li><a href="index.html#contato" class="nav-cta">Consultoria</a></li>
+    </ul>
+    <button class="hb" id="hb" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="post-hero">
+    <div class="phi">
+        <div class="breadcrumb"><a href="index.html">Bonvolts</a><span>/</span><a href="blog.html">Intel // Blog</a><span>/</span><span>Harmônicas e Data Centers</span></div>
+        <div class="post-cat">Elétrica Industrial</div>
+        <h1 class="post-title">Harmônicas e Data Centers:<br>o que a TI ignora</h1>
+        <p class="post-lead">Muitos focam no firewall e esquecem que uma rede elétrica mal dimensionada destrói servidores silenciosamente. Correntes harmônicas sobreaquecm transformadores, queimam neutros e causam falhas intermitentes impossíveis de rastrear. Aqui está como identificar e corrigir antes do colapso.</p>
+        <div class="post-meta">
+            <div class="meta-item">DATA <strong>JAN 2026</strong></div>
+            <div class="meta-item">LEITURA <strong>9 MIN</strong></div>
+            <div class="meta-item">POR <strong>BONVOLTS</strong></div>
+            <div class="meta-item">CATEGORIA <strong>ELÉTRICA INDUSTRIAL</strong></div>
+        </div>
+    </div>
+</div>
+<div class="wrap">
+    <div class="post-layout">
+        <article class="post-content">
+
+            <h2>O problema que a maioria ignora</h2>
+            <p>Você já viu aquele servidor que reinicia sozinho toda semana sem motivo aparente? Ou o inversor de frequência que apresenta falha intermitente e o técnico de TI não consegue reproduzir o problema? Em grande parte dos casos, a raiz não está no software — está na rede elétrica.</p>
+            <p><strong>Correntes harmônicas</strong> são distorções na forma de onda da tensão e corrente causadas por cargas não-lineares. Em ambientes de TI e data centers, praticamente tudo gera harmônicas: fontes chaveadas de servidores, nobreaks (UPS), inversores de frequência, reatores eletrônicos de iluminação.</p>
+            <div class="callout">
+                <div class="callout-label green">// O que são harmônicas</div>
+                <p>A rede elétrica opera em 60Hz. Cargas não-lineares injetam correntes em múltiplos desse valor: 3ª harmônica (180Hz), 5ª (300Hz), 7ª (420Hz)... Essas correntes parasitas circulam pela instalação e causam danos invisíveis.</p>
+            </div>
+
+            <h2>O que acontece quando as harmônicas dominam a instalação</h2>
+            <p>As consequências são progressivas e traiçoeiras — nenhuma faz o disjuntor cair imediatamente, mas todas destroem o equipamento aos poucos.</p>
+            <h3>1. Superaquecimento do neutro</h3>
+            <p>Em sistemas trifásicos equilibrados, as correntes fundamentais (60Hz) se cancelam no neutro. As harmônicas de 3ª ordem <strong>não se cancelam</strong> — elas somam. Em uma instalação com cargas não-lineares intensas, a corrente no neutro pode atingir até <em>1,73 vezes</em> a corrente de fase. Um neutro dimensionado para 100A pode estar conduzindo 173A.</p>
+            <div class="callout amber">
+                <div class="callout-label amber">⚠ Ponto crítico</div>
+                <p>Se o seu neutro não foi superdimensionado (padrão em instalações antigas), ele está sobrecarregado silenciosamente. Aquece, degrada o isolamento e pode causar incêndio sem nunca disparar um disjuntor.</p>
+            </div>
+            <h3>2. Destruição de transformadores</h3>
+            <p>Transformadores convencionais não foram projetados para operar com correntes harmônicas. O efeito é duplo: perdas adicionais no núcleo magnético (perdas no ferro) e perdas nas bobinas por efeito pelicular — a corrente de alta frequência circula apenas pela superfície do condutor, aumentando a resistência efetiva. Resultado: o transformador opera a temperatura mais alta do que o esperado. Para cada 10°C acima do limite de projeto, a vida útil do equipamento é reduzida à metade.</p>
+            <h3>3. Falhas intermitentes em equipamentos de TI</h3>
+            <p>Servidores, switches e storages possuem fontes de alimentação com correção ativa de fator de potência. Quando a tensão de entrada contém alta distorção harmônica (THD-V acima de 8%), essas fontes operam fora da especificação. O equipamento não falha de uma vez — apresenta erros de memória, reinicializações espontâneas, corrupção de dados. Exatamente o tipo de problema que leva meses para ser rastreado.</p>
+
+            <h2>Como medir e identificar o problema</h2>
+            <p>O equipamento correto para diagnóstico de harmônicas é um <strong>analisador de qualidade de energia</strong> (power quality analyzer). Ele registra em tempo real:</p>
+            <ul>
+                <li>THD-V (Distorção Harmônica Total de Tensão) — limite IEEE 519: 5% para instalações <69kV</li>
+                <li>THD-I (Distorção Harmônica Total de Corrente) — varia por ponto de acoplamento</li>
+                <li>Corrente de neutro — deve ser menor que a corrente de fase</li>
+                <li>Espectro harmônico — quais ordens estão dominando</li>
+                <li>Fator K do transformador — indica quanto o transformador aguenta as harmônicas</li>
+            </ul>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Parâmetro</th><th>Normal</th><th>Atenção</th><th>Crítico</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>THD-V</strong></td><td><span class="ok">&#60; 5%</span></td><td><span class="warn">5–8%</span></td><td><span class="bad">> 8%</span></td></tr>
+                        <tr><td><strong>THD-I</strong></td><td><span class="ok">&#60; 15%</span></td><td><span class="warn">15–30%</span></td><td><span class="bad">> 30%</span></td></tr>
+                        <tr><td><strong>I_neutro / I_fase</strong></td><td><span class="ok">&#60; 0,8</span></td><td><span class="warn">0,8–1,2</span></td><td><span class="bad">> 1,2</span></td></tr>
+                        <tr><td><strong>Fator de Potência</strong></td><td><span class="ok">> 0,92</span></td><td><span class="warn">0,80–0,92</span></td><td><span class="bad">&#60; 0,80</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>As soluções — do mais simples ao mais robusto</h2>
+            <h3>Filtros passivos de harmônicas</h3>
+            <p>Circuitos LC sintonizados para absorver harmônicas específicas (geralmente 5ª e 7ª). Solução de baixo custo para cargas com perfil harmônico previsível. Desvantagem: perdem eficiência se o perfil de carga mudar.</p>
+            <h3>Filtros ativos de harmônicas (FAH)</h3>
+            <p>Injetam correntes de compensação em oposição de fase, cancelando as harmônicas em tempo real. Eficiência acima de 97% para qualquer perfil de carga. Custo mais alto, mas tecnologia adequada para data centers e ambientes críticos.</p>
+            <h3>Transformadores K-rated</h3>
+            <p>Projetados especificamente para operar com cargas não-lineares. O fator K indica a capacidade de suportar correntes harmônicas — um transformador K-13 aguenta 13 vezes mais perdas harmônicas que um convencional. Para data centers, o mínimo recomendado é K-13.</p>
+            <h3>Superdimensionamento do neutro</h3>
+            <p>Na reforma ou projeto novo: usar neutro com bitola 1,5 a 2x a dos condutores de fase em instalações com alta concentração de cargas não-lineares. Custo baixo no projeto, economia enorme em problemas futuros.</p>
+            <div class="callout red">
+                <div class="callout-label red">// Erro comum de projeto</div>
+                <p>Instalar banco de capacitores para correção de fator de potência sem antes avaliar as harmônicas. Capacitores em ambientes com alta THD entram em ressonância e amplificam as harmônicas em vez de compensá-las. Resultado: explosão do banco de capacitores.</p>
+            </div>
+
+            <h2>Por que data centers são os mais vulneráveis</h2>
+            <p>A concentração de cargas não-lineares em data centers é extremamente alta: servidores blade com múltiplas fontes chaveadas, UPS de dupla conversão, PDUs com retificadores, sistemas de refrigeração com inversores de frequência. Um rack de servidores moderno pode gerar THD-I acima de 50%.</p>
+            <p>A ironia é que os profissionais de TI monitoram temperatura, tráfego de rede e disponibilidade de serviço — mas raramente monitoram a qualidade da energia que alimenta tudo isso. O problema existe antes do servidor ligar.</p>
+
+            <div class="cta-inline">
+                <p>Suspeita de harmônicas na sua instalação? A Bonvolts faz diagnóstico de qualidade de energia e dimensiona a solução correta — sem vender produto desnecessário.</p>
+                <a href="https://wa.me/5562999050403" class="btn btn-p">Solicitar Diagnóstico →</a>
+            </div>
+
+            <div class="post-tags">
+                <a href="blog.html" class="post-tag">Harmônicas</a>
+                <a href="blog.html" class="post-tag">Data Center</a>
+                <a href="blog.html" class="post-tag">Qualidade de Energia</a>
+                <a href="blog.html" class="post-tag">THD</a>
+                <a href="blog.html" class="post-tag">Elétrica Industrial</a>
+                <a href="blog.html" class="post-tag">IEEE 519</a>
+            </div>
+        </article>
+        <aside class="sidebar">
+            <div class="sb">
+                <div class="progress-label">PROGRESSO</div>
+                <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+                <div class="sbt">Neste artigo</div>
+                <ul class="sbl" id="toc"></ul>
+            </div>
+            <div class="sb">
+                <div class="sbt">Precisa de ajuda?</div>
+                <ul class="sbl">
+                    <li><a href="index.html#contato">Solicitar diagnóstico →</a></li>
+                    <li><a href="quadro-de-cargas.html">Quadro de Cargas grátis</a></li>
+                    <li><a href="https://wa.me/5562999050403">WhatsApp direto →</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+    <div class="related">
+        <div class="related-title">Leia também</div>
+        <div class="rg">
+            <a href="clp-rede-corporativa.html" class="rc"><div class="rc-cat">OT SECURITY</div><h4>CLP na rede corporativa: o erro que ninguém assume</h4><p>A maior vulnerabilidade industrial não é zero-day.</p></a>
+            <a href="chuveiro-certo-para-sua-instalacao.html" class="rc"><div class="rc-cat">ELÉTRICA RESIDENCIAL</div><h4>Como saber o chuveiro certo para sua instalação</h4><p>Disjuntor caindo, fio esquentando — o problema quase sempre não é o chuveiro.</p></a>
+            <a href="retorno-solar-goias.html" class="rc"><div class="rc-cat">SOLAR</div><h4>Retorno real de solar em Goiás: os números que o vendedor não mostra</h4><p>Irradiação solar de Goiás é excepcional. Mas o payback real depende de variáveis que a maioria ignora.</p></a>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="flogo">BONVOLTS</div>
+    <ul class="flinks">
+        <li><a href="index.html#servicos">Serviços</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+    <p>&copy; 2026 BONVOLTS — Energia, Automação e Monitoramento.</p>
+</footer>
+<script>
+    document.getElementById('hb').addEventListener('click',()=>document.getElementById('nl').classList.toggle('open'));
+    document.querySelectorAll('#nl a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nl').classList.remove('open')));
+    window.addEventListener('scroll',()=>{
+        const el=document.documentElement;
+        document.getElementById('pf').style.width=(el.scrollTop/(el.scrollHeight-el.clientHeight)*100)+'%';
+    });
+    const toc=document.getElementById('toc');
+    document.querySelectorAll('.post-content h2').forEach((h,i)=>{
+        h.id='sec-'+i;
+        const li=document.createElement('li');
+        const a=document.createElement('a');
+        a.href='#sec-'+i;
+        a.textContent=h.textContent;
+        li.appendChild(a);
+        toc.appendChild(li);
+    });
+</script>
+</body>
+</html>

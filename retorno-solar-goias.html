@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retorno real de solar em Goiás: os números que o vendedor não mostra — BONVOLTS</title>
+    <meta name="description" content="Irradiação solar de Goiás é excepcional. Mas o payback real de um sistema fotovoltaico depende de variáveis que a maioria dos projetos ignora. Números honestos.">
+    <meta name="keywords" content="energia solar Goiás, payback solar Goiás, homologar solar Equatorial GO, sistema fotovoltaico Anápolis, retorno investimento solar, Lei 14300 microgeração, irradiação solar Goiás">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root{--green:#00ffcc;--red:#ff2d55;--amber:#f5a623;--bg:#080808;--bg2:#0f0f0f;--border:#1e1e1e;--text:#a0a8b0;--bright:#d8dde3;--mono:'Share Tech Mono',monospace;--display:'Barlow Condensed',sans-serif;--body:'Barlow',sans-serif;}
+        *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+        body{background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden;line-height:1.6;}
+        body::before{display:none;}
+
+        nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);height:60px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;}
+        .logo{font-family:var(--mono);font-size:1.1rem;color:var(--green);text-decoration:none;letter-spacing:3px;}
+        .nl{display:flex;gap:28px;list-style:none;align-items:center;}
+        .nl a{font-family:var(--mono);font-size:0.73rem;color:var(--text);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;}
+        .nl a:hover{color:var(--green);}
+        .nav-cta{color:var(--green)!important;border:1px solid var(--green);padding:6px 14px!important;}
+        .nav-cta:hover{background:var(--green)!important;color:var(--bg)!important;}
+        .hb{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+        .hb span{display:block;width:22px;height:1.5px;background:var(--green);}
+
+        /* HERO */
+        .post-hero{padding:110px 40px 56px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+        .post-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,204,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,204,0.02) 1px,transparent 1px);background-size:60px 60px;}
+        .phi{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+        .breadcrumb{font-family:var(--mono);font-size:0.68rem;color:var(--text);letter-spacing:2px;margin-bottom:22px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+        .breadcrumb a{color:var(--green);text-decoration:none;}
+        .breadcrumb span{opacity:0.4;}
+        .post-cat{font-family:var(--mono);font-size:0.7rem;color:var(--red);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+        .post-cat::before{content:'●';}
+        .post-title{font-family:var(--display);font-size:clamp(2.2rem,6vw,4.5rem);font-weight:900;color:#fff;text-transform:uppercase;line-height:0.95;letter-spacing:-1px;margin-bottom:22px;}
+        .post-lead{font-size:1.15rem;color:var(--bright);line-height:1.75;max-width:680px;margin-bottom:30px;}
+        .post-meta{display:flex;gap:28px;align-items:center;flex-wrap:wrap;padding-top:22px;border-top:1px solid var(--border);}
+        .meta-item{font-family:var(--mono);font-size:0.67rem;color:#444;letter-spacing:2px;text-transform:uppercase;}
+        .meta-item strong{color:var(--text);}
+
+        /* LAYOUT */
+        .wrap{max-width:1100px;margin:0 auto;padding:0 40px;}
+        .post-layout{display:grid;grid-template-columns:1fr 300px;gap:60px;padding:60px 0 80px;}
+
+        /* CONTEÚDO */
+        .post-content h2{font-family:var(--display);font-size:2rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:-0.3px;margin:52px 0 18px;padding-bottom:14px;border-bottom:1px solid var(--border);line-height:1;}
+        .post-content h3{font-family:var(--display);font-size:1.4rem;font-weight:700;color:var(--bright);text-transform:uppercase;margin:34px 0 12px;}
+        .post-content p{font-size:1.05rem;color:var(--text);line-height:1.85;margin-bottom:20px;}
+        .post-content strong{color:var(--bright);}
+        .post-content em{color:var(--green);font-style:normal;font-family:var(--mono);font-size:0.9em;}
+        .post-content ul,.post-content ol{padding-left:0;margin:18px 0 22px;list-style:none;display:flex;flex-direction:column;gap:10px;}
+        .post-content li{font-size:1.05rem;color:var(--text);line-height:1.7;padding-left:22px;position:relative;}
+        .post-content ul li::before{content:'→';position:absolute;left:0;color:var(--green);font-family:var(--mono);}
+        .post-content ol{counter-reset:item;}
+        .post-content ol li{counter-increment:item;}
+        .post-content ol li::before{content:counter(item,decimal-leading-zero);position:absolute;left:0;color:var(--green);font-family:var(--mono);font-size:0.8rem;top:3px;}
+
+        /* CALLOUTS */
+        .callout{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--green);padding:22px 26px;margin:28px 0;}
+        .callout.red{border-left-color:var(--red);}
+        .callout.amber{border-left-color:var(--amber);}
+        .callout-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+        .callout-label.green{color:var(--green);}
+        .callout-label.red{color:var(--red);}
+        .callout-label.amber{color:var(--amber);}
+        .callout p{margin:0;font-size:1rem;}
+
+        /* TABELA */
+        .table-wrap{overflow-x:auto;margin:28px 0;}
+        table{width:100%;border-collapse:collapse;font-size:0.92rem;}
+        thead tr{background:var(--bg2);border-bottom:1px solid var(--border);}
+        thead th{font-family:var(--mono);font-size:0.67rem;letter-spacing:2px;text-transform:uppercase;color:var(--green);padding:14px 16px;text-align:left;font-weight:400;}
+        tbody tr{border-bottom:1px solid var(--border);transition:background 0.2s;}
+        tbody tr:hover{background:rgba(255,255,255,0.02);}
+        tbody td{padding:14px 16px;color:var(--text);line-height:1.5;}
+        tbody td strong{color:var(--bright);}
+        .ok{color:var(--green)!important;font-family:var(--mono);}
+        .warn{color:var(--amber)!important;font-family:var(--mono);}
+        .bad{color:var(--red)!important;font-family:var(--mono);}
+
+        /* DIVISOR */
+        .divider{border:none;border-top:1px solid var(--border);margin:44px 0;}
+
+        /* CHECKLIST */
+        .checklist{background:var(--bg2);border:1px solid var(--border);padding:30px;margin:28px 0;}
+        .checklist-title{font-family:var(--display);font-size:1.1rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+        .checklist-title::before{content:'☑';color:var(--green);}
+        .checklist ul{margin:0;}
+        .checklist li::before{content:'☐';color:var(--green);}
+
+        /* CTA INLINE */
+        .cta-inline{background:var(--bg2);border:1px solid rgba(0,255,204,0.15);padding:34px 30px;margin:44px 0;display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap;}
+        .cta-inline p{margin:0;font-size:1rem;color:var(--bright);flex:1;line-height:1.5;}
+        .btn{display:inline-block;font-family:var(--mono);font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;padding:12px 22px;transition:all 0.3s;cursor:pointer;border:none;}
+        .btn-p{background:var(--green);color:var(--bg);}
+        .btn-p:hover{background:#fff;}
+        .btn-o{background:transparent;color:var(--green);border:1px solid var(--green);}
+        .btn-o:hover{background:rgba(0,255,204,0.07);}
+
+        /* TAGS */
+        .post-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:44px;padding-top:26px;border-top:1px solid var(--border);}
+        .post-tag{font-family:var(--mono);font-size:0.62rem;letter-spacing:1.5px;text-transform:uppercase;padding:5px 11px;border:1px solid var(--border);color:var(--text);text-decoration:none;transition:all 0.2s;}
+        .post-tag:hover{border-color:var(--green);color:var(--green);}
+
+        /* SIDEBAR */
+        .sidebar{position:sticky;top:80px;align-self:start;display:flex;flex-direction:column;gap:2px;}
+        .sb{background:var(--bg2);border:1px solid var(--border);padding:24px;}
+        .sbt{font-family:var(--mono);font-size:0.67rem;color:var(--green);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+        .sbl{list-style:none;display:flex;flex-direction:column;gap:12px;}
+        .sbl a{font-family:var(--mono);font-size:0.68rem;color:var(--text);text-decoration:none;letter-spacing:1px;transition:color 0.2s;line-height:1.4;}
+        .sbl a:hover{color:var(--green);}
+        .progress-bar{height:2px;background:var(--border);margin-bottom:16px;overflow:hidden;}
+        .progress-fill{height:100%;background:var(--green);width:0%;transition:width 0.1s;}
+        .progress-label{font-family:var(--mono);font-size:0.62rem;color:#333;letter-spacing:2px;margin-bottom:8px;}
+
+        /* RELATED */
+        .related{padding:56px 0;border-top:1px solid var(--border);}
+        .related-title{font-family:var(--display);font-size:1.8rem;font-weight:700;color:#fff;text-transform:uppercase;margin-bottom:24px;}
+        .rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;}
+        .rc{background:var(--bg2);border:1px solid var(--border);padding:26px;text-decoration:none;color:inherit;transition:border-color 0.3s;display:block;}
+        .rc:hover{border-color:rgba(0,255,204,0.2);}
+        .rc-cat{font-family:var(--mono);font-size:0.63rem;color:var(--green);letter-spacing:2px;margin-bottom:10px;}
+        .rc h4{font-family:var(--display);font-size:1.2rem;font-weight:700;color:#fff;text-transform:uppercase;line-height:1.1;margin-bottom:8px;}
+        .rc p{font-size:0.85rem;color:var(--text);line-height:1.6;}
+
+        footer{padding:36px 40px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+        .flogo{font-family:var(--mono);font-size:1rem;color:var(--green);letter-spacing:3px;}
+        .flinks{display:flex;gap:22px;list-style:none;}
+        .flinks a{font-family:var(--mono);font-size:0.67rem;color:#333;text-decoration:none;letter-spacing:1.5px;transition:color 0.2s;}
+        .flinks a:hover{color:var(--green);}
+        footer p{font-family:var(--mono);font-size:0.65rem;color:#252525;letter-spacing:1px;}
+
+        @media(max-width:768px){
+            nav{padding:0 20px;}.nl{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--border);padding:24px 20px;gap:20px;}
+            .nl.open{display:flex;}.hb{display:flex;}
+            .post-hero{padding:100px 20px 48px;}.wrap{padding:0 20px;}
+            .post-layout{grid-template-columns:1fr;}.sidebar{position:static;}
+            .cta-inline{flex-direction:column;align-items:flex-start;}
+            footer{padding:28px 20px;flex-direction:column;align-items:flex-start;}
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="index.html" class="logo">BON<span style="color:var(--green)">VOLTS</span></a>
+    <ul class="nl" id="nl">
+        <li><a href="index.html#servicos">Serviços</a></li>
+        <li><a href="index.html#segmentos">Segmentos</a></li>
+        <li><a href="blog.html">Intel // Blog</a></li>
+        <li><a href="index.html#contato" class="nav-cta">Consultoria</a></li>
+    </ul>
+    <button class="hb" id="hb" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="post-hero">
+    <div class="phi">
+        <div class="breadcrumb"><a href="index.html">Bonvolts</a><span>/</span><a href="blog.html">Intel // Blog</a><span>/</span><span>Retorno real do solar em Goiás</span></div>
+        <div class="post-cat">Energia Solar</div>
+        <h1 class="post-title">Retorno real de solar<br>em Goiás: os números<br>que o vendedor não mostra</h1>
+        <p class="post-lead">Irradiação solar de Goiás é uma das melhores do mundo. Mas o payback real depende de variáveis que a maioria dos projetos ignora deliberadamente. Aqui estão os números completos — incluindo o que não aparece na proposta.</p>
+        <div class="post-meta">
+            <div class="meta-item">DATA <strong>DEZ 2025</strong></div>
+            <div class="meta-item">LEITURA <strong>8 MIN</strong></div>
+            <div class="meta-item">POR <strong>BONVOLTS</strong></div>
+            <div class="meta-item">CATEGORIA <strong>ENERGIA SOLAR</strong></div>
+        </div>
+    </div>
+</div>
+<div class="wrap">
+    <div class="post-layout">
+        <article class="post-content">
+
+            <h2>Por que Goiás tem uma das melhores irradiações do Brasil</h2>
+            <p>Goiás está no coração do Cerrado brasileiro — uma das regiões com maior incidência solar do planeta. A irradiação média global horizontal em Goiás varia entre 5,2 e 6,0 kWh/m²/dia dependendo da cidade, com Anápolis e Goiânia na faixa de 5,4 a 5,7 kWh/m²/dia. Para efeito de comparação, Alemanha — líder mundial em instalação solar por décadas — tem média de 2,8 a 3,5 kWh/m²/dia.</p>
+            <p>Em teoria, o retorno sobre investimento em solar em Goiás deveria ser excelente. Na prática, depende de variáveis que a maioria dos vendedores ignora ou omite deliberadamente na proposta.</p>
+            <div class="callout">
+                <div class="callout-label green">// Como funciona o cálculo base</div>
+                <p>Um sistema de 5kWp em Goiás, com Performance Ratio (PR) de 75%, gera aproximadamente <strong>1.500 kWh por kWp instalado por ano</strong>. O sistema completo gera ~7.500 kWh/ano. Com tarifa média de R$0,80/kWh, a economia anual teórica é de R$6.000.</p>
+            </div>
+
+            <h2>O que o vendedor calcula — e o que ele omite</h2>
+            <p>O vendedor pega sua conta de luz, divide pelo consumo médio mensal, calcula quantos kWp você precisa para "zerar a conta" e apresenta o payback como se fosse uma equação simples. Não é.</p>
+            <h3>1. A troca do inversor</h3>
+            <p>O inversor é o coração do sistema fotovoltaico — converte a corrente contínua dos painéis em corrente alternada para uso. Sua vida útil é de <strong>10 a 15 anos</strong>. Os painéis duram 25 a 30 anos. Isso significa que, no meio da vida útil do sistema, você vai trocar o inversor. Custo: R$2.000 a R$5.000 dependendo da potência. Esse valor raramente aparece na proposta do vendedor.</p>
+            <h3>2. A degradação dos painéis</h3>
+            <p>Painéis fotovoltaicos degradam com o tempo. A taxa típica é de <strong>0,5% a 0,7% ao ano</strong>. Um painel que gera 400W hoje vai gerar ~350W em 20 anos. As propostas de vendedor sempre usam a capacidade nominal atual para calcular o retorno ao longo de toda a vida útil — o que superestima a geração nos anos seguintes.</p>
+            <h3>3. Manutenção e limpeza</h3>
+            <p>Painéis sujos geram menos energia. Em Anápolis e região, a poeira do Cerrado na época seca pode reduzir a geração em 15 a 25% sem limpeza. A limpeza periódica (2 a 4 vezes por ano em telhados inclinados) custa R$300 a R$600 por sessão dependendo do sistema. Não aparece na proposta.</p>
+            <h3>4. A tarifa de disponibilidade (fio B)</h3>
+            <p>Mesmo gerando toda a sua energia pelo sol, você nunca vai ter conta de luz zero. A Equatorial GO cobra uma tarifa mínima de disponibilidade — o custo de estar conectado à rede. Para ligação monofásica é de 30 kWh/mês; bifásica 50 kWh/mês; trifásica 100 kWh/mês. Esse valor é cobrado independente da sua geração.</p>
+            <h3>5. COSIP e outros encargos</h3>
+            <p>A Lei 14.300/2022 (Marco Legal da Microgeração Distribuída) estabeleceu que sistemas instalados após 2023 podem pagar encargos sobre a energia compensada na rede. A implementação varia por concessionária e por enquadramento do sistema. Consulte as regras atuais da Equatorial GO antes de fechar contrato.</p>
+
+            <h2>O payback real — números honestos</h2>
+            <p>Considerando os custos que o vendedor omite, o payback real de um sistema residencial de 5kWp em Goiás em 2024:</p>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Item</th><th>Valor</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Investimento inicial (5kWp instalado)</strong></td><td>R$18.000 – R$22.000</td></tr>
+                        <tr><td>Economia anual bruta (7.500 kWh × R$0,80)</td><td>R$6.000/ano</td></tr>
+                        <tr><td>Troca de inversor (diluída 25 anos)</td><td>– R$160/ano</td></tr>
+                        <tr><td>Manutenção/limpeza</td><td>– R$600/ano</td></tr>
+                        <tr><td>Degradação média (0,6%/ano)</td><td>– R$36/ano no 1º ano</td></tr>
+                        <tr><td><strong>Economia anual líquida (1º ano)</strong></td><td><strong>~R$5.200/ano</strong></td></tr>
+                        <tr><td><strong>Payback real (R$20.000)</strong></td><td><span class="ok"><strong>~4,5 anos</strong></span></td></tr>
+                        <tr><td><strong>Retorno em 25 anos (após payback)</strong></td><td><span class="ok"><strong>R$80.000 – R$120.000</strong></span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="callout amber">
+                <div class="callout-label amber">// Importante</div>
+                <p>Payback de 4 a 6 anos ainda é excelente — equivale a um investimento com retorno de 15 a 20% ao ano, muito acima da renda fixa. O problema não é solar ser ruim. O problema é a proposta desonesta que promete 2 anos de payback e cria frustração.</p>
+            </div>
+
+            <h2>Como homologar solar na Equatorial GO em 2026</h2>
+            <p>O processo de homologação de sistema de geração distribuída na Equatorial GO passou por mudanças com a Lei 14.300/2022. O fluxo atual é:</p>
+            <ol>
+                <li><strong>Solicitação de acesso:</strong> protocolo no sistema da Equatorial com projeto elétrico assinado por responsável técnico habilitado (engenheiro ou técnico com ART/RRT)</li>
+                <li><strong>Análise da concessionária:</strong> prazo regulatório de até 30 dias para sistemas até 75kW</li>
+                <li><strong>Vistoria:</strong> inspeção presencial do sistema instalado pela equipe da Equatorial</li>
+                <li><strong>Troca do medidor:</strong> instalação do medidor bidirecional pela concessionária</li>
+                <li><strong>Início da compensação:</strong> sistema passa a compensar créditos de energia na conta</li>
+            </ol>
+            <p>O prazo total varia de 30 a 90 dias dependendo da demanda e da qualidade do projeto entregue. Projetos com erros de documentação voltam para correção e reiniciam o prazo.</p>
+
+            <div class="cta-inline">
+                <p>A Bonvolts dimensiona, instala e homologa sistemas fotovoltaicos na Equatorial GO — com projeto assinado, ART e documentação completa.</p>
+                <a href="https://wa.me/5562999050403" class="btn btn-p">Solicitar Projeto Solar →</a>
+            </div>
+
+            <div class="post-tags">
+                <a href="blog.html" class="post-tag">Energia Solar</a>
+                <a href="blog.html" class="post-tag">Goiás</a>
+                <a href="blog.html" class="post-tag">Fotovoltaico</a>
+                <a href="blog.html" class="post-tag">Equatorial GO</a>
+                <a href="blog.html" class="post-tag">Payback Solar</a>
+                <a href="blog.html" class="post-tag">Homologação</a>
+            </div>
+        </article>
+        <aside class="sidebar">
+            <div class="sb">
+                <div class="progress-label">PROGRESSO</div>
+                <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+                <div class="sbt">Neste artigo</div>
+                <ul class="sbl" id="toc"></ul>
+            </div>
+            <div class="sb">
+                <div class="sbt">Precisa de ajuda?</div>
+                <ul class="sbl">
+                    <li><a href="index.html#contato">Projeto Solar →</a></li>
+                    <li><a href="https://wa.me/5562999050403">WhatsApp direto →</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+    <div class="related">
+        <div class="related-title">Leia também</div>
+        <div class="rg">
+            <a href="nr10-pratica.html" class="rc"><div class="rc-cat">NORMAS</div><h4>NR-10 na prática: o que o fiscal vai olhar primeiro</h4><p>Os 7 pontos que mais geram autuação em fiscalizações.</p></a>
+            <a href="harmonicas-data-centers.html" class="rc"><div class="rc-cat">ELÉTRICA INDUSTRIAL</div><h4>Harmônicas e Data Centers: o que a TI ignora</h4><p>Rede elétrica mal dimensionada destrói servidores silenciosamente.</p></a>
+            <a href="clp-rede-corporativa.html" class="rc"><div class="rc-cat">OT SECURITY</div><h4>CLP na rede corporativa: o erro que ninguém assume</h4><p>A maior vulnerabilidade industrial não é zero-day.</p></a>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="flogo">BONVOLTS</div>
+    <ul class="flinks">
+        <li><a href="index.html#servicos">Serviços</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+    <p>&copy; 2026 BONVOLTS — Energia, Automação e Monitoramento.</p>
+</footer>
+<script>
+    document.getElementById('hb').addEventListener('click',()=>document.getElementById('nl').classList.toggle('open'));
+    document.querySelectorAll('#nl a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nl').classList.remove('open')));
+    window.addEventListener('scroll',()=>{
+        const el=document.documentElement;
+        document.getElementById('pf').style.width=(el.scrollTop/(el.scrollHeight-el.clientHeight)*100)+'%';
+    });
+    const toc=document.getElementById('toc');
+    document.querySelectorAll('.post-content h2').forEach((h,i)=>{
+        h.id='sec-'+i;
+        const li=document.createElement('li');
+        const a=document.createElement('a');
+        a.href='#sec-'+i;
+        a.textContent=h.textContent;
+        li.appendChild(a);
+        toc.appendChild(li);
+    });
+</script>
+</body>
+</html>

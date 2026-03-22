@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLP na rede corporativa: o erro que ninguém assume — BONVOLTS</title>
+    <meta name="description" content="A maior vulnerabilidade industrial não é zero-day — é o CLP conectado direto na rede de escritório. Entenda o risco real e como corrigir com baixo custo.">
+    <meta name="keywords" content="segurança OT industrial, CLP vulnerável, SCADA segurança, rede industrial segura, OT security Brasil, Modbus segurança, ataque industrial, proteção CLP IHM">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root{--green:#00ffcc;--red:#ff2d55;--amber:#f5a623;--bg:#080808;--bg2:#0f0f0f;--border:#1e1e1e;--text:#a0a8b0;--bright:#d8dde3;--mono:'Share Tech Mono',monospace;--display:'Barlow Condensed',sans-serif;--body:'Barlow',sans-serif;}
+        *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+        body{background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden;line-height:1.6;}
+        body::before{display:none;}
+
+        nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);height:60px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;}
+        .logo{font-family:var(--mono);font-size:1.1rem;color:var(--green);text-decoration:none;letter-spacing:3px;}
+        .nl{display:flex;gap:28px;list-style:none;align-items:center;}
+        .nl a{font-family:var(--mono);font-size:0.73rem;color:var(--text);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;}
+        .nl a:hover{color:var(--green);}
+        .nav-cta{color:var(--green)!important;border:1px solid var(--green);padding:6px 14px!important;}
+        .nav-cta:hover{background:var(--green)!important;color:var(--bg)!important;}
+        .hb{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+        .hb span{display:block;width:22px;height:1.5px;background:var(--green);}
+
+        /* HERO */
+        .post-hero{padding:110px 40px 56px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+        .post-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,204,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,204,0.02) 1px,transparent 1px);background-size:60px 60px;}
+        .phi{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+        .breadcrumb{font-family:var(--mono);font-size:0.68rem;color:var(--text);letter-spacing:2px;margin-bottom:22px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+        .breadcrumb a{color:var(--green);text-decoration:none;}
+        .breadcrumb span{opacity:0.4;}
+        .post-cat{font-family:var(--mono);font-size:0.7rem;color:var(--red);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+        .post-cat::before{content:'●';}
+        .post-title{font-family:var(--display);font-size:clamp(2.2rem,6vw,4.5rem);font-weight:900;color:#fff;text-transform:uppercase;line-height:0.95;letter-spacing:-1px;margin-bottom:22px;}
+        .post-lead{font-size:1.15rem;color:var(--bright);line-height:1.75;max-width:680px;margin-bottom:30px;}
+        .post-meta{display:flex;gap:28px;align-items:center;flex-wrap:wrap;padding-top:22px;border-top:1px solid var(--border);}
+        .meta-item{font-family:var(--mono);font-size:0.67rem;color:#444;letter-spacing:2px;text-transform:uppercase;}
+        .meta-item strong{color:var(--text);}
+
+        /* LAYOUT */
+        .wrap{max-width:1100px;margin:0 auto;padding:0 40px;}
+        .post-layout{display:grid;grid-template-columns:1fr 300px;gap:60px;padding:60px 0 80px;}
+
+        /* CONTEÚDO */
+        .post-content h2{font-family:var(--display);font-size:2rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:-0.3px;margin:52px 0 18px;padding-bottom:14px;border-bottom:1px solid var(--border);line-height:1;}
+        .post-content h3{font-family:var(--display);font-size:1.4rem;font-weight:700;color:var(--bright);text-transform:uppercase;margin:34px 0 12px;}
+        .post-content p{font-size:1.05rem;color:var(--text);line-height:1.85;margin-bottom:20px;}
+        .post-content strong{color:var(--bright);}
+        .post-content em{color:var(--green);font-style:normal;font-family:var(--mono);font-size:0.9em;}
+        .post-content ul,.post-content ol{padding-left:0;margin:18px 0 22px;list-style:none;display:flex;flex-direction:column;gap:10px;}
+        .post-content li{font-size:1.05rem;color:var(--text);line-height:1.7;padding-left:22px;position:relative;}
+        .post-content ul li::before{content:'→';position:absolute;left:0;color:var(--green);font-family:var(--mono);}
+        .post-content ol{counter-reset:item;}
+        .post-content ol li{counter-increment:item;}
+        .post-content ol li::before{content:counter(item,decimal-leading-zero);position:absolute;left:0;color:var(--green);font-family:var(--mono);font-size:0.8rem;top:3px;}
+
+        /* CALLOUTS */
+        .callout{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--green);padding:22px 26px;margin:28px 0;}
+        .callout.red{border-left-color:var(--red);}
+        .callout.amber{border-left-color:var(--amber);}
+        .callout-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+        .callout-label.green{color:var(--green);}
+        .callout-label.red{color:var(--red);}
+        .callout-label.amber{color:var(--amber);}
+        .callout p{margin:0;font-size:1rem;}
+
+        /* TABELA */
+        .table-wrap{overflow-x:auto;margin:28px 0;}
+        table{width:100%;border-collapse:collapse;font-size:0.92rem;}
+        thead tr{background:var(--bg2);border-bottom:1px solid var(--border);}
+        thead th{font-family:var(--mono);font-size:0.67rem;letter-spacing:2px;text-transform:uppercase;color:var(--green);padding:14px 16px;text-align:left;font-weight:400;}
+        tbody tr{border-bottom:1px solid var(--border);transition:background 0.2s;}
+        tbody tr:hover{background:rgba(255,255,255,0.02);}
+        tbody td{padding:14px 16px;color:var(--text);line-height:1.5;}
+        tbody td strong{color:var(--bright);}
+        .ok{color:var(--green)!important;font-family:var(--mono);}
+        .warn{color:var(--amber)!important;font-family:var(--mono);}
+        .bad{color:var(--red)!important;font-family:var(--mono);}
+
+        /* DIVISOR */
+        .divider{border:none;border-top:1px solid var(--border);margin:44px 0;}
+
+        /* CHECKLIST */
+        .checklist{background:var(--bg2);border:1px solid var(--border);padding:30px;margin:28px 0;}
+        .checklist-title{font-family:var(--display);font-size:1.1rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+        .checklist-title::before{content:'☑';color:var(--green);}
+        .checklist ul{margin:0;}
+        .checklist li::before{content:'☐';color:var(--green);}
+
+        /* CTA INLINE */
+        .cta-inline{background:var(--bg2);border:1px solid rgba(0,255,204,0.15);padding:34px 30px;margin:44px 0;display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap;}
+        .cta-inline p{margin:0;font-size:1rem;color:var(--bright);flex:1;line-height:1.5;}
+        .btn{display:inline-block;font-family:var(--mono);font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;padding:12px 22px;transition:all 0.3s;cursor:pointer;border:none;}
+        .btn-p{background:var(--green);color:var(--bg);}
+        .btn-p:hover{background:#fff;}
+        .btn-o{background:transparent;color:var(--green);border:1px solid var(--green);}
+        .btn-o:hover{background:rgba(0,255,204,0.07);}
+
+        /* TAGS */
+        .post-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:44px;padding-top:26px;border-top:1px solid var(--border);}
+        .post-tag{font-family:var(--mono);font-size:0.62rem;letter-spacing:1.5px;text-transform:uppercase;padding:5px 11px;border:1px solid var(--border);color:var(--text);text-decoration:none;transition:all 0.2s;}
+        .post-tag:hover{border-color:var(--green);color:var(--green);}
+
+        /* SIDEBAR */
+        .sidebar{position:sticky;top:80px;align-self:start;display:flex;flex-direction:column;gap:2px;}
+        .sb{background:var(--bg2);border:1px solid var(--border);padding:24px;}
+        .sbt{font-family:var(--mono);font-size:0.67rem;color:var(--green);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+        .sbl{list-style:none;display:flex;flex-direction:column;gap:12px;}
+        .sbl a{font-family:var(--mono);font-size:0.68rem;color:var(--text);text-decoration:none;letter-spacing:1px;transition:color 0.2s;line-height:1.4;}
+        .sbl a:hover{color:var(--green);}
+        .progress-bar{height:2px;background:var(--border);margin-bottom:16px;overflow:hidden;}
+        .progress-fill{height:100%;background:var(--green);width:0%;transition:width 0.1s;}
+        .progress-label{font-family:var(--mono);font-size:0.62rem;color:#333;letter-spacing:2px;margin-bottom:8px;}
+
+        /* RELATED */
+        .related{padding:56px 0;border-top:1px solid var(--border);}
+        .related-title{font-family:var(--display);font-size:1.8rem;font-weight:700;color:#fff;text-transform:uppercase;margin-bottom:24px;}
+        .rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;}
+        .rc{background:var(--bg2);border:1px solid var(--border);padding:26px;text-decoration:none;color:inherit;transition:border-color 0.3s;display:block;}
+        .rc:hover{border-color:rgba(0,255,204,0.2);}
+        .rc-cat{font-family:var(--mono);font-size:0.63rem;color:var(--green);letter-spacing:2px;margin-bottom:10px;}
+        .rc h4{font-family:var(--display);font-size:1.2rem;font-weight:700;color:#fff;text-transform:uppercase;line-height:1.1;margin-bottom:8px;}
+        .rc p{font-size:0.85rem;color:var(--text);line-height:1.6;}
+
+        footer{padding:36px 40px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+        .flogo{font-family:var(--mono);font-size:1rem;color:var(--green);letter-spacing:3px;}
+        .flinks{display:flex;gap:22px;list-style:none;}
+        .flinks a{font-family:var(--mono);font-size:0.67rem;color:#333;text-decoration:none;letter-spacing:1.5px;transition:color 0.2s;}
+        .flinks a:hover{color:var(--green);}
+        footer p{font-family:var(--mono);font-size:0.65rem;color:#252525;letter-spacing:1px;}
+
+        @media(max-width:768px){
+            nav{padding:0 20px;}.nl{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--border);padding:24px 20px;gap:20px;}
+            .nl.open{display:flex;}.hb{display:flex;}
+            .post-hero{padding:100px 20px 48px;}.wrap{padding:0 20px;}
+            .post-layout{grid-template-columns:1fr;}.sidebar{position:static;}
+            .cta-inline{flex-direction:column;align-items:flex-start;}
+            footer{padding:28px 20px;flex-direction:column;align-items:flex-start;}
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="index.html" class="logo">BON<span style="color:var(--green)">VOLTS</span></a>
+    <ul class="nl" id="nl">
+        <li><a href="index.html#servicos">Serviços</a></li>
+        <li><a href="index.html#segmentos">Segmentos</a></li>
+        <li><a href="blog.html">Intel // Blog</a></li>
+        <li><a href="index.html#contato" class="nav-cta">Consultoria</a></li>
+    </ul>
+    <button class="hb" id="hb" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="post-hero">
+    <div class="phi">
+        <div class="breadcrumb"><a href="index.html">Bonvolts</a><span>/</span><a href="blog.html">Intel // Blog</a><span>/</span><span>CLP na rede corporativa</span></div>
+        <div class="post-cat">OT Security</div>
+        <h1 class="post-title">CLP na rede corporativa:<br>o erro que ninguém assume</h1>
+        <p class="post-lead">A maior vulnerabilidade de uma planta industrial raramente é um exploit sofisticado. É o CLP conectado direto na rede de escritório porque "sempre foi assim". Casos reais, riscos concretos e como corrigir sem parar a produção.</p>
+        <div class="post-meta">
+            <div class="meta-item">DATA <strong>JAN 2026</strong></div>
+            <div class="meta-item">LEITURA <strong>8 MIN</strong></div>
+            <div class="meta-item">POR <strong>BONVOLTS</strong></div>
+            <div class="meta-item">CATEGORIA <strong>OT SECURITY</strong></div>
+        </div>
+    </div>
+</div>
+<div class="wrap">
+    <div class="post-layout">
+        <article class="post-content">
+
+            <h2>O cenário mais comum nas indústrias brasileiras</h2>
+            <p>O técnico de automação instalou o CLP, comissionou o sistema, e precisava acessar remotamente para manutenção. A solução mais rápida? Plugou o CLP direto na rede de escritório. Afinal, já tinha internet. Assim ficou. Para sempre.</p>
+            <p>Esse cenário se repete em fábricas, frigoríficos, agroindustriais e até em data centers por todo o Brasil. O CLP está na mesma rede que o computador do RH, o notebook do gerente e o celular conectado ao Wi-Fi corporativo. Qualquer dispositivo comprometido nessa rede tem acesso direto ao sistema de controle industrial.</p>
+            <div class="callout red">
+                <div class="callout-label red">// Dado real</div>
+                <p>O mecanismo de busca Shodan indexa dispositivos conectados à internet. Em 2024, mais de 50.000 dispositivos com protocolo Modbus TCP estavam expostos diretamente na internet, sem autenticação. Parte deles no Brasil.</p>
+            </div>
+
+            <h2>Por que CLPs são alvos fáceis</h2>
+            <p>Protocolos industriais foram projetados para eficiência e velocidade — não para segurança. Essa é a raiz do problema.</p>
+            <h3>Modbus TCP — sem autenticação nenhuma</h3>
+            <p>O Modbus foi criado em 1979 para comunicação serial em ambientes fechados. Sua versão TCP/IP manteve a mesma filosofia: qualquer dispositivo na rede pode ler e <strong>escrever</strong> registros no CLP sem precisar se autenticar. Isso significa que qualquer máquina comprometida na rede pode enviar comandos diretamente para o equipamento de controle.</p>
+            <h3>EtherNet/IP e PROFINET — melhor, mas longe de seguro</h3>
+            <p>Protocolos mais modernos como EtherNet/IP (porta 44818) e PROFINET têm mais recursos, mas também carecem de criptografia nativa na maioria das implementações. A autenticação, quando existe, é frequentemente desabilitada para "facilitar a manutenção".</p>
+            <h3>Firmware desatualizado</h3>
+            <p>CLPs industriais têm ciclo de vida de 15 a 25 anos. Vulnerabilidades descobertas nos primeiros anos raramente recebem patch — o fabricante descontinuou o suporte, o técnico não sabe atualizar, ou a atualização exige parada de produção que "não pode ser agendada agora". O equipamento fica vulnerável por décadas.</p>
+
+            <h2>O que acontece quando exploram um CLP</h2>
+            <p>Não é teoria. Os casos mais impactantes da história da segurança cibernética envolvem sistemas industriais:</p>
+            <h3>Stuxnet (2010)</h3>
+            <p>O primeiro cyberweapon direcionado a infraestrutura física. Atacou especificamente CLPs Siemens S7-315 que controlavam centrífugas de enriquecimento de urânio no Irã. O malware alterou sutilmente a velocidade das centrífugas enquanto reportava operação normal para os operadores. Destruiu 1.000 centrífugas sem disparar um único alarme. Levou anos para ser descoberto.</p>
+            <h3>Colonial Pipeline (2021)</h3>
+            <p>Ransomware comprometeu a rede corporativa de TI da maior operadora de oleodutos dos EUA. Por precaução, a empresa desligou manualmente os sistemas OT. Resultado: falta de combustível em 17 estados, filas em postos, preço do petróleo subindo. Seis dias de paralisação. Resgate de US$ 4,4 milhões pago.</p>
+            <h3>Estação de tratamento de água na Flórida (2021)</h3>
+            <p>Um atacante acessou remotamente o sistema SCADA de uma estação de tratamento de água em Oldsmar, Flórida, e aumentou a concentração de hidróxido de sódio de 111 ppm para 11.100 ppm — 100 vezes acima do limite seguro. Um operador viu o cursor se mover na tela e reverteu a tempo. O acesso era via TeamViewer sem autenticação de dois fatores.</p>
+            <div class="callout amber">
+                <div class="callout-label amber">// Reflexão</div>
+                <p>Os três casos têm um denominador comum: a rede de controle não estava isolada da rede corporativa ou da internet. A segurança física da planta era rigorosa. A segurança digital era inexistente.</p>
+            </div>
+
+            <h2>Como identificar se sua planta está vulnerável</h2>
+            <p>Você não precisa de um pentester para fazer um diagnóstico inicial. Responda estas perguntas:</p>
+            <ul>
+                <li>Seus CLPs e IHMs estão na mesma rede que computadores de escritório?</li>
+                <li>Existe acesso remoto ao sistema SCADA via VPN? Essa VPN exige autenticação de dois fatores?</li>
+                <li>O firmware dos seus CLPs foi atualizado alguma vez desde a instalação?</li>
+                <li>Existe algum firewall ou regra de filtragem entre a rede OT e a rede corporativa?</li>
+                <li>Alguém na empresa sabe listar quais dispositivos estão conectados à rede de controle?</li>
+            </ul>
+            <p>Se a resposta para qualquer uma dessas perguntas te deixou desconfortável, o risco é real e mensurável.</p>
+
+            <h2>As três correções de maior impacto com menor custo</h2>
+            <h3>1. Segmentação de rede — VLANs</h3>
+            <p>Criar uma VLAN dedicada para a rede OT, separada da rede corporativa, é a medida de maior custo-benefício. Não exige substituição de hardware na maioria dos casos — apenas configuração nos switches gerenciáveis. Custo: zero em equipamento novo, horas de configuração e teste.</p>
+            <h3>2. Firewall industrial no perímetro IT/OT</h3>
+            <p>Um firewall entre as redes IT e OT define exatamente quais comunicações são permitidas entre os ambientes. Apenas o necessário passa — o resto é bloqueado por padrão. Ferramentas como pfSense/OPNsense (open source) ou firewalls industriais dedicados (Fortinet, Cisco, Check Point) cumprem esse papel.</p>
+            <h3>3. Desabilitar protocolos e portas não utilizados</h3>
+            <p>Muitos CLPs têm serviços habilitados por padrão que nunca são usados: servidor web interno, FTP, Telnet. Cada serviço ativo é uma superfície de ataque. Mapear e desabilitar o que não é necessário leva poucas horas e elimina vetores inteiros de ataque.</p>
+
+            <div class="cta-inline">
+                <p>A Bonvolts faz diagnóstico completo de exposição OT — mapeamento de ativos, análise de vulnerabilidades e plano de correção com documentação técnica.</p>
+                <a href="https://wa.me/5562999050403" class="btn btn-p">Falar com a Bonvolts →</a>
+            </div>
+
+            <div class="post-tags">
+                <a href="blog.html" class="post-tag">OT Security</a>
+                <a href="blog.html" class="post-tag">CLP</a>
+                <a href="blog.html" class="post-tag">SCADA</a>
+                <a href="blog.html" class="post-tag">Segurança Industrial</a>
+                <a href="blog.html" class="post-tag">Modbus</a>
+                <a href="blog.html" class="post-tag">Automação</a>
+            </div>
+        </article>
+        <aside class="sidebar">
+            <div class="sb">
+                <div class="progress-label">PROGRESSO</div>
+                <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+                <div class="sbt">Neste artigo</div>
+                <ul class="sbl" id="toc"></ul>
+            </div>
+            <div class="sb">
+                <div class="sbt">Precisa de ajuda?</div>
+                <ul class="sbl">
+                    <li><a href="index.html#contato">Diagnóstico OT →</a></li>
+                    <li><a href="https://wa.me/5562999050403">WhatsApp direto →</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+    <div class="related">
+        <div class="related-title">Leia também</div>
+        <div class="rg">
+            <a href="segmentacao-rede-ot.html" class="rc"><div class="rc-cat">TI/TO</div><h4>Segmentação de rede OT: do papel à execução em 3 etapas</h4><p>Purdue Model na prática, sem budget de multinacional.</p></a>
+            <a href="harmonicas-data-centers.html" class="rc"><div class="rc-cat">ELÉTRICA INDUSTRIAL</div><h4>Harmônicas e Data Centers: o que a TI ignora</h4><p>Rede elétrica mal dimensionada destrói servidores silenciosamente.</p></a>
+            <a href="nr10-pratica.html" class="rc"><div class="rc-cat">NORMAS</div><h4>NR-10 na prática: o que o fiscal vai olhar primeiro</h4><p>Os 7 pontos que mais geram autuação em fiscalizações.</p></a>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="flogo">BONVOLTS</div>
+    <ul class="flinks">
+        <li><a href="index.html#servicos">Serviços</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+    <p>&copy; 2026 BONVOLTS — Energia, Automação e Monitoramento.</p>
+</footer>
+<script>
+    document.getElementById('hb').addEventListener('click',()=>document.getElementById('nl').classList.toggle('open'));
+    document.querySelectorAll('#nl a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nl').classList.remove('open')));
+    window.addEventListener('scroll',()=>{
+        const el=document.documentElement;
+        document.getElementById('pf').style.width=(el.scrollTop/(el.scrollHeight-el.clientHeight)*100)+'%';
+    });
+    const toc=document.getElementById('toc');
+    document.querySelectorAll('.post-content h2').forEach((h,i)=>{
+        h.id='sec-'+i;
+        const li=document.createElement('li');
+        const a=document.createElement('a');
+        a.href='#sec-'+i;
+        a.textContent=h.textContent;
+        li.appendChild(a);
+        toc.appendChild(li);
+    });
+</script>
+</body>
+</html>
