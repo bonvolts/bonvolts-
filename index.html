@@ -49,6 +49,10 @@
         .si{display:flex;align-items:center;gap:9px;white-space:nowrap;font-family:var(--mono);font-size:0.7rem;color:var(--text);letter-spacing:1px;}
         .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green),0 0 16px rgba(0,255,204,0.4);animation:pulse 2s infinite;}
         .dot.r{background:var(--red);box-shadow:0 0 6px var(--red);}
+        .status{overflow:hidden;padding:0!important;}
+        .status-ticker{overflow:hidden;}
+        .status-inner{display:flex;gap:36px;padding:13px 40px;white-space:nowrap;animation:ticker 25s linear infinite;}
+        @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
         .wrap{max-width:1100px;margin:0 auto;padding:0 40px;}
         section{padding:100px 0;border-bottom:1px solid var(--border);}
         .stag{font-family:var(--mono);font-size:0.7rem;color:var(--green);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;}
@@ -154,12 +158,22 @@
 </header>
 
 <div class="status">
-    <div class="si"><span class="dot"></span> SISTEMA OPERACIONAL</div>
-    <div class="si"><span class="dot"></span> RURAL · INDUSTRIAL · COMERCIAL · RESIDENCIAL</div>
-    <div class="si"><span class="dot"></span> QGBT · QDC · CCM</div>
-    <div class="si"><span class="dot"></span> CLP · IHM · SENSORES</div>
-    <div class="si"><span class="dot r"></span> OT SECURITY: DEMANDA CRÍTICA</div>
-    <div class="si"><span class="dot"></span> ANÁPOLIS-GO · NACIONAL</div>
+    <div class="status-ticker">
+        <div class="status-inner">
+            <div class="si"><span class="dot"></span> SISTEMA OPERACIONAL</div>
+            <div class="si"><span class="dot"></span> RURAL · INDUSTRIAL · COMERCIAL · RESIDENCIAL</div>
+            <div class="si"><span class="dot"></span> QGBT · QDC · CCM</div>
+            <div class="si"><span class="dot"></span> CLP · IHM · SENSORES</div>
+            <div class="si"><span class="dot r"></span> OT SECURITY: DEMANDA CRÍTICA</div>
+            <div class="si"><span class="dot"></span> ANÁPOLIS-GO · NACIONAL</div>
+            <div class="si"><span class="dot"></span> SISTEMA OPERACIONAL</div>
+            <div class="si"><span class="dot"></span> RURAL · INDUSTRIAL · COMERCIAL · RESIDENCIAL</div>
+            <div class="si"><span class="dot"></span> QGBT · QDC · CCM</div>
+            <div class="si"><span class="dot"></span> CLP · IHM · SENSORES</div>
+            <div class="si"><span class="dot r"></span> OT SECURITY: DEMANDA CRÍTICA</div>
+            <div class="si"><span class="dot"></span> ANÁPOLIS-GO · NACIONAL</div>
+        </div>
+    </div>
 </div>
 
 <section id="servicos">
