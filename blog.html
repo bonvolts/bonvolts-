@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intel // Blog — BONVOLTS</title>
+    <meta name="description" content="Artigos táticos sobre elétrica industrial, OT security e infraestrutura crítica em Goiás. Sem filtro de marketing.">
+    <link rel="canonical" href="https://www.bonvolts.com.br/blog.html">
+    <meta property="og:url" content="https://www.bonvolts.com.br/blog.html">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root{--green:#00ffcc;--red:#ff2d55;--bg:#080808;--bg2:#0f0f0f;--border:#1e1e1e;--text:#a0a8b0;--bright:#d8dde3;--mono:'Share Tech Mono',monospace;--display:'Barlow Condensed',sans-serif;--body:'Barlow',sans-serif;}
+        *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+        body{background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden;}
+        body::before{display:none;}
+        nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);height:60px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;}
+        .logo{font-family:var(--mono);font-size:1.1rem;color:var(--green);text-decoration:none;letter-spacing:3px;}
+        .nl{display:flex;gap:28px;list-style:none;align-items:center;}
+        .nl a{font-family:var(--mono);font-size:0.73rem;color:var(--text);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;position:relative;}
+        .nl a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--green);transition:width 0.3s;}
+        .nl a:hover,.nl a.active{color:var(--green);}
+        .nl a:hover::after,.nl a.active::after{width:100%;}
+        .nav-cta{color:var(--green)!important;border:1px solid var(--green);padding:6px 14px!important;}
+        .nav-cta::after{display:none!important;}.nav-cta:hover{background:var(--green)!important;color:var(--bg)!important;}
+        .hb{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+        .hb span{display:block;width:22px;height:1.5px;background:var(--green);}
+
+        .blog-hero{padding:120px 40px 60px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+        .blog-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,204,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,204,0.02) 1px,transparent 1px);background-size:60px 60px;}
+        .bhi{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+        .bh-tag{font-family:var(--mono);font-size:0.72rem;color:var(--green);letter-spacing:3px;margin-bottom:18px;}
+        .bh-title{font-family:var(--display);font-size:clamp(3rem,7vw,6rem);font-weight:900;color:#fff;text-transform:uppercase;line-height:0.9;letter-spacing:-2px;margin-bottom:20px;}
+        .bh-title span{color:var(--green);}
+        .bh-sub{font-size:1.05rem;color:var(--text);max-width:500px;line-height:1.75;}
+
+        .filters{padding:22px 40px;border-bottom:1px solid var(--border);background:#0a0a0a;}
+        .fi{max-width:1100px;margin:0 auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+        .fl{font-family:var(--mono);font-size:0.68rem;color:var(--text);letter-spacing:2px;margin-right:4px;}
+        .fb{font-family:var(--mono);font-size:0.68rem;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;transition:all 0.2s;}
+        .fb:hover,.fb.active{border-color:var(--green);color:var(--green);background:rgba(0,255,204,0.05);}
+
+        .container{max-width:1100px;margin:0 auto;padding:0 40px;}
+
+        .featured-post{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);background:#0f0f0f;text-decoration:none;color:inherit;transition:border-color 0.3s;overflow:hidden;margin:60px 0 2px;}
+        .featured-post:hover{border-color:rgba(0,255,204,0.25);}
+        .fv{background:linear-gradient(135deg,#0f1a14 0%,#080808 100%);padding:60px 50px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-right:1px solid var(--border);}
+        .fv::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,204,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,204,0.04) 1px,transparent 1px);background-size:30px 30px;}
+        .fs{font-family:var(--mono);font-size:5rem;color:var(--green);opacity:0.12;position:relative;z-index:1;line-height:1;}
+        .fb2{padding:50px 48px;display:flex;flex-direction:column;justify-content:center;}
+        .fbadge{font-family:var(--mono);font-size:0.65rem;color:var(--red);letter-spacing:3px;margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+        .fbadge::before{content:'●';}
+        .featured-post h2{font-family:var(--display);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;color:#fff;text-transform:uppercase;line-height:1.0;margin-bottom:18px;letter-spacing:-0.5px;}
+        .featured-post p{font-size:0.95rem;color:var(--text);line-height:1.75;margin-bottom:28px;}
+        .fmeta{font-family:var(--mono);font-size:0.67rem;color:#444;letter-spacing:1.5px;display:flex;gap:20px;flex-wrap:wrap;}
+
+        .posts-grid{display:grid;gap:2px;}
+        .pg2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));}
+        .post-card{background:#0f0f0f;border:1px solid var(--border);padding:34px 30px;text-decoration:none;color:inherit;transition:border-color 0.3s,transform 0.3s;display:flex;flex-direction:column;position:relative;overflow:hidden;}
+        .post-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--green);transition:height 0.4s;}
+        .post-card:hover{border-color:rgba(0,255,204,0.2);transform:translateY(-2px);}
+        .post-card:hover::before{height:100%;}
+        .pc-tag{font-family:var(--mono);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;display:inline-flex;align-items:center;gap:7px;}
+        .pc-tag::before{content:'●';}
+        .pc-tag.green{color:var(--green);}.pc-tag.red{color:var(--red);}.pc-tag.yellow{color:#f5c400;}
+        .post-card h3{font-family:var(--display);font-size:1.45rem;font-weight:700;color:#fff;text-transform:uppercase;line-height:1.05;margin-bottom:10px;flex:1;}
+        .post-card p{font-size:0.88rem;color:var(--text);line-height:1.7;margin-bottom:22px;}
+        .pcf{display:flex;justify-content:space-between;align-items:center;margin-top:auto;}
+        .pcm{font-family:var(--mono);font-size:0.62rem;color:#3a3a3a;letter-spacing:1.5px;}
+        .pca{font-family:var(--mono);color:var(--green);opacity:0;transition:opacity 0.3s;}
+        .post-card:hover .pca{opacity:1;}
+
+        /* POST EM BREVE - cinza, sem link */
+        .post-card.em-breve{opacity:0.45;cursor:default;pointer-events:none;}
+        .post-card.em-breve::before{background:var(--border);}
+        .badge-breve{font-family:var(--mono);font-size:0.58rem;letter-spacing:2px;color:#444;border:1px solid #2a2a2a;padding:2px 8px;margin-left:8px;vertical-align:middle;}
+
+        .nl-box{background:#0f0f0f;border:1px solid var(--border);padding:56px;margin:60px 0;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+        .nl-box h3{font-family:var(--display);font-size:2rem;font-weight:700;color:#fff;text-transform:uppercase;line-height:1;margin-bottom:12px;}
+        .nl-box p{font-size:0.9rem;color:var(--text);line-height:1.7;}
+        .nlf{display:flex;}
+        .nli{flex:1;background:#080808;border:1px solid var(--border);border-right:none;padding:13px 18px;font-family:var(--mono);font-size:0.8rem;color:var(--bright);outline:none;transition:border-color 0.3s;}
+        .nli::placeholder{color:#2a2a2a;}.nli:focus{border-color:rgba(0,255,204,0.3);}
+        .nlb{background:var(--green);color:var(--bg);border:none;padding:13px 22px;font-family:var(--mono);font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background 0.3s;white-space:nowrap;}
+        .nlb:hover{background:#fff;}
+        .nln{font-family:var(--mono);font-size:0.62rem;color:#252525;letter-spacing:1px;margin-top:10px;}
+
+        .blog-layout{display:grid;grid-template-columns:1fr 280px;gap:40px;padding:60px 0;}
+        .sb{background:#0f0f0f;border:1px solid var(--border);padding:26px;margin-bottom:2px;}
+        .sbt{font-family:var(--mono);font-size:0.67rem;color:var(--green);letter-spacing:3px;text-transform:uppercase;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+        .sbl{list-style:none;display:flex;flex-direction:column;gap:13px;}
+        .sbl a{font-family:var(--mono);font-size:0.68rem;color:var(--text);text-decoration:none;letter-spacing:1px;transition:color 0.2s;line-height:1.4;}
+        .sbl a:hover{color:var(--green);}
+        .tag-cloud{display:flex;flex-wrap:wrap;gap:8px;}
+        .tag-pill{font-family:var(--mono);font-size:0.62rem;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border:1px solid var(--border);color:var(--text);cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;}
+        .tag-pill:hover,.tag-pill.active{border-color:var(--green);color:var(--green);}
+
+        footer{padding:36px 40px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+        .flogo{font-family:var(--mono);font-size:1rem;color:var(--green);letter-spacing:3px;}
+        .flinks{display:flex;gap:22px;list-style:none;}
+        .flinks a{font-family:var(--mono);font-size:0.67rem;color:#333;text-decoration:none;letter-spacing:1.5px;transition:color 0.2s;}
+        .flinks a:hover{color:var(--green);}
+        footer p{font-family:var(--mono);font-size:0.65rem;color:#252525;letter-spacing:1px;}
+
+        @media(max-width:768px){
+            nav{padding:0 20px;}.nl{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--border);padding:24px 20px;gap:20px;}
+            .nl.open{display:flex;}.hb{display:flex;}
+            .blog-hero,.filters{padding-left:20px;padding-right:20px;}.container{padding:0 20px;}
+            .featured-post{grid-template-columns:1fr;}.fv{display:none;}.fb2{padding:32px 26px;}
+            .blog-layout{grid-template-columns:1fr;}
+            .nl-box{grid-template-columns:1fr;padding:36px 26px;gap:28px;}
+            .nlf{flex-direction:column;}.nli{border-right:1px solid var(--border);border-bottom:none;}
+            footer{padding:28px 20px;flex-direction:column;align-items:flex-start;}
+        }
+    </style>
+
+    <meta property="og:image" content="https://www.bonvolts.com.br/og-image.jpg">
+
+    <meta property="og:site_name" content="BONVOLTS">
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="logo">BON<span style="color:var(--green)">VOLTS</span></a>
+    <ul class="nl" id="nl">
+        <li><a href="index.html#servicos">Serviços</a></li>
+        <li><a href="index.html#segmentos">Segmentos</a></li>
+        <li><a href="fazenda-inteligente.html">Agro</a></li>
+        <li><a href="index.html#sobre">Sobre</a></li>
+        <li><a href="blog.html" class="active">Intel // Blog</a></li>
+        <li><a href="index.html#contato" class="nav-cta">Fale Conosco</a></li>
+    </ul>
+    <button class="hb" id="hb" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="blog-hero">
+    <div class="bhi">
+        <div class="bh-tag">// BONVOLTS INTEL — DIÁRIO DE CAMPO</div>
+        <h1 class="bh-title">INTEL //<br><span>FIELD LOG</span></h1>
+        <p class="bh-sub">Informação tática sobre energia, automação e segurança. Do campo para você. Sem filtro de marketing.</p>
+    </div>
+</div>
+
+<div class="filters">
+    <div class="fi">
+        <span class="fl">FILTRAR:</span>
+        <button class="fb active" data-cat="all">Todos</button>
+        <button class="fb" data-cat="eletrica">Elétrica</button>
+        <button class="fb" data-cat="ot">OT Security</button>
+        <button class="fb" data-cat="normas">Normas</button>
+        <button class="fb" data-cat="tito">TI/TO</button>
+        <button class="fb" data-cat="solar">Solar</button>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- DESTAQUE — troque o href quando tiver o artigo pronto -->
+    <a href="clp-rede-corporativa.html" class="featured-post">
+        <div class="fv"><div class="fs">🔒</div></div>
+        <div class="fb2">
+            <div class="fbadge">DESTAQUE DA SEMANA</div>
+            <h2>CLP na rede corporativa: o erro que ninguém assume</h2>
+            <p>A maior vulnerabilidade industrial não é zero-day. É o CLP conectado direto na rede de escritório. Casos reais, riscos concretos e como corrigir.</p>
+            <div class="fmeta"><span>JAN 2026</span><span>8 MIN LEITURA</span><span>OT SECURITY</span></div>
+        </div>
+    </a>
+
+    <div class="blog-layout">
+        <div>
+            <div class="posts-grid pg2" id="grid">
+
+                <!-- ✅ ARTIGOS PUBLICADOS -->
+                <a href="chuveiro-certo-para-sua-instalacao.html" class="post-card" data-cat="eletrica">
+                    <div class="pc-tag red">Elétrica Residencial</div>
+                    <h3>Como saber o chuveiro certo para sua instalação</h3>
+                    <p>Disjuntor caindo, fio esquentando — o problema quase sempre não é o chuveiro. É que o chuveiro errado foi instalado numa rede que não aguenta.</p>
+                    <div class="pcf"><span class="pcm">MAR 2026 · 7 MIN</span><span class="pca">→</span></div>
+                </a>
+
+                <a href="clp-rede-corporativa.html" class="post-card" data-cat="ot">
+                    <div class="pc-tag green">OT Security</div>
+                    <h3>CLP na rede corporativa: o erro que ninguém assume</h3>
+                    <p>A maior vulnerabilidade industrial não é zero-day. É o CLP conectado direto na rede de escritório porque "sempre foi assim".</p>
+                    <div class="pcf"><span class="pcm">JAN 2026 · 8 MIN</span><span class="pca">→</span></div>
+                </a>
+
+                <a href="harmonicas-data-centers.html" class="post-card" data-cat="eletrica">
+                    <div class="pc-tag red">Elétrica Industrial</div>
+                    <h3>Harmônicas e Data Centers: o que a TI ignora</h3>
+                    <p>Rede elétrica mal dimensionada destrói servidores silenciosamente. Como identificar e corrigir antes do colapso.</p>
+                    <div class="pcf"><span class="pcm">JAN 2026 · 9 MIN</span><span class="pca">→</span></div>
+                </a>
+
+                <a href="nr10-pratica.html" class="post-card" data-cat="normas">
+                    <div class="pc-tag yellow">Normas</div>
+                    <h3>NR-10 na prática: o que o fiscal vai olhar primeiro</h3>
+                    <p>Os 7 pontos que mais geram autuação em fiscalizações. Checklist completo e como regularizar antes da visita.</p>
+                    <div class="pcf"><span class="pcm">JAN 2026 · 7 MIN</span><span class="pca">→</span></div>
+                </a>
+
+                <a href="retorno-solar-goias.html" class="post-card" data-cat="solar">
+                    <div class="pc-tag yellow">Solar</div>
+                    <h3>Retorno real de solar em Goiás: os números que o vendedor não mostra</h3>
+                    <p>Irradiação solar de Goiás é excepcional. Mas o payback real depende de variáveis que a maioria dos projetos ignora deliberadamente.</p>
+                    <div class="pcf"><span class="pcm">DEZ 2025 · 8 MIN</span><span class="pca">→</span></div>
+                </a>
+
+                <a href="segmentacao-rede-ot.html" class="post-card" data-cat="tito">
+                    <div class="pc-tag green">TI/TO</div>
+                    <h3>Segmentação de rede OT: do papel à execução em 3 etapas</h3>
+                    <p>Purdue Model na prática, sem budget de multinacional. Como criar zonas de segurança em indústrias com infraestrutura legada.</p>
+                    <div class="pcf"><span class="pcm">DEZ 2025 · 9 MIN</span><span class="pca">→</span></div>
+                </a>
+
+                <!-- COLE NOVOS ARTIGOS AQUI — copie o bloco abaixo e troque os dados
+                <a href="NOME-DO-ARQUIVO.html" class="post-card" data-cat="eletrica">
+                    <div class="pc-tag red">Categoria</div>
+                    <h3>Título do artigo</h3>
+                    <p>Resumo em 2 linhas.</p>
+                    <div class="pcf"><span class="pcm">MES ANO · X MIN</span><span class="pca">→</span></div>
+                </a>
+                -->
+
+            </div>
+
+            <div class="nl-box">
+                <div>
+                    <h3>Intel direto no seu email</h3>
+                    <p>Novo artigo toda semana. Só conteúdo tático de quem está no campo. Sem spam.</p>
+                </div>
+                <div>
+                    <div class="nlf">
+                        <input type="email" class="nli" placeholder="seu@email.com" id="nlEmail">
+                        <button class="nlb" id="nlBtn">Assinar →</button>
+                    </div>
+                    <p class="nln">Sem spam. Cancela quando quiser.</p>
+                </div>
+            </div>
+        </div>
+
+        <aside>
+            <div class="sb">
+                <div class="sbt">Categorias</div>
+                <div class="tag-cloud">
+                    <a class="tag-pill active" data-cat="all">Todos</a>
+                    <a class="tag-pill" data-cat="eletrica">Elétrica</a>
+                    <a class="tag-pill" data-cat="ot">OT Security</a>
+                    <a class="tag-pill" data-cat="normas">Normas</a>
+                    <a class="tag-pill" data-cat="tito">TI/TO</a>
+                    <a class="tag-pill" data-cat="solar">Solar</a>
+                </div>
+            </div>
+            <div class="sb">
+                <div class="sbt">Publicados</div>
+                <ul class="sbl">
+                    <li><a href="clp-rede-corporativa.html">CLP na rede corporativa →</a></li>
+                    <li><a href="harmonicas-data-centers.html">Harmônicas e Data Centers →</a></li>
+                    <li><a href="nr10-pratica.html">NR-10 na prática →</a></li>
+                    <li><a href="retorno-solar-goias.html">Retorno real do solar GO →</a></li>
+                    <li><a href="segmentacao-rede-ot.html">Segmentação de rede OT →</a></li>
+                    <li><a href="chuveiro-certo-para-sua-instalacao.html">Chuveiro certo para sua instalação →</a></li>
+                </ul>
+            </div>
+            <div class="sb">
+                <div class="sbt">Serviços</div>
+                <ul class="sbl">
+                    <li><a href="index.html#servicos">Projetos Elétricos</a></li>
+                    <li><a href="index.html#tecnologia">OT Security</a></li>
+                    <li><a href="fazenda-inteligente.html">Agro</a></li>
+                    <li><a href="index.html#contato">Pedir consultoria →</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+</div>
+
+<footer>
+    <div class="flogo">BONVOLTS</div>
+    <ul class="flinks">
+        <li><a href="index.html#servicos">Serviços</a></li>
+        <li><a href="fazenda-inteligente.html">Agro</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+    <p>&copy; 2026 BONVOLTS — Energia, Automação e Monitoramento.</p>
+</footer>
+
+<script>
+    var hbBtn = document.getElementById('hb');
+    var nlMenu = document.getElementById('nl');
+    if(hbBtn){
+        hbBtn.addEventListener('click',function(e){e.stopPropagation();nlMenu.classList.toggle('open');});
+    }
+    document.querySelectorAll('#nl a').forEach(function(a){a.addEventListener('click',function(){nlMenu.classList.remove('open');});});
+    document.addEventListener('click',function(e){if(!e.target.closest('nav'))nlMenu.classList.remove('open');});
+
+    function filter(cat){
+        document.querySelectorAll('.post-card').forEach(function(c){
+            if(c.classList.contains('em-breve')) return;
+            c.style.display=(cat==='all'||c.dataset.cat===cat)?'flex':'none';
+        });
+        document.querySelectorAll('.fb,.tag-pill').forEach(function(b){b.classList.toggle('active',b.dataset.cat===cat);});
+    }
+    document.querySelectorAll('.fb,.tag-pill').forEach(function(b){
+        b.addEventListener('click',function(e){e.preventDefault();filter(b.dataset.cat);});
+    });
+
+    document.getElementById('nlBtn').addEventListener('click',function(){
+        var i=document.getElementById('nlEmail');
+        if(i.value.includes('@')){i.value='';i.placeholder='Cadastrado! Em breve o primeiro artigo.';i.style.borderColor='rgba(0,255,204,0.4)';}
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BONVOLTS — Energia, Automação e Segurança Industrial · Anápolis GO</title>
+<meta name="description" content="Instalações elétricas, automação com CLPs, OT Security e energia solar. Anápolis-GO e nacional.">
+    <link rel="canonical" href="https://www.bonvolts.com.br/">
+    <meta property="og:url" content="https://www.bonvolts.com.br/">
+<link href="https://fonts.googleapis.com/css2?family=DIN+Condensed&family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d0d0d;
+  --off:#141414;
+  --panel:#1a1a1a;
+  --line:#2a2a2a;
+  --line2:#333;
+  --muted:#666;
+  --mid:#999;
+  --light:#ccc;
+  --white:#f5f5f5;
+  --blue:#0057ff;
+  --blue2:#003db3;
+  --blue-dim:rgba(0,87,255,.12);
+  --red:#ff2200;
+  --amber:#ff9900;
+  --green:#00cc66;
+  --display:'Bebas Neue',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --body:'IBM Plex Sans',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--white);font-family:var(--body);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--black);}
+::-webkit-scrollbar-thumb{background:var(--blue);}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:var(--black);border-bottom:1px solid var(--line);display:flex;align-items:stretch;}
+.nav-logo{display:flex;align-items:center;padding:0 28px;border-right:1px solid var(--line);text-decoration:none;}
+.nav-logo-text{font-family:var(--display);font-size:1.25rem;font-weight:800;color:var(--white);line-height:1;letter-spacing:-.3px;}
+.nav-links{display:flex;align-items:stretch;flex:1;}
+.nav-links a{display:flex;align-items:center;padding:0 20px;font-family:var(--mono);font-size:0.65rem;color:var(--muted);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;border-right:1px solid var(--line);transition:color .15s,background .15s;}
+.nav-links a:hover{color:var(--white);background:var(--off);}
+.nav-links a.active{color:var(--blue);}
+.nav-cta{margin-left:auto;display:flex;align-items:center;padding:0 28px;background:var(--blue);font-family:var(--mono);font-size:0.65rem;color:var(--white);text-decoration:none;letter-spacing:2px;text-transform:uppercase;transition:background .15s;border-left:1px solid var(--blue2);}
+.nav-cta:hover{background:var(--blue2);}
+.hb{display:none;background:none;border:none;cursor:pointer;padding:0 20px;flex-direction:column;gap:5px;align-items:center;justify-content:center;border-left:1px solid var(--line);}
+.hb span{display:block;width:18px;height:1px;background:var(--white);}
+
+/* ── STATUS LINE ── */
+.statusline{height:44px;background:var(--off);border-bottom:1px solid var(--line);display:flex;align-items:stretch;overflow:hidden;margin-top:64px;}
+.sl-item{display:flex;align-items:center;gap:8px;padding:0 20px;border-right:1px solid var(--line);font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:1px;white-space:nowrap;}
+.sl-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.sl-dot.on{background:var(--green);box-shadow:0 0 6px var(--green);}
+.sl-dot.warn{background:var(--amber);}
+.sl-dot.err{background:var(--red);}
+.sl-val{color:var(--white);}
+.sl-ticker{flex:1;overflow:hidden;position:relative;height:100%;}
+.sl-ticker-inner{display:flex;gap:0;animation:ticker 40s linear infinite;white-space:nowrap;height:100%;align-items:center;line-height:1.5;}
+.sl-ticker span{font-family:var(--mono);font-size:0.65rem;font-weight:500;color:var(--muted);letter-spacing:2px;padding:0 32px;line-height:44px;}
+.sl-ticker span em{color:var(--blue);font-style:normal;margin:0 8px;}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── HERO ── */
+.hero{display:grid;grid-template-columns:1fr 380px;min-height:calc(100vh - 108px);border-bottom:1px solid var(--line);}
+.hero-main{padding:72px 56px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--line);}
+.hero-tag{font-family:var(--mono);font-size:0.62rem;color:var(--blue);letter-spacing:3px;text-transform:uppercase;margin-bottom:40px;display:flex;align-items:center;gap:12px;}
+.hero-tag::before{content:'';display:block;width:32px;height:1px;background:var(--blue);}
+.hero-h1{font-family:var(--display);font-size:clamp(5rem,9vw,10rem);line-height:.88;letter-spacing:-1px;color:var(--white);margin-bottom:48px;}
+.hero-h1 .ln{display:block;}
+.hero-h1 .blue{color:var(--blue);}
+.hero-desc{font-size:0.95rem;color:var(--mid);line-height:1.85;max-width:560px;font-weight:300;margin-bottom:48px;}
+.hero-desc strong{color:var(--white);font-weight:400;}
+.hero-bottom{display:flex;align-items:center;gap:0;border-top:1px solid var(--line);padding-top:32px;}
+.hero-stat{padding:0 32px;border-right:1px solid var(--line);}
+.hero-stat:first-child{padding-left:0;}
+.hero-stat-n{font-family:var(--display);font-size:2.4rem;color:var(--blue);letter-spacing:-1px;line-height:1;margin-bottom:4px;}
+.hero-stat-l{font-family:var(--mono);font-size:0.58rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;}
+.hero-btns{display:flex;gap:1px;margin-left:auto;}
+.btn-p{background:var(--blue);color:var(--white);padding:14px 28px;font-family:var(--mono);font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:background .15s;display:inline-block;}
+.btn-p:hover{background:var(--blue2);}
+.btn-o{background:transparent;color:var(--mid);padding:14px 28px;font-family:var(--mono);font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border:1px solid var(--line2);transition:all .15s;display:inline-block;}
+.btn-o:hover{color:var(--white);border-color:var(--mid);}
+
+/* HERO SIDEBAR */
+.hero-side{display:flex;flex-direction:column;}
+.hside-item{flex:1;padding:28px 24px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;min-height:0;transition:background .15s;}
+.hside-item:last-child{border-bottom:none;}
+.hside-item:hover{background:var(--off);}
+.hside-tag{font-family:var(--mono);font-size:0.58rem;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+.hside-item h3{font-family:var(--body);font-size:0.92rem;font-weight:500;color:var(--white);margin-bottom:6px;line-height:1.3;}
+.hside-item p{font-size:0.78rem;color:var(--muted);line-height:1.6;font-weight:300;}
+.hside-arrow{font-family:var(--mono);font-size:0.7rem;color:var(--line2);margin-top:12px;transition:color .15s;}
+.hside-item:hover .hside-arrow{color:var(--blue);}
+
+/* ── GRID SYSTEM ── */
+.wrap{max-width:1400px;margin:0 auto;}
+.section{border-bottom:1px solid var(--line);}
+.section-head{display:grid;grid-template-columns:240px 1fr;border-bottom:1px solid var(--line);}
+.section-index{padding:40px 32px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;}
+.section-num{font-family:var(--display);font-size:4rem;color:var(--line2);line-height:1;letter-spacing:-2px;}
+.section-label{font-family:var(--mono);font-size:0.58rem;color:var(--blue);letter-spacing:2px;text-transform:uppercase;}
+.section-title-wrap{padding:40px 48px;display:flex;align-items:flex-end;justify-content:space-between;gap:40px;}
+.section-title{font-family:var(--display);font-size:clamp(2.5rem,5vw,5rem);color:var(--white);line-height:.9;letter-spacing:-1px;}
+.section-title em{color:var(--blue);font-style:normal;}
+.section-lead{font-size:0.82rem;color:var(--muted);max-width:280px;line-height:1.7;font-weight:300;text-align:right;flex-shrink:0;}
+
+/* ── SERVIÇOS ── */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);}
+.svc{padding:40px 36px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;transition:background .15s;}
+.svc:hover{background:var(--off);}
+.svc:nth-child(3n){border-right:none;}
+.svc-n{font-family:var(--mono);font-size:0.58rem;color:var(--muted);letter-spacing:2px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;}
+.svc-n span{color:var(--line2);}
+.svc h3{font-family:var(--body);font-size:1rem;font-weight:600;color:var(--white);margin-bottom:12px;line-height:1.2;}
+.svc p{font-size:0.8rem;color:var(--muted);line-height:1.7;margin-bottom:20px;font-weight:300;}
+.svc-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.svc-list li{font-family:var(--mono);font-size:0.62rem;color:var(--muted);padding-left:16px;position:relative;letter-spacing:.5px;line-height:1.5;}
+.svc-list li::before{content:'—';position:absolute;left:0;color:var(--blue);}
+.svc-ot{grid-column:1/-1;border-right:none;background:var(--off);border-top:1px solid var(--line);}
+.svc-ot:hover{background:#1e1e1e;}
+.svc-ot-inner{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.svc-ot-left{padding:48px 48px;border-right:1px solid var(--line);}
+.svc-ot-right{padding:48px 48px;}
+.svc-ot h3{font-family:var(--display);font-size:2.4rem;color:var(--white);line-height:.95;letter-spacing:-.5px;margin-bottom:16px;}
+.svc-ot h3 span{color:var(--red);}
+.svc-ot p{font-size:0.85rem;color:var(--muted);line-height:1.8;font-weight:300;}
+.svc-ot-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+.svc-ot-tag{font-family:var(--mono);font-size:0.6rem;padding:5px 12px;border:1px solid var(--line2);color:var(--mid);letter-spacing:1px;}
+.svc-ot-tag.hi{border-color:var(--red);color:var(--red);}
+.svc-ot-metrics{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);margin-top:24px;}
+.svc-ot-metric{background:var(--off);padding:20px;transition:background .15s;}
+.svc-ot-metric:hover{background:var(--panel);}
+.otm-label{font-family:var(--mono);font-size:0.58rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
+.otm-val{font-size:0.82rem;color:var(--light);font-weight:300;line-height:1.4;}
+
+/* ── SEGMENTOS ── */
+.seg-grid{display:grid;grid-template-columns:repeat(5,1fr);}
+.seg-item{padding:36px 28px;border-right:1px solid var(--line);text-align:center;transition:background .15s;cursor:default;}
+.seg-item:last-child{border-right:none;}
+.seg-item:hover{background:var(--off);}
+.seg-ico{font-size:2rem;display:block;margin-bottom:16px;}
+.seg-item h4{font-family:var(--body);font-size:0.85rem;font-weight:600;color:var(--white);margin-bottom:6px;}
+.seg-item p{font-family:var(--mono);font-size:0.6rem;color:var(--muted);line-height:1.6;letter-spacing:.3px;}
+
+/* ── SOBRE ── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;}
+.about-left{padding:64px 56px;border-right:1px solid var(--line);}
+.about-quote{font-family:var(--display);font-size:clamp(1.8rem,3vw,2.8rem);color:var(--white);line-height:1.1;letter-spacing:-.5px;border-left:3px solid var(--blue);padding-left:24px;margin-bottom:36px;}
+.about-left p{font-size:0.88rem;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:16px;}
+.about-right{display:grid;grid-template-columns:1fr 1fr;}
+.stat-box{padding:40px 32px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);}
+.stat-box:nth-child(2n){border-right:none;}
+.stat-box:nth-child(3),.stat-box:nth-child(4){border-bottom:none;}
+.stat-n{font-family:var(--display);font-size:3.5rem;color:var(--blue);letter-spacing:-2px;line-height:1;margin-bottom:8px;}
+.stat-l{font-family:var(--mono);font-size:0.58rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;line-height:1.5;}
+
+/* ── BLOG ── */
+.blog-list{display:flex;flex-direction:column;}
+.bpost{padding:28px 48px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:160px 1fr auto;align-items:center;gap:32px;text-decoration:none;transition:background .15s;}
+.bpost:hover{background:var(--off);}
+.bpost-meta{display:flex;flex-direction:column;gap:4px;}
+.bpost-cat{font-family:var(--mono);font-size:0.58rem;color:var(--blue);letter-spacing:2px;text-transform:uppercase;}
+.bpost-date{font-family:var(--mono);font-size:0.58rem;color:var(--muted);letter-spacing:1px;}
+.bpost h3{font-size:0.95rem;font-weight:500;color:var(--white);margin-bottom:4px;line-height:1.3;}
+.bpost p{font-size:0.78rem;color:var(--muted);font-weight:300;line-height:1.5;}
+.bpost-arrow{font-family:var(--mono);font-size:0.9rem;color:var(--line2);transition:color .15s;}
+.bpost:hover .bpost-arrow{color:var(--blue);}
+
+/* ── CTA ── */
+.cta{display:grid;grid-template-columns:1fr 1px 480px;}
+.cta-left{padding:80px 64px;display:flex;flex-direction:column;justify-content:space-between;}
+.cta-divider{background:var(--line);}
+.cta-right{display:flex;flex-direction:column;}
+.cta-h{font-family:var(--display);font-size:clamp(4rem,7vw,8rem);color:var(--white);line-height:.88;letter-spacing:-2px;margin-bottom:24px;}
+.cta-h span{color:var(--blue);}
+.cta-sub{font-size:0.88rem;color:var(--muted);line-height:1.7;font-weight:300;max-width:480px;}
+.cta-link{display:flex;align-items:center;gap:20px;padding:28px 32px;border-bottom:1px solid var(--line);text-decoration:none;transition:background .15s;}
+.cta-link:hover{background:var(--off);}
+.cta-link-ico{width:40px;height:40px;background:var(--blue-dim);border:1px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.cta-link-body{flex:1;}
+.cta-link-title{font-size:0.9rem;font-weight:500;color:var(--white);margin-bottom:3px;}
+.cta-link-sub{font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:1px;}
+.cta-link-arr{font-family:var(--mono);font-size:0.8rem;color:var(--line2);transition:color .15s;}
+.cta-link:hover .cta-link-arr{color:var(--blue);}
+
+/* ── FOOTER ── */
+footer{display:grid;grid-template-columns:240px 1fr auto;align-items:center;border-top:1px solid var(--line);}
+.flogo{padding:28px 32px;border-right:1px solid var(--line);font-family:var(--display);font-size:1.4rem;letter-spacing:2px;color:var(--white);}
+.flogo em{color:var(--blue);font-style:normal;}
+.flinks{display:flex;gap:0;list-style:none;padding-left:0;}
+.flinks li a{display:block;padding:28px 24px;font-family:var(--mono);font-size:0.6rem;color:var(--muted);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;border-right:1px solid var(--line);transition:color .15s;}
+.flinks li a:hover{color:var(--white);}
+footer p{padding:28px 32px;font-family:var(--mono);font-size:0.58rem;color:var(--muted);letter-spacing:1px;border-left:1px solid var(--line);}
+
+/* ── FOMO TICKER ── */
+.fomo{background:var(--blue);height:32px;display:flex;align-items:center;overflow:hidden;border-bottom:1px solid var(--blue2);}
+.fomo-inner{display:flex;gap:0;animation:ticker2 25s linear infinite;white-space:nowrap;}
+.fomo-inner span{font-family:var(--mono);font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.7);padding:0 40px;}
+.fomo-inner span strong{color:#fff;}
+@keyframes ticker2{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+@media(max-width:960px){
+  nav{flex-wrap:wrap;}
+  .nav-links{display:none;flex-direction:column;position:absolute;top:56px;left:0;right:0;background:var(--black);border-bottom:1px solid var(--line);z-index:200;}
+  .nav-links.open{display:flex;}
+  .nav-links a{border-right:none;border-bottom:1px solid var(--line);}
+  .hb{display:flex;}
+  .hero{grid-template-columns:1fr;}
+  .hero-side{display:none;}
+  .hero-main{padding:48px 24px;}
+  .section-head{grid-template-columns:1fr;}
+  .section-index{display:none;}
+  .section-title-wrap{padding:40px 24px;flex-direction:column;align-items:flex-start;gap:16px;}
+  .section-lead{text-align:left;max-width:100%;}
+  .svc-grid{grid-template-columns:1fr;}
+  .svc{border-right:none;}
+  .svc-ot-inner{grid-template-columns:1fr;}
+  .svc-ot-left{border-right:none;border-bottom:1px solid var(--line);}
+  .seg-grid{grid-template-columns:repeat(2,1fr);}
+  .about-grid{grid-template-columns:1fr;}
+  .about-left{padding:40px 24px;}
+  .cta{grid-template-columns:1fr;}
+  .cta-divider{display:none;}
+  .cta-left{padding:48px 24px;}
+  .bpost{grid-template-columns:1fr;padding:24px;}
+  .bpost-meta{flex-direction:row;gap:16px;}
+  .bpost-arrow{display:none;}
+  footer{grid-template-columns:1fr;border-top:none;}
+  .flogo{border-right:none;border-bottom:1px solid var(--line);}
+  .flinks{flex-wrap:wrap;}
+  .flinks li a{border-bottom:1px solid var(--line);}
+  footer p{border-left:none;border-top:1px solid var(--line);}
+  .hero-btns{margin-left:0;margin-top:24px;}
+  .hero-bottom{flex-wrap:wrap;gap:24px;}
+}
+</style>
+
+    <meta property="og:image" content="https://www.bonvolts.com.br/og-image.jpg">
+
+    <meta property="og:site_name" content="BONVOLTS">
+
+    <meta property="og:locale" content="pt_BR">
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo"><span class="nav-logo-text">BON<em style="color:var(--blue);font-style:normal;">VOLTS</em></span></a>
+  <div class="nav-links" id="nl">
+    <a href="#servicos">Serviços</a>
+    <a href="#segmentos">Segmentos</a>
+    <a href="fazenda-inteligente.html">Agro</a>
+    <a href="#sobre">Sobre</a>
+    <a href="quadro-de-cargas.html">Ferramentas</a>
+    <a href="blog.html">Blog</a>
+  </div>
+  <a href="#contato" class="nav-cta">Fale Conosco</a>
+  <button class="hb" id="hb"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="statusline">
+  <div class="sl-item"><span class="sl-dot on"></span><span class="sl-val">SISTEMA OPERACIONAL</span></div>
+  <div class="sl-item"><span class="sl-dot on"></span>ANÁPOLIS · GO</div>
+  <div class="sl-item"><span class="sl-dot warn"></span>OT SECURITY — DEMANDA CRÍTICA</div>
+  <div class="sl-item"><span class="sl-dot on"></span>NBR 5410</div>
+  <div class="sl-ticker">
+    <div class="sl-ticker-inner">
+      <span>QGBT<em>·</em>QDC<em>·</em>CCM</span>
+      <span>CLP<em>·</em>IHM<em>·</em>SCADA</span>
+      <span>SOLAR FOTOVOLTAICA</span>
+      <span>MONITORAMENTO REMOTO</span>
+      <span>OT SECURITY</span>
+      <span>AUTOMAÇÃO INDUSTRIAL</span>
+      <span>QGBT<em>·</em>QDC<em>·</em>CCM</span>
+      <span>CLP<em>·</em>IHM<em>·</em>SCADA</span>
+      <span>SOLAR FOTOVOLTAICA</span>
+      <span>MONITORAMENTO REMOTO</span>
+      <span>OT SECURITY</span>
+      <span>AUTOMAÇÃO INDUSTRIAL</span>
+    </div>
+  </div>
+</div>
+
+<div class="fomo">
+  <div class="fomo-inner">
+    <span><strong>Sua instalação está dentro da norma?</strong> A maioria não está.</span>
+    <span>Cada dia sem automação é eficiência que seu concorrente já tem.</span>
+    <span><strong>CLP na rede corporativa</strong> é uma porta aberta para qualquer ataque.</span>
+    <span>Energia desperdiçada não some — vira lucro perdido.</span>
+    <span><strong>Sua instalação está dentro da norma?</strong> A maioria não está.</span>
+    <span>Cada dia sem automação é eficiência que seu concorrente já tem.</span>
+    <span><strong>CLP na rede corporativa</strong> é uma porta aberta para qualquer ataque.</span>
+    <span>Energia desperdiçada não some — vira lucro perdido.</span>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-main">
+    <div>
+      <div class="hero-tag">Energia · Automação · Segurança Industrial</div>
+      <h1 class="hero-h1">
+        <span class="ln">INFRA</span>
+        <span class="ln">ESTRUTURA</span>
+        <span class="ln blue">ELÉTRICA.</span>
+      </h1>
+      <p class="hero-desc">
+        Do campo à indústria — instalações elétricas, automação com <strong>CLPs e IHMs</strong>, quadros <strong>QGBT / QDC / CCM</strong>, energia solar e <strong>OT Security</strong>. Projetos documentados, entregues e sustentados.
+      </p>
+    </div>
+    <div class="hero-bottom">
+      <div class="hero-stat"><div class="hero-stat-n">800</div><div class="hero-stat-l">kVA máx.</div></div>
+      <div class="hero-stat"><div class="hero-stat-n">24/7</div><div class="hero-stat-l">Suporte</div></div>
+      <div class="hero-stat"><div class="hero-stat-n">NBR</div><div class="hero-stat-l">5410</div></div>
+      <div class="hero-btns">
+        <a href="#contato" class="btn-p">Solicitar Projeto</a>
+        <a href="#servicos" class="btn-o">Ver Serviços →</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-side">
+    <div class="hside-item">
+      <div>
+        <div class="hside-tag">Infraestrutura Elétrica</div>
+        <h3>Quadros QGBT, QDC e CCM</h3>
+        <p>Projetos completos até 800 kVA com documentação e NBR 5410.</p>
+      </div>
+      <div class="hside-arrow">↗</div>
+    </div>
+    <div class="hside-item">
+      <div>
+        <div class="hside-tag">Automação Industrial</div>
+        <h3>CLPs, IHMs e Sensores</h3>
+        <p>Programação, comissionamento e integração de sistemas.</p>
+      </div>
+      <div class="hside-arrow">↗</div>
+    </div>
+    <div class="hside-item">
+      <div>
+        <div class="hside-tag">OT Security</div>
+        <h3>Redes Industriais Seguras</h3>
+        <p>Feito por quem entende o que está fisicamente ligado.</p>
+      </div>
+      <div class="hside-arrow">↗</div>
+    </div>
+    <div class="hside-item">
+      <div>
+        <div class="hside-tag">Ferramenta Gratuita</div>
+        <h3>Quadro de Cargas Online</h3>
+        <p>Calcule disjuntores e bitolas conforme NBR 5410. Gera PDF.</p>
+      </div>
+      <a href="quadro-de-cargas.html" style="font-family:var(--mono);font-size:0.62rem;color:var(--blue);text-decoration:none;letter-spacing:1px;">ACESSAR →</a>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="servicos">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-index">
+        <div class="section-num">01</div>
+        <div class="section-label">Serviços</div>
+      </div>
+      <div class="section-title-wrap">
+        <div>
+          <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">O QUE A BONVOLTS FAZ</div>
+          <h2 class="section-title">Projetos <em>do zero.</em></h2>
+        </div>
+        <p class="section-lead">Toda entrega inclui testes, documentação técnica completa e suporte especializado.</p>
+      </div>
+    </div>
+    <div class="svc-grid">
+      <div class="svc">
+        <div class="svc-n"><span>01</span> INSTALAÇÕES</div>
+        <h3>Infraestrutura Elétrica</h3>
+        <p>Quadros customizados, distribuição elétrica e cabeamento para qualquer porte.</p>
+        <ul class="svc-list">
+          <li>Quadros QGBT, QDC e CCM</li>
+          <li>Painéis elétricos customizados</li>
+          <li>Instalações rurais, industriais e comerciais</li>
+          <li>Projetos NBR 5410 documentados</li>
+        </ul>
+      </div>
+      <div class="svc">
+        <div class="svc-n"><span>02</span> AUTOMAÇÃO</div>
+        <h3>CLPs, IHMs e Sensores</h3>
+        <p>Automação de processos industriais com programação e comissionamento.</p>
+        <ul class="svc-list">
+          <li>Programação de CLPs</li>
+          <li>Integração de IHMs</li>
+          <li>Sensores industriais de processo</li>
+          <li>Automação de irrigação e agronegócio</li>
+        </ul>
+      </div>
+      <div class="svc">
+        <div class="svc-n"><span>03</span> ENERGIA SOLAR</div>
+        <h3>Geração Distribuída</h3>
+        <p>Dimensionamento, instalação e homologação de sistemas fotovoltaicos.</p>
+        <ul class="svc-list">
+          <li>Dimensionamento fotovoltaico completo</li>
+          <li>Homologação na concessionária</li>
+          <li>Integração com monitoramento</li>
+          <li>Análise de retorno real</li>
+        </ul>
+      </div>
+      <div class="svc">
+        <div class="svc-n"><span>04</span> MONITORAMENTO</div>
+        <h3>Visibilidade Total</h3>
+        <p>Câmeras, sensores e telemetria em tempo real, de qualquer lugar.</p>
+        <ul class="svc-list">
+          <li>Monitoramento de ativos elétricos</li>
+          <li>Telemetria de consumo e geração</li>
+          <li>Alarmes em tempo real</li>
+          <li>Dashboard centralizado</li>
+        </ul>
+      </div>
+      <div class="svc" style="background:var(--blue-dim);border-color:var(--blue);">
+        <div class="svc-n"><span>05</span> FERRAMENTA</div>
+        <h3>Quadro de Cargas — Grátis</h3>
+        <p>Calcule disjuntores, bitolas e fases conforme NBR 5410. Gera PDF profissional.</p>
+        <ul class="svc-list">
+          <li>Cálculo automático por circuito</li>
+          <li>Balanceamento de fases</li>
+          <li>PDF com memorial de cálculo</li>
+        </ul>
+        <a href="quadro-de-cargas.html" style="display:inline-block;margin-top:20px;font-family:var(--mono);font-size:0.62rem;color:var(--blue);text-decoration:none;letter-spacing:1.5px;">ACESSAR FERRAMENTA →</a>
+      </div>
+      <div class="svc-ot">
+        <div class="svc-ot-inner">
+          <div class="svc-ot-left">
+            <div class="svc-n"><span>06</span> OT SECURITY</div>
+            <h3>A sua rede é tão segura quanto o <span>disjuntor</span> que a alimenta.</h3>
+            <p>CLP conectado direto na rede corporativa. SCADA sem autenticação. IHM com acesso remoto aberto. A Bonvolts identifica esses vetores antes que um atacante — ou uma falha — os encontre primeiro.</p>
+          </div>
+          <div class="svc-ot-right">
+            <div class="svc-ot-tags">
+              <span class="svc-ot-tag hi">Diagnóstico OT</span>
+              <span class="svc-ot-tag hi">Segmentação IT/OT</span>
+              <span class="svc-ot-tag hi">Hardening CLP/SCADA</span>
+              <span class="svc-ot-tag">IEC 62443</span>
+              <span class="svc-ot-tag">Relatório Técnico</span>
+            </div>
+            <div class="svc-ot-metrics">
+              <div class="svc-ot-metric"><div class="otm-label">Diagnóstico</div><div class="otm-val">Mapeamento de ativos OT expostos</div></div>
+              <div class="svc-ot-metric"><div class="otm-label">Segmentação</div><div class="otm-val">Separação e proteção da rede IT/OT</div></div>
+              <div class="svc-ot-metric"><div class="otm-label">Hardening</div><div class="otm-val">Proteção de CLPs, IHMs e SCADA</div></div>
+              <div class="svc-ot-metric"><div class="otm-label">Relatório</div><div class="otm-val">Documentação técnica com evidências</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="segmentos">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-index">
+        <div class="section-num">02</div>
+        <div class="section-label">Segmentos</div>
+      </div>
+      <div class="section-title-wrap">
+        <div>
+          <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">ONDE ATUAMOS</div>
+          <h2 class="section-title">Do campo<br><em>à cidade.</em></h2>
+        </div>
+        <p class="section-lead">Onde energia e tecnologia são críticas — do agronegócio ao data center.</p>
+      </div>
+    </div>
+    <div class="seg-grid">
+      <div class="seg-item"><span class="seg-ico">🌾</span><h4>Agronegócio</h4><p>Automação de irrigação, sensores e monitoramento remoto de propriedades.</p></div>
+      <div class="seg-item"><span class="seg-ico">⚙️</span><h4>Indústria</h4><p>CLPs, CCMs, automação de processos e segurança OT.</p></div>
+      <div class="seg-item"><span class="seg-ico">🏪</span><h4>Comércio</h4><p>Eficiência energética, solar e monitoramento de consumo.</p></div>
+      <div class="seg-item"><span class="seg-ico">🏠</span><h4>Residencial</h4><p>Projetos elétricos, automação e laudos técnicos.</p></div>
+      <div class="seg-item"><span class="seg-ico">🖥️</span><h4>Data Centers</h4><p>Cargas críticas, UPS industrial e redundância elétrica.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="sobre">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-index">
+        <div class="section-num">03</div>
+        <div class="section-label">Sobre</div>
+      </div>
+      <div class="section-title-wrap">
+        <div>
+          <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">BONVOLTS</div>
+          <h2 class="section-title">Nascida<br><em>no campo.</em></h2>
+        </div>
+      </div>
+    </div>
+    <div class="about-grid">
+      <div class="about-left">
+        <div class="about-quote">"Energia e tecnologia caminham juntas."</div>
+        <p>A Bonvolts nasceu da vivência real em campo. Trabalhamos desde a elaboração do projeto até o comissionamento — e ficamos de pé pelo que entregamos.</p>
+        <p>Cada entrega inclui testes, documentação técnica completa e suporte especializado. Do campo à cidade.</p>
+      </div>
+      <div class="about-right">
+        <div class="stat-box"><div class="stat-n">800</div><div class="stat-l">kVA máximo<br>por projeto</div></div>
+        <div class="stat-box"><div class="stat-n">24/7</div><div class="stat-l">Suporte<br>especializado</div></div>
+        <div class="stat-box"><div class="stat-n">GO</div><div class="stat-l">Base Anápolis<br>+ Nacional</div></div>
+        <div class="stat-box"><div class="stat-n">0</div><div class="stat-l">Tolerância<br>a falhas</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-index">
+        <div class="section-num">04</div>
+        <div class="section-label">Blog</div>
+      </div>
+      <div class="section-title-wrap">
+        <div>
+          <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">INTEL // FIELD LOG</div>
+          <h2 class="section-title">Diário de<br><em>campo.</em></h2>
+        </div>
+        <p class="section-lead">Conteúdo tático sobre energia, automação e segurança. Sem filtro de marketing.</p>
+      </div>
+    </div>
+    <div class="blog-list">
+      <a href="chuveiro-certo-para-sua-instalacao.html" class="bpost">
+        <div class="bpost-meta"><span class="bpost-cat">Elétrica Residencial</span><span class="bpost-date">Mar 2026 · 7 min</span></div>
+        <div><h3>Como saber o chuveiro certo para sua instalação</h3><p>Disjuntor caindo, fio esquentando — o problema quase sempre não é o chuveiro.</p></div>
+        <div class="bpost-arrow">→</div>
+      </a>
+      <a href="blog.html" class="bpost">
+        <div class="bpost-meta"><span class="bpost-cat">Elétrica Industrial</span><span class="bpost-date">Jan 2026 · 8 min</span></div>
+        <div><h3>Harmônicas e Data Centers: o que a TI ignora</h3><p>Rede elétrica mal dimensionada destrói servidores silenciosamente.</p></div>
+        <div class="bpost-arrow">→</div>
+      </a>
+      <a href="blog.html" class="bpost">
+        <div class="bpost-meta"><span class="bpost-cat">OT Security</span><span class="bpost-date">Jan 2026 · 6 min</span></div>
+        <div><h3>CLP na rede corporativa: o erro que ninguém assume</h3><p>A maior vulnerabilidade industrial não é zero-day.</p></div>
+        <div class="bpost-arrow">→</div>
+      </a>
+    </div>
+    <div style="padding:24px 48px;border-top:1px solid var(--line);">
+      <a href="blog.html" class="btn-o">Ver todos os artigos →</a>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="contato">
+  <div class="wrap">
+    <div class="cta">
+      <div class="cta-left">
+        <div>
+          <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:2px;margin-bottom:20px;">06 — CONTATO</div>
+          <h2 class="cta-h">Manda<br>o <span>projeto.</span></h2>
+        </div>
+        <p class="cta-sub">Pode ser o projeto, a situação ou só a dúvida. Diagnóstico real — não proposta de vendedor.</p>
+      </div>
+      <div class="cta-divider"></div>
+      <div class="cta-right">
+        <a href="https://wa.me/5562999050403" class="cta-link" target="_blank">
+          <div class="cta-link-ico">📱</div>
+          <div class="cta-link-body"><div class="cta-link-title">(62) 99905-0403</div><div class="cta-link-sub">WhatsApp — resposta rápida</div></div>
+          <div class="cta-link-arr">↗</div>
+        </a>
+        <a href="quadro-de-cargas.html" class="cta-link">
+          <div class="cta-link-ico">⚡</div>
+          <div class="cta-link-body"><div class="cta-link-title">Quadro de Cargas</div><div class="cta-link-sub">Ferramenta gratuita — NBR 5410</div></div>
+          <div class="cta-link-arr">↗</div>
+        </a>
+        <a href="fazenda-inteligente.html" class="cta-link">
+          <div class="cta-link-ico">🌾</div>
+          <div class="cta-link-body"><div class="cta-link-title">Bonvolts Agro</div><div class="cta-link-sub">Automação para propriedades rurais</div></div>
+          <div class="cta-link-arr">↗</div>
+        </a>
+        <a href="blog.html" class="cta-link">
+          <div class="cta-link-ico">📖</div>
+          <div class="cta-link-body"><div class="cta-link-title">Intel // Blog</div><div class="cta-link-sub">Conteúdo técnico gratuito</div></div>
+          <div class="cta-link-arr">↗</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="flogo">BON<em>VOLTS</em></div>
+  <ul class="flinks">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="fazenda-inteligente.html">Agro</a></li>
+    <li><a href="quadro-de-cargas.html">Ferramentas</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <p>© 2026 BONVOLTS — Anápolis-GO · Nacional</p>
+</footer>
+
+<script>
+var hb=document.getElementById('hb'),nl=document.getElementById('nl');
+hb.addEventListener('click',function(e){e.stopPropagation();nl.classList.toggle('open');});
+document.querySelectorAll('#nl a').forEach(function(a){a.addEventListener('click',function(){nl.classList.remove('open');});});
+document.addEventListener('click',function(e){if(!e.target.closest('nav'))nl.classList.remove('open');});
+</script>
+</body>
+</html>

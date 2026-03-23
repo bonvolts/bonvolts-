@@ -1,0 +1,24 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{"type": "host", "value": "bonvolts.vercel.app"}],
+      "destination": "https://www.bonvolts.com.br/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [{"type": "host", "value": "bonvolts.com.br"}],
+      "destination": "https://www.bonvolts.com.br/$1",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {"key": "X-Robots-Tag", "value": "index, follow"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fazenda Inteligente — Automação, Sensores e Monitoramento | BONVOLTS Goiás</title>
+    <meta name="description" content="Automação de irrigação, cochos, câmeras térmicas com IA, sensores de solo e monitoramento remoto para propriedades rurais em Goiás. Bonvolts Agro.">
+    <link rel="canonical" href="https://www.bonvolts.com.br/fazenda-inteligente.html">
+    <meta property="og:url" content="https://www.bonvolts.com.br/fazenda-inteligente.html">
+    <meta name="keywords" content="automação rural Goiás, monitoramento fazenda, sensor solo irrigação, câmera térmica rebanho, fazenda inteligente Goiás, IoT agronegócio">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --green:#00ffcc; --amber:#f5a623; --red:#ff2d55;
+            --bg:#060a06; --bg2:#0d120d; --border:#1a241a;
+            --text:#9aaa98; --bright:#d4ddd2;
+            --mono:'Share Tech Mono',monospace;
+            --display:'Barlow Condensed',sans-serif;
+            --body:'Barlow',sans-serif;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        html{scroll-behavior:smooth;}
+        body{background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden;}
+        body::before{display:none;}
+
+        /* NAV */
+        nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(6,10,6,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);height:60px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;}
+        .logo{font-family:var(--mono);font-size:1rem;color:var(--green);text-decoration:none;letter-spacing:3px;}
+        .logo span{color:var(--amber);}
+        .nl{display:flex;gap:26px;list-style:none;align-items:center;}
+        .nl a{font-family:var(--mono);font-size:0.72rem;color:var(--text);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;}
+        .nl a:hover{color:var(--green);}
+        .nav-cta{color:var(--amber)!important;border:1px solid var(--amber);padding:6px 14px!important;}
+        .nav-cta:hover{background:var(--amber)!important;color:#000!important;}
+        .hb{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+        .hb span{display:block;width:22px;height:1.5px;background:var(--green);}
+
+        /* HERO */
+        header{min-height:100vh;display:flex;align-items:center;padding:100px 40px 60px;position:relative;overflow:hidden;}
+        .hero-bg{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,10,6,0.85) 0%,rgba(6,10,6,0.6) 50%,rgba(6,10,6,0.92) 100%);z-index:1;}
+        .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,204,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,204,0.02) 1px,transparent 1px);background-size:50px 50px;z-index:2;}
+        .hw{max-width:1100px;margin:0 auto;width:100%;position:relative;z-index:3;}
+        .htag{font-family:var(--mono);font-size:0.72rem;color:var(--amber);letter-spacing:3px;margin-bottom:20px;opacity:0;animation:fu 0.6s ease 0.2s forwards;}
+        .htitle{font-family:var(--display);font-size:clamp(3.5rem,9vw,8rem);font-weight:900;color:#fff;line-height:0.9;letter-spacing:-2px;text-transform:uppercase;margin-bottom:14px;opacity:0;animation:fu 0.7s ease 0.35s forwards;}
+        .htitle .ga{color:var(--amber);}
+        .htitle .gg{color:var(--green);}
+        .hsub{font-family:var(--display);font-size:clamp(0.9rem,2vw,1.3rem);font-weight:300;color:var(--text);letter-spacing:5px;text-transform:uppercase;margin-bottom:32px;opacity:0;animation:fu 0.7s ease 0.5s forwards;}
+        .hdesc{max-width:560px;font-size:1.05rem;color:var(--text);line-height:1.85;margin-bottom:44px;opacity:0;animation:fu 0.7s ease 0.65s forwards;}
+        .hdesc strong{color:var(--bright);}
+        .hact{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fu 0.7s ease 0.8s forwards;}
+        .stat-strip{display:flex;gap:2px;margin-top:60px;opacity:0;animation:fu 0.7s ease 1s forwards;}
+        .stat-item{background:rgba(13,18,13,0.85);border:1px solid var(--border);padding:16px 22px;backdrop-filter:blur(8px);}
+        .stat-n{font-family:var(--display);font-size:1.8rem;font-weight:900;color:var(--amber);line-height:1;margin-bottom:3px;}
+        .stat-l{font-family:var(--mono);font-size:0.6rem;color:var(--text);letter-spacing:2px;text-transform:uppercase;}
+
+        /* STATUS */
+        .status{background:#080d08;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px 40px;display:flex;gap:32px;overflow-x:auto;}
+        .si{display:flex;align-items:center;gap:9px;white-space:nowrap;font-family:var(--mono);font-size:0.69rem;color:var(--text);letter-spacing:1px;}
+        .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 2s infinite;}
+        .dot.a{background:var(--amber);box-shadow:0 0 6px var(--amber);}
+
+        /* LAYOUT */
+        .wrap{max-width:1100px;margin:0 auto;padding:0 40px;}
+        section{padding:96px 0;border-bottom:1px solid var(--border);}
+        .stag{font-family:var(--mono);font-size:0.7rem;color:var(--amber);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;}
+        .stitle{font-family:var(--display);font-size:clamp(2rem,5vw,3.5rem);font-weight:700;color:#fff;text-transform:uppercase;line-height:1;margin-bottom:18px;letter-spacing:-0.5px;}
+        .slead{font-size:1.05rem;color:var(--text);max-width:560px;line-height:1.8;margin-bottom:52px;}
+
+        /* BUTTONS */
+        .btn{display:inline-block;font-family:var(--mono);font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;padding:13px 26px;transition:all 0.3s;border:none;cursor:pointer;}
+        .btn-a{background:var(--amber);color:#000;}
+        .btn-a:hover{background:#fff;box-shadow:0 0 30px rgba(245,166,35,0.35);}
+        .btn-o{background:transparent;color:var(--green);border:1px solid var(--green);}
+        .btn-o:hover{background:rgba(0,255,204,0.07);}
+
+        /* CARDS SERVIÇOS */
+        .grid{display:grid;gap:2px;}
+        .g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));}
+        .g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
+        .card{background:var(--bg2);border:1px solid var(--border);padding:36px 32px;position:relative;overflow:hidden;transition:border-color 0.3s,transform 0.3s;}
+        .card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--amber);transition:height 0.4s;}
+        .card:hover{border-color:rgba(245,166,35,0.2);transform:translateY(-2px);}
+        .card:hover::before{height:100%;}
+        .ctag{font-family:var(--mono);font-size:0.66rem;color:var(--amber);letter-spacing:2px;margin-bottom:16px;opacity:0.7;}
+        .card h3{font-family:var(--display);font-size:1.4rem;font-weight:700;color:#fff;text-transform:uppercase;margin-bottom:12px;line-height:1.05;}
+        .card p{font-size:0.93rem;color:var(--text);line-height:1.72;margin-bottom:16px;}
+        .clist{list-style:none;display:flex;flex-direction:column;gap:7px;}
+        .clist li{font-family:var(--mono);font-size:0.7rem;color:var(--text);letter-spacing:1px;padding-left:16px;position:relative;}
+        .clist li::before{content:'→';position:absolute;left:0;color:var(--amber);}
+
+        /* DESTAQUE CÂMERA TÉRMICA */
+        .feature-big{background:var(--bg2);border:1px solid var(--border);padding:50px 46px;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;margin-bottom:2px;position:relative;overflow:hidden;}
+        .feature-big::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(--amber),var(--green));}
+        .feature-big h3{font-family:var(--display);font-size:2rem;font-weight:900;color:#fff;text-transform:uppercase;line-height:1;margin-bottom:16px;}
+        .feature-big p{font-size:0.95rem;color:var(--text);line-height:1.8;margin-bottom:20px;}
+        .feat-tags{display:flex;flex-wrap:wrap;gap:8px;}
+        .feat-tag{font-family:var(--mono);font-size:0.62rem;letter-spacing:1.5px;text-transform:uppercase;padding:5px 12px;border:1px solid var(--border);color:var(--text);}
+        .feat-tag.active{border-color:var(--amber);color:var(--amber);}
+        .feature-visual{background:#0a0f0a;border:1px solid var(--border);padding:32px;display:flex;flex-direction:column;gap:16px;}
+        .fv-item{display:flex;align-items:flex-start;gap:14px;padding:14px;border:1px solid var(--border);transition:border-color 0.3s;}
+        .fv-item:hover{border-color:rgba(245,166,35,0.2);}
+        .fv-ico{font-family:var(--mono);font-size:1.2rem;color:var(--amber);flex-shrink:0;margin-top:2px;}
+        .fv-item h4{font-family:var(--display);font-size:1rem;font-weight:700;color:#fff;text-transform:uppercase;margin-bottom:4px;}
+        .fv-item p{font-size:0.82rem;color:var(--text);line-height:1.55;}
+
+        /* PROBLEMA → SOLUÇÃO */
+        .ps-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+        .ps-box{padding:36px 32px;border:1px solid var(--border);}
+        .ps-box.prob{background:#0f0808;}
+        .ps-box.sol{background:#080f08;}
+        .ps-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+        .ps-label.prob{color:var(--red);}
+        .ps-label.sol{color:var(--green);}
+        .ps-items{list-style:none;display:flex;flex-direction:column;gap:10px;}
+        .ps-items li{font-size:0.92rem;color:var(--text);line-height:1.6;padding-left:20px;position:relative;}
+        .ps-items.prob li::before{content:'✗';position:absolute;left:0;color:var(--red);font-size:0.8rem;}
+        .ps-items.sol li::before{content:'✓';position:absolute;left:0;color:var(--green);font-size:0.8rem;}
+
+        /* CTA FINAL */
+        .cta-box{background:var(--bg2);border:1px solid rgba(245,166,35,0.2);padding:64px 56px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+        .cta-box h2{font-family:var(--display);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;color:#fff;text-transform:uppercase;line-height:1;margin-bottom:16px;}
+        .clinks{display:flex;flex-direction:column;gap:14px;}
+        .clinks a{font-family:var(--mono);font-size:0.82rem;color:var(--amber);text-decoration:none;letter-spacing:1px;transition:opacity 0.2s;display:flex;align-items:center;gap:10px;}
+        .clinks a:hover{opacity:0.7;}
+
+        /* BLOG PREVIEW */
+        .bpost{background:var(--bg2);border:1px solid var(--border);padding:26px 30px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;text-decoration:none;color:inherit;transition:border-color 0.3s;margin-top:2px;}
+        .bpost:first-of-type{margin-top:0;}
+        .bpost:hover{border-color:rgba(245,166,35,0.2);}
+        .pmeta{font-family:var(--mono);font-size:0.65rem;color:var(--text);letter-spacing:2px;margin-bottom:7px;display:flex;gap:16px;}
+        .ptag{color:var(--amber);}
+        .bpost h3{font-family:var(--display);font-size:1.3rem;font-weight:700;color:#fff;text-transform:uppercase;margin-bottom:5px;line-height:1.1;}
+        .bpost p{font-size:0.86rem;color:var(--text);line-height:1.6;}
+        .barrow{font-family:var(--mono);font-size:1.2rem;color:var(--amber);opacity:0.3;transition:opacity 0.3s;}
+        .bpost:hover .barrow{opacity:1;}
+
+        footer{padding:36px 40px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+        .flogo{font-family:var(--mono);font-size:1rem;color:var(--green);letter-spacing:3px;}
+        .flinks{display:flex;gap:22px;list-style:none;}
+        .flinks a{font-family:var(--mono);font-size:0.67rem;color:#333;text-decoration:none;letter-spacing:1.5px;transition:color 0.2s;}
+        .flinks a:hover{color:var(--amber);}
+        footer p{font-family:var(--mono);font-size:0.65rem;color:#222;letter-spacing:1px;}
+
+        @keyframes fu{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
+
+        @media(max-width:768px){
+            nav{padding:0 20px;}
+            .nl{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--border);padding:24px 20px;gap:20px;}
+            .nl.open{display:flex;}.hb{display:flex;}
+            header{padding:100px 20px 60px;}.wrap{padding:0 20px;}section{padding:70px 0;}
+            .feature-big{grid-template-columns:1fr;}.ps-grid{grid-template-columns:1fr;}
+            .cta-box{grid-template-columns:1fr;padding:36px 24px;gap:28px;}
+            .stat-strip{flex-wrap:wrap;}.bpost{grid-template-columns:1fr;}.barrow{display:none;}
+            footer{padding:28px 20px;flex-direction:column;align-items:flex-start;}
+        }
+    </style>
+
+    <meta property="og:image" content="https://www.bonvolts.com.br/og-image.jpg">
+
+    <meta property="og:site_name" content="BONVOLTS">
+</head>
+<body>
+
+<nav id="nav">
+    <a href="index.html" class="logo">BON<span>VOLTS</span> <span style="color:var(--text);font-size:0.65rem;letter-spacing:2px;margin-left:8px;">AGRO</span></a>
+    <ul class="nl" id="nl">
+        <li><a href="#solucoes">Soluções</a></li>
+        <li><a href="#termica">Câmera Térmica</a></li>
+        <li><a href="#sensores">Sensores</a></li>
+        <li><a href="blog.html">Intel // Blog</a></li>
+        <li><a href="#contato" class="nav-cta">Falar Agora</a></li>
+    </ul>
+    <button class="hb" id="hb" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<header>
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hw">
+        <div class="htag">// Bonvolts Agro — Smart Farm GO</div>
+        <h1 class="htitle">FAZENDA<br><span class="ga">INTELI</span><span class="gg">GENTE</span></h1>
+        <div class="hsub">Automação · Sensores · Monitoramento Remoto</div>
+        <p class="hdesc">
+            Você não precisa estar na fazenda para saber o que está acontecendo nela.
+            <strong>Sensores de solo, câmeras térmicas com IA, automação de irrigação e cochos</strong> —
+            tudo monitorado no celular, de qualquer lugar.
+        </p>
+        <div class="hact">
+            <a href="#contato" class="btn btn-a">Quero uma fazenda inteligente</a>
+            <a href="#solucoes" class="btn btn-o">Ver soluções →</a>
+        </div>
+        <div class="stat-strip">
+            <div class="stat-item"><div class="stat-n">+30%</div><div class="stat-l">Produtividade com IoT</div></div>
+            <div class="stat-item"><div class="stat-n">24/7</div><div class="stat-l">Monitoramento remoto</div></div>
+            <div class="stat-item"><div class="stat-n">GO</div><div class="stat-l">Base Goiás + Nacional</div></div>
+            <div class="stat-item"><div class="stat-n">↓</div><div class="stat-l">Desperdício de água e ração</div></div>
+        </div>
+    </div>
+</header>
+
+<div class="status">
+    <div class="si"><span class="dot"></span> SISTEMA ONLINE</div>
+    <div class="si"><span class="dot a"></span> AGRO 4.0: ALTA DEMANDA EM GO</div>
+    <div class="si"><span class="dot"></span> IoT · CLP · CÂMERA TÉRMICA · IA</div>
+    <div class="si"><span class="dot"></span> BOVINOS · SUÍNOS · LAVOURA · IRRIGAÇÃO</div>
+    <div class="si"><span class="dot a"></span> ESCASSEZ DE MÃO DE OBRA: AUTOMATIZE</div>
+</div>
+
+<!-- PROBLEMA → SOLUÇÃO -->
+<section>
+    <div class="wrap">
+        <div class="stag">// O problema real</div>
+        <h2 class="stitle">O que acontece<br>sem automação</h2>
+        <p class="slead">Antes de implantar tecnologia, os produtores convivem com perdas evitáveis todo dia.</p>
+        <div class="ps-grid">
+            <div class="ps-box prob">
+                <div class="ps-label prob">● Antes — sem automação</div>
+                <ul class="ps-items prob">
+                    <li>Irrigação manual desperdiça água por excesso ou falta</li>
+                    <li>Animal doente só é identificado quando o problema é visível</li>
+                    <li>Contagem de rebanho feita à mão — sujeita a erro</li>
+                    <li>Solo adubado no chute, sem dados reais de pH e umidade</li>
+                    <li>Você precisa estar na fazenda para saber o que está acontecendo</li>
+                    <li>Mão de obra escassa e cara para tarefas repetitivas</li>
+                </ul>
+            </div>
+            <div class="ps-box sol">
+                <div class="ps-label sol">✓ Depois — com Bonvolts Agro</div>
+                <ul class="ps-items sol">
+                    <li>Irrigação automática baseada em sensor de umidade do solo</li>
+                    <li>Câmera térmica detecta febre no animal antes dos sintomas</li>
+                    <li>IA conta o rebanho com precisão, a qualquer hora</li>
+                    <li>Sensores de pH, NPK e temperatura guiam a adubação</li>
+                    <li>Dashboard no celular — fazenda inteira na palma da mão</li>
+                    <li>Automação de cochos e irrigação reduz dependência de pessoal</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SOLUÇÕES -->
+<section id="solucoes">
+    <div class="wrap">
+        <div class="stag">// 01 — Soluções</div>
+        <h2 class="stitle">Tecnologia que<br>o campo entende</h2>
+        <p class="slead">Cada solução é projetada, instalada e comissionada pela Bonvolts — com documentação técnica e suporte.</p>
+        <div class="grid g2">
+            <div class="card">
+                <div class="ctag">[ IRRIGAÇÃO ]</div>
+                <h3>Automação de Irrigação</h3>
+                <p>Irrigação controlada por sensor — fornece a quantidade exata que a cultura precisa, quando precisa. Sem desperdício, sem falta.</p>
+                <ul class="clist">
+                    <li>Sensor de umidade e temperatura do solo</li>
+                    <li>CLP para controle automatizado das bombas</li>
+                    <li>Acionamento por horário ou por demanda do solo</li>
+                    <li>Monitoramento remoto do sistema pelo celular</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="ctag">[ COCHOS ]</div>
+                <h3>Automação de Cochos</h3>
+                <p>Controle automatizado da alimentação — quantidade ideal de ração no momento certo. Menos desperdício, custo reduzido, rebanho saudável.</p>
+                <ul class="clist">
+                    <li>Controle de dosagem por CLP programável</li>
+                    <li>Sensores de nível no cocho</li>
+                    <li>Registro de consumo por lote</li>
+                    <li>Alertas de abastecimento no celular</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="ctag">[ SENSORES DE SOLO ]</div>
+                <h3>Monitoramento do Solo</h3>
+                <p>Sensores de umidade, pH e temperatura do solo em tempo real — dados que guiam cada decisão agronômica com precisão.</p>
+                <ul class="clist">
+                    <li>Sensores de umidade volumétrica do solo</li>
+                    <li>Sensores de pH e nutrientes (NPK)</li>
+                    <li>Temperatura do solo em múltiplas profundidades</li>
+                    <li>Dashboard com histórico e tendências</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="ctag">[ ENERGIA SOLAR ]</div>
+                <h3>Energia Limpa na Fazenda</h3>
+                <p>Solar para alimentar toda a automação — bombas, sensores, câmeras e CLPs funcionando sem depender da concessionária em área remota.</p>
+                <ul class="clist">
+                    <li>Dimensionamento fotovoltaico off-grid e on-grid</li>
+                    <li>Sistemas isolados para pontos remotos da propriedade</li>
+                    <li>Integração com banco de baterias</li>
+                    <li>Monitoramento de geração em tempo real</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CÂMERA TÉRMICA — DESTAQUE -->
+<section id="termica">
+    <div class="wrap">
+        <div class="stag">// 02 — Tecnologia de ponta</div>
+        <h2 class="stitle">Câmera Térmica<br>& Inteligência<br>Artificial</h2>
+        <div class="feature-big">
+            <div>
+                <h3>Veja o que o olho humano não vê</h3>
+                <p>Câmeras térmicas identificam variações de temperatura em animais e lavouras — detectando problemas antes que se tornem prejuízo. A IA processa as imagens e gera alertas automáticos.</p>
+                <p>Uma vaca com febre de 39.5°C parece normal a olho nu. Numa câmera térmica, ela brilha diferente de todas as outras. Você recebe o alerta no celular antes de perder o animal.</p>
+                <div class="feat-tags">
+                    <span class="feat-tag active">Detecção de febre</span>
+                    <span class="feat-tag active">Contagem de rebanho</span>
+                    <span class="feat-tag active">Estresse hídrico na lavoura</span>
+                    <span class="feat-tag active">Detecção de pragas</span>
+                    <span class="feat-tag">Monitoramento 24/7</span>
+                    <span class="feat-tag">Alerta automático</span>
+                </div>
+            </div>
+            <div class="feature-visual">
+                <div class="fv-item">
+                    <div class="fv-ico">🌡</div>
+                    <div>
+                        <h4>Saúde do Rebanho</h4>
+                        <p>Detecta febre em bovinos, suínos e aves antes dos sintomas clínicos. Intervenção precoce reduz mortalidade e custo veterinário.</p>
+                    </div>
+                </div>
+                <div class="fv-item">
+                    <div class="fv-ico">🔢</div>
+                    <div>
+                        <h4>Contagem por IA</h4>
+                        <p>Inteligência artificial processa as imagens e conta o rebanho com precisão — sem erros humanos, sem precisar reunir os animais.</p>
+                    </div>
+                </div>
+                <div class="fv-item">
+                    <div class="fv-ico">🌾</div>
+                    <div>
+                        <h4>Lavoura Inteligente</h4>
+                        <p>Identifica zonas de estresse hídrico e áreas infestadas por pragas antes de serem visíveis — permitindo intervenção cirúrgica na área afetada.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SENSORES AMBIENTAIS -->
+<section id="sensores">
+    <div class="wrap">
+        <div class="stag">// 03 — Sensores ambientais</div>
+        <h2 class="stitle">Dados reais.<br>Decisões certas.</h2>
+        <p class="slead">Antes da automação, os produtores adubavam e irrigavam no chute. Com sensores, cada decisão tem dado por trás.</p>
+        <div class="grid g3">
+            <div class="card">
+                <div class="ctag">[ UMIDADE ]</div>
+                <h3>Solo e Ar</h3>
+                <p>Umidade do solo em tempo real — irrigação só quando necessário. Economia de água de até 40% comprovada em campo.</p>
+            </div>
+            <div class="card">
+                <div class="ctag">[ pH & NUTRIENTES ]</div>
+                <h3>NPK e pH</h3>
+                <p>Mapeamento de nutrientes no solo. Adubação baseada em dado, não em estimativa. Menos insumo, mais produção.</p>
+            </div>
+            <div class="card">
+                <div class="ctag">[ TEMPERATURA ]</div>
+                <h3>Solo e Ambiente</h3>
+                <p>Temperatura do solo em múltiplas profundidades. Identificação de zonas problemáticas antes de afetar a produção.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BLOG PREVIEW -->
+<section>
+    <div class="wrap">
+        <div class="stag">// 04 — Intel Agro</div>
+        <h2 class="stitle">Do campo<br>para você</h2>
+        <p class="slead">Conteúdo tático sobre automação rural e tecnologia no agro. Sem enrolação.</p>
+        <a href="blog.html" class="bpost">
+            <div><div class="pmeta"><span class="ptag">● AUTOMAÇÃO RURAL</span><span>JAN 2026</span><span>7 MIN</span></div><h3>Automação de irrigação em Goiás: quanto custa e quanto economiza</h3><p>Números reais de projetos executados no cerrado goiano. O investimento e o retorno em meses.</p></div>
+            <div class="barrow">→</div>
+        </a>
+        <a href="blog.html" class="bpost">
+            <div><div class="pmeta"><span class="ptag">● SAÚDE ANIMAL</span><span>DEZ 2025</span><span>6 MIN</span></div><h3>Câmera térmica no rebanho: como funciona na prática</h3><p>Como instalamos em uma fazenda em Goiás e o que encontramos nas primeiras 48 horas de operação.</p></div>
+            <div class="barrow">→</div>
+        </a>
+        <a href="blog.html" class="bpost">
+            <div><div class="pmeta"><span class="ptag">● SENSORES</span><span>DEZ 2025</span><span>5 MIN</span></div><h3>Sensor de solo: qual escolher para cada cultura no Cerrado</h3><p>Soja, milho, pastagem — cada cultura tem uma demanda diferente. O guia prático de especificação.</p></div>
+            <div class="barrow">→</div>
+        </a>
+        <div style="margin-top:28px"><a href="blog.html" class="btn btn-o">Ver todos os artigos →</a></div>
+    </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+    <div class="wrap">
+        <div class="cta-box">
+            <div>
+                <div class="stag">// Fale com a Bonvolts Agro</div>
+                <h2>Sua fazenda pode ser mais inteligente.</h2>
+                <p style="font-size:0.95rem;color:var(--text);line-height:1.8;">Manda a localização da propriedade e o que você quer monitorar ou automatizar. A gente faz o diagnóstico e manda a proposta — sem visita cobrada.</p>
+            </div>
+            <div class="clinks">
+                <a href="https://wa.me/5562999050403">📱 (62) 99905-0403 — WhatsApp</a>
+                <a href="/cdn-cgi/l/email-protection#e4808d9681908b968d85a4868b8a928b889097ca878b89ca8696">✉ <span class="__cf_email__" data-cfemail="4e2a273c2b3a213c272f0e2c21203821223a3d602d2123602c3c">[email&#160;protected]</span></a>
+                <a href="index.html">🌐 Ver todos os serviços →</a>
+                <p style="font-family:var(--mono);font-size:0.67rem;color:#2a2a2a;letter-spacing:1px;margin-top:4px;">Anápolis-GO · Atendimento em todo o Cerrado</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="flogo">BONVOLTS AGRO</div>
+    <ul class="flinks">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="#solucoes">Soluções</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="#contato">Contato</a></li>
+    </ul>
+    <p>&copy; 2026 BONVOLTS — Fazenda Inteligente GO.</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    document.getElementById('h
