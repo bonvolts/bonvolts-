@@ -83,7 +83,7 @@
         .seg{background:var(--bg2);border:1px solid var(--border);padding:28px 24px;display:flex;align-items:flex-start;gap:14px;transition:border-color 0.3s;}
         .seg:hover{border-color:rgba(0,255,204,0.18);}
         .seg-ico{font-size:1.3rem;flex-shrink:0;margin-top:2px;}
-        .seg h4{font-family:var(--display);font-size:1.1rem;font-weight:700;color:#fff;text-transform:uppercase;margin-bottom:4px;}
+        .seg h4,.seg-h{font-family:var(--display);font-size:1.1rem;font-weight:700;color:#fff;text-transform:uppercase;margin-bottom:4px;}
         .seg p{font-size:0.82rem;color:var(--text);line-height:1.55;}
         .diff-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;}
         .diff{background:var(--bg2);border:1px solid var(--border);padding:34px 28px;text-align:center;}
@@ -147,7 +147,7 @@
 <header>
     <div class="hw">
         <div class="htag" id="fomo">root@bonvolts:~# ./iniciar_sistema.sh ▮</div>
-        <h1 class="htitle"><span class="g-metal">B</span>ON<span class="g-metal">VOLTS</span></h1>
+        <h1 class="htitle" aria-label="BONVOLTS — Energia, Automação e Segurança Industrial Anápolis GO"><span class="g-metal">B</span>ON<span class="g-metal">VOLTS</span></h1>
         <div class="hsub">Energia · Automação · Monitoramento</div>
         <p class="hdesc">Do campo à indústria — instalações elétricas, automação com <strong>CLPs e IHMs</strong>, quadros <strong>QGBT / QDC / CCM</strong>, sensores industriais, energia solar e <strong>monitoramento remoto</strong>. Tudo integrado, tudo documentado.</p>
         <div class="hact">
@@ -258,11 +258,11 @@
         <h2 class="stitle">Do campo<br>à cidade</h2>
         <p class="slead">A Bonvolts atua onde energia e tecnologia são críticas — do agronegócio ao data center.</p>
         <div class="seg-grid">
-            <div class="seg"><div class="seg-ico">🌾</div><div><h4>Agronegócio</h4><p>Automação de irrigação, quadros rurais, sensores e monitoramento remoto de propriedades.</p></div></div>
-            <div class="seg"><div class="seg-ico">⚙️</div><div><h4>Indústria</h4><p>CLPs, CCMs, automação de processos, segurança OT e infraestrutura elétrica industrial.</p></div></div>
-            <div class="seg"><div class="seg-ico">🏪</div><div><h4>Comércio</h4><p>Quadros comerciais, eficiência energética, solar e monitoramento de consumo.</p></div></div>
-            <div class="seg"><div class="seg-ico">🏠</div><div><h4>Residencial</h4><p>Projetos elétricos, automação residencial, solar e laudos técnicos com documentação.</p></div></div>
-            <div class="seg"><div class="seg-ico">🖥️</div><div><h4>Data Centers</h4><p>Cargas críticas, UPS industrial, redundância elétrica e segurança de infraestrutura.</p></div></div>
+            <div class="seg"><div class="seg-ico">🌾</div><div><h3 class="seg-h">Agronegócio</h3><p>Automação de irrigação, quadros rurais, sensores e monitoramento remoto de propriedades.</p></div></div>
+            <div class="seg"><div class="seg-ico">⚙️</div><div><h3 class="seg-h">Indústria</h3><p>CLPs, CCMs, automação de processos, segurança OT e infraestrutura elétrica industrial.</p></div></div>
+            <div class="seg"><div class="seg-ico">🏪</div><div><h3 class="seg-h">Comércio</h3><p>Quadros comerciais, eficiência energética, solar e monitoramento de consumo.</p></div></div>
+            <div class="seg"><div class="seg-ico">🏠</div><div><h3 class="seg-h">Residencial</h3><p>Projetos elétricos, automação residencial, solar e laudos técnicos com documentação.</p></div></div>
+            <div class="seg"><div class="seg-ico">🖥️</div><div><h3 class="seg-h">Data Centers</h3><p>Cargas críticas, UPS industrial, redundância elétrica e segurança de infraestrutura.</p></div></div>
         </div>
     </div>
 </section>
