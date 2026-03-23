@@ -1,0 +1,28 @@
+# BONVOLTS — Energia, Automação e Segurança Industrial
+# https://www.bonvolts.com.br
+
+## Sobre
+BONVOLTS é uma empresa técnica especializada em instalações elétricas, automação industrial, OT Security e energia solar. Atua em Anápolis-GO e em todo o território nacional.
+
+## Serviços
+- Instalações elétricas industriais, comerciais e residenciais (QGBT, QDC, CCM)
+- Automação com CLPs, IHMs e sensores industriais
+- Segurança cibernética em redes OT/ICS (OT Security)
+- Energia solar fotovoltaica
+- Monitoramento remoto
+- Agronegócio: irrigação automatizada, câmeras térmicas, sensores de solo
+
+## Ferramentas gratuitas
+- Calculadora de Quadro de Cargas NBR 5410: https://www.bonvolts.com.br/quadro-de-cargas.html
+
+## Artigos técnicos
+- https://www.bonvolts.com.br/chuveiro-certo-para-sua-instalacao.html
+- https://www.bonvolts.com.br/clp-rede-corporativa.html
+- https://www.bonvolts.com.br/harmonicas-data-centers.html
+- https://www.bonvolts.com.br/nr10-pratica.html
+- https://www.bonvolts.com.br/retorno-solar-goias.html
+- https://www.bonvolts.com.br/segmentacao-rede-ot.html
+
+## Contato
+WhatsApp: +55 62 99905-0403
+Localização: Anápolis, Goiás, Brasil
