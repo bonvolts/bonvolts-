@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensor de solo: qual escolher para cada cultura no Cerrado</title>
+    <meta name="description" content="Guia técnico de sensores de umidade de solo para soja, milho, pastagem e café no Cerrado. Tensiômetro, capacitivo e Watermark — diferenças, instalação e conectividade.">
+    <meta name="keywords" content="sensor umidade solo Cerrado, tensiômetro irrigação, sensor capacitivo solo, monitoramento solo soja milho, irrigação inteligente Goiás, sensor solo pastagem">
+    <link rel="canonical" href="https://www.bonvolts.com.br/sensor-solo-cerrado.html">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.bonvolts.com.br/sensor-solo-cerrado.html">
+    <meta property="og:title" content="Sensor de solo: qual escolher para cada cultura no Cerrado">
+    <meta property="og:description" content="Guia técnico de sensores de umidade de solo para soja, milho, pastagem e café no Cerrado goiano.">
+    <meta property="og:site_name" content="BONVOLTS">
+    <meta property="og:locale" content="pt_BR">
+    <meta name="robots" content="index, follow">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root{--green:#00ffcc;--red:#ff2d55;--amber:#f5a623;--bg:#080808;--bg2:#0f0f0f;--border:#1e1e1e;--text:#a0a8b0;--bright:#d8dde3;--mono:'Share Tech Mono',monospace;--display:'Barlow Condensed',sans-serif;--body:'Barlow',sans-serif;}
+        *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+        body{background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden;line-height:1.6;}
+        body::before{display:none;}
+
+        nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,8,8,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);height:60px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;}
+        .logo{font-family:var(--mono);font-size:1.1rem;color:var(--green);text-decoration:none;letter-spacing:3px;}
+        .nl{display:flex;gap:28px;list-style:none;align-items:center;}
+        .nl a{font-family:var(--mono);font-size:0.73rem;color:var(--text);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;}
+        .nl a:hover{color:var(--green);}
+        .nav-cta{color:var(--green)!important;border:1px solid var(--green);padding:6px 14px!important;}
+        .nav-cta:hover{background:var(--green)!important;color:var(--bg)!important;}
+        .hb{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+        .hb span{display:block;width:22px;height:1.5px;background:var(--green);}
+
+        /* HERO */
+        .post-hero{padding:110px 40px 56px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+        .post-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,204,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,204,0.02) 1px,transparent 1px);background-size:60px 60px;}
+        .phi{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+        .breadcrumb{font-family:var(--mono);font-size:0.68rem;color:var(--text);letter-spacing:2px;margin-bottom:22px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+        .breadcrumb a{color:var(--green);text-decoration:none;}
+        .breadcrumb span{opacity:0.4;}
+        .post-cat{font-family:var(--mono);font-size:0.7rem;color:var(--red);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+        .post-cat::before{content:'●';}
+        .post-title{font-family:var(--display);font-size:clamp(2.2rem,6vw,4.5rem);font-weight:900;color:#fff;text-transform:uppercase;line-height:0.95;letter-spacing:-1px;margin-bottom:22px;}
+        .post-lead{font-size:1.15rem;color:var(--bright);line-height:1.75;max-width:680px;margin-bottom:30px;}
+        .post-meta{display:flex;gap:28px;align-items:center;flex-wrap:wrap;padding-top:22px;border-top:1px solid var(--border);}
+        .meta-item{font-family:var(--mono);font-size:0.67rem;color:#444;letter-spacing:2px;text-transform:uppercase;}
+        .meta-item strong{color:var(--text);}
+
+        /* LAYOUT */
+        .wrap{max-width:1100px;margin:0 auto;padding:0 40px;}
+        .post-layout{display:grid;grid-template-columns:1fr 300px;gap:60px;padding:60px 0 80px;}
+
+        /* CONTEÚDO */
+        .post-content h2{font-family:var(--display);font-size:2rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:-0.3px;margin:52px 0 18px;padding-bottom:14px;border-bottom:1px solid var(--border);line-height:1;}
+        .post-content h3{font-family:var(--display);font-size:1.4rem;font-weight:700;color:var(--bright);text-transform:uppercase;margin:34px 0 12px;}
+        .post-content p{font-size:1.05rem;color:var(--text);line-height:1.85;margin-bottom:20px;}
+        .post-content strong{color:var(--bright);}
+        .post-content em{color:var(--green);font-style:normal;font-family:var(--mono);font-size:0.9em;}
+        .post-content ul,.post-content ol{padding-left:0;margin:18px 0 22px;list-style:none;display:flex;flex-direction:column;gap:10px;}
+        .post-content li{font-size:1.05rem;color:var(--text);line-height:1.7;padding-left:22px;position:relative;}
+        .post-content ul li::before{content:'→';position:absolute;left:0;color:var(--green);font-family:var(--mono);}
+        .post-content ol{counter-reset:item;}
+        .post-content ol li{counter-increment:item;}
+        .post-content ol li::before{content:counter(item,decimal-leading-zero);position:absolute;left:0;color:var(--green);font-family:var(--mono);font-size:0.8rem;top:3px;}
+
+        /* CALLOUTS */
+        .callout{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--green);padding:22px 26px;margin:28px 0;}
+        .callout.red{border-left-color:var(--red);}
+        .callout.amber{border-left-color:var(--amber);}
+        .callout-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+        .callout-label.green{color:var(--green);}
+        .callout-label.red{color:var(--red);}
+        .callout-label.amber{color:var(--amber);}
+        .callout p{margin:0;font-size:1rem;}
+
+        /* TABELA */
+        .table-wrap{overflow-x:auto;margin:28px 0;}
+        table{width:100%;border-collapse:collapse;font-size:0.92rem;}
+        thead tr{background:var(--bg2);border-bottom:1px solid var(--border);}
+        thead th{font-family:var(--mono);font-size:0.67rem;letter-spacing:2px;text-transform:uppercase;color:var(--green);padding:14px 16px;text-align:left;font-weight:400;}
+        tbody tr{border-bottom:1px solid var(--border);transition:background 0.2s;}
+        tbody tr:hover{background:rgba(255,255,255,0.02);}
+        tbody td{padding:14px 16px;color:var(--text);line-height:1.5;}
+        tbody td strong{color:var(--bright);}
+        .ok{color:var(--green)!important;font-family:var(--mono);}
+        .warn{color:var(--amber)!important;font-family:var(--mono);}
+        .bad{color:var(--red)!important;font-family:var(--mono);}
+
+        /* DIVISOR */
+        .divider{border:none;border-top:1px solid var(--border);margin:44px 0;}
+
+        /* CHECKLIST */
+        .checklist{background:var(--bg2);border:1px solid var(--border);padding:30px;margin:28px 0;}
+        .checklist-title{font-family:var(--display);font-size:1.1rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+        .checklist-title::before{content:'☑';color:var(--green);}
+        .checklist ul{margin:0;}
+        .checklist li::before{content:'☐';color:var(--green);}
+
+        /* CTA INLINE */
+        .cta-inline{background:var(--bg2);border:1px solid rgba(0,255,204,0.15);padding:34px 30px;margin:44px 0;display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap;}
+        .cta-inline p{margin:0;font-size:1rem;color:var(--bright);flex:1;line-height:1.5;}
+        .btn{display:inline-block;font-family:var(--mono);font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;padding:12px 22px;transition:all 0.3s;cursor:pointer;border:none;}
+        .btn-p{background:var(--green);color:var(--bg);}
+        .btn-p:hover{background:#fff;}
+        .btn-o{background:transparent;color:var(--green);border:1px solid var(--green);}
+        .btn-o:hover{background:rgba(0,255,204,0.07);}
+
+        /* TAGS */
+        .post-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:44px;padding-top:26px;border-top:1px solid var(--border);}
+        .post-tag{font-family:var(--mono);font-size:0.62rem;letter-spacing:1.5px;text-transform:uppercase;padding:5px 11px;border:1px solid var(--border);color:var(--text);text-decoration:none;transition:all 0.2s;}
+        .post-tag:hover{border-color:var(--green);color:var(--green);}
+
+        /* SIDEBAR */
+        .sidebar{position:sticky;top:80px;align-self:start;display:flex;flex-direction:column;gap:2px;}
+        .sb{background:var(--bg2);border:1px solid var(--border);padding:24px;}
+        .sbt{font-family:var(--mono);font-size:0.67rem;color:var(--green);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+        .sbl{list-style:none;display:flex;flex-direction:column;gap:12px;}
+        .sbl a{font-family:var(--mono);font-size:0.68rem;color:var(--text);text-decoration:none;letter-spacing:1px;transition:color 0.2s;line-height:1.4;}
+        .sbl a:hover{color:var(--green);}
+        .progress-bar{height:2px;background:var(--border);margin-bottom:16px;overflow:hidden;}
+        .progress-fill{height:100%;background:var(--green);width:0%;transition:width 0.1s;}
+        .progress-label{font-family:var(--mono);font-size:0.62rem;color:#333;letter-spacing:2px;margin-bottom:8px;}
+
+        /* RELATED */
+        .related{padding:56px 0;border-top:1px solid var(--border);}
+        .related-title{font-family:var(--display);font-size:1.8rem;font-weight:700;color:#fff;text-transform:uppercase;margin-bottom:24px;}
+        .rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;}
+        .rc{background:var(--bg2);border:1px solid var(--border);padding:26px;text-decoration:none;color:inherit;transition:border-color 0.3s;display:block;}
+        .rc:hover{border-color:rgba(0,255,204,0.2);}
+        .rc-cat{font-family:var(--mono);font-size:0.63rem;color:var(--green);letter-spacing:2px;margin-bottom:10px;}
+        .rc h4{font-family:var(--display);font-size:1.2rem;font-weight:700;color:#fff;text-transform:uppercase;line-height:1.1;margin-bottom:8px;}
+        .rc p{font-size:0.85rem;color:var(--text);line-height:1.6;}
+
+        footer{padding:36px 40px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+        .flogo{font-family:var(--mono);font-size:1rem;color:var(--green);letter-spacing:3px;}
+        .flinks{display:flex;gap:22px;list-style:none;}
+        .flinks a{font-family:var(--mono);font-size:0.67rem;color:#333;text-decoration:none;letter-spacing:1.5px;transition:color 0.2s;}
+        .flinks a:hover{color:var(--green);}
+        footer p{font-family:var(--mono);font-size:0.65rem;color:#252525;letter-spacing:1px;}
+
+        @media(max-width:768px){
+            nav{padding:0 20px;}.nl{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--border);padding:24px 20px;gap:20px;}
+            .nl.open{display:flex;}.hb{display:flex;}
+            .post-hero{padding:100px 20px 48px;}.wrap{padding:0 20px;}
+            .post-layout{grid-template-columns:1fr;}.sidebar{position:static;}
+            .cta-inline{flex-direction:column;align-items:flex-start;}
+            footer{padding:28px 20px;flex-direction:column;align-items:flex-start;}
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="index.html" class="logo">BON<span style="color:var(--green)">VOLTS</span></a>
+    <ul class="nl" id="nl">
+        <li><a href="index.html#servicos">Serviços</a></li>
+        <li><a href="index.html#segmentos">Segmentos</a></li>
+        <li><a href="blog.html">Intel // Blog</a></li>
+        <li><a href="index.html#contato" class="nav-cta">Consultoria</a></li>
+    </ul>
+    <button class="hb" id="hb" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="post-hero">
+    <div class="phi">
+        <div class="breadcrumb"><a href="index.html">Bonvolts</a><span>/</span><a href="fazenda-inteligente.html">Agro</a><span>/</span><span>Sensor de Solo no Cerrado</span></div>
+        <div class="post-cat">Sensores</div>
+        <h1 class="post-title">Sensor de solo: qual<br>escolher para cada<br>cultura no Cerrado</h1>
+        <p class="post-lead">Soja, milho, pastagem, café — cada cultura tem uma demanda hídrica e uma profundidade radicular diferente. O guia prático de especificação, posicionamento e conectividade para o solo do Cerrado goiano.</p>
+        <div class="post-meta">
+            <div class="meta-item">DATA <strong>DEZ 2025</strong></div>
+            <div class="meta-item">LEITURA <strong>5 MIN</strong></div>
+            <div class="meta-item">POR <strong>BONVOLTS</strong></div>
+            <div class="meta-item">CATEGORIA <strong>SENSORES</strong></div>
+        </div>
+    </div>
+</div>
+<div class="wrap">
+    <div class="post-layout">
+        <article class="post-content">
+
+            <h2>Por que a escolha do sensor importa mais do que o preço</h2>
+            <p>Sensor de umidade de solo errado para a cultura e o tipo de solo é pior do que não ter sensor nenhum — porque você toma decisões de irrigação com base em dados incorretos. Um tensiômetro mal posicionado em solo arenoso, um sensor capacitivo sem calibração para solo argiloso do Cerrado, ou um sensor instalado fora da zona radicular ativa vão gerar leituras que não representam a realidade da planta.</p>
+            <p>O Cerrado goiano tem características específicas que afetam a escolha: solo argiloso ou argilo-arenoso na maioria das regiões, variação de textura entre camadas, e solos com alta variabilidade espacial mesmo dentro de um mesmo talhão. O sensor certo para a sua situação depende da cultura, do solo e do objetivo de manejo.</p>
+
+            <div class="callout">
+                <div class="callout-label green">// O que o sensor mede de fato</div>
+                <p>Existem dois parâmetros distintos: <strong>umidade volumétrica</strong> (m³ de água por m³ de solo, em %) e <strong>tensão mátrica</strong> (força com que o solo retém a água, em kPa ou cbar). A planta responde à tensão, não ao volume. Sensores capacitivos medem umidade; tensiômetros medem tensão. Os dois são úteis — para fins diferentes.</p>
+            </div>
+
+            <h2>Tipos de sensor — características e aplicações</h2>
+
+            <h3>Tensiômetro — o mais próximo do que a planta sente</h3>
+            <p>O tensiômetro mede diretamente a tensão mátrica — a energia que a planta gasta para extrair água do solo. É o sensor com maior correlação com o status hídrico real da cultura. Funciona por uma cápsula porosa em contato com o solo: quando o solo seca, cria sucção que é medida por manômetro ou transdutor eletrônico.</p>
+            <ul>
+                <li><strong>Vantagem:</strong> mede o parâmetro que a planta realmente sente, sem necessidade de calibração por tipo de solo</li>
+                <li><strong>Desvantagem:</strong> requer manutenção periódica (reposição de água na coluna), faixa limitada até ~80 kPa (perde contato hidráulico em solos muito secos)</li>
+                <li><strong>Melhor para:</strong> horticultura, fruticultura, café, feijão — culturas sensíveis ao déficit hídrico</li>
+            </ul>
+
+            <h3>Sensor capacitivo (FDR/TDR) — prático e sem manutenção</h3>
+            <p>Sensores capacitivos medem a constante dielétrica do solo, que varia com o teor de água. São robustos, não requerem manutenção e podem ser deixados no campo por anos. A limitação é que a leitura depende da textura e composição do solo — um sensor calibrado para solo arenoso lido em solo argiloso dará valores incorretos.</p>
+            <ul>
+                <li><strong>Vantagem:</strong> sem manutenção, longa durabilidade, pode ser conectado a datalogger para monitoramento contínuo</li>
+                <li><strong>Desvantagem:</strong> necessita calibração específica para o solo da área — calibração genérica gera erro de até 10 pontos percentuais</li>
+                <li><strong>Melhor para:</strong> grãos (soja, milho), pastagem, sistemas com telemetria e monitoramento remoto</li>
+            </ul>
+
+            <h3>Watermark — robusto para solos argilosos do Cerrado</h3>
+            <p>O Watermark é um sensor de resistência elétrica que mede tensão mátrica, similar ao tensiômetro mas sem manutenção de água. É especialmente adequado para solos argilosos do Cerrado porque funciona bem na faixa de tensão relevante para a maioria das culturas (0–200 cbar) sem perder contato hidráulico.</p>
+            <ul>
+                <li><strong>Vantagem:</strong> sem manutenção, robusto, faixa maior que o tensiômetro convencional</li>
+                <li><strong>Desvantagem:</strong> sensível à salinidade do solo e à temperatura — requer correção em alguns casos</li>
+                <li><strong>Melhor para:</strong> pastagem, cana, culturas em solos argilosos de média profundidade</li>
+            </ul>
+
+            <h2>Por cultura — qual sensor e onde instalar</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Cultura</th><th>Tensão ideal</th><th>Profundidade do sensor</th><th>Sensor recomendado</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Soja</strong></td><td>20–40 kPa</td><td>30 e 60 cm</td><td>Capacitivo calibrado ou Watermark</td></tr>
+                        <tr><td><strong>Milho</strong></td><td>25–50 kPa</td><td>30 e 60 cm</td><td>Tensiômetro ou capacitivo</td></tr>
+                        <tr><td><strong>Feijão</strong></td><td>20–35 kPa</td><td>20 e 40 cm</td><td>Tensiômetro (cultura sensível)</td></tr>
+                        <tr><td><strong>Pastagem (Brachiaria)</strong></td><td>50–80 kPa</td><td>20 e 40 cm</td><td>Watermark ou capacitivo simples</td></tr>
+                        <tr><td><strong>Café</strong></td><td>30–60 kPa</td><td>30 e 60 cm</td><td>Tensiômetro eletrônico</td></tr>
+                        <tr><td><strong>Tomate (irrigado)</strong></td><td>15–25 kPa</td><td>20 e 40 cm</td><td>Tensiômetro (muito sensível)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Onde instalar — posição é mais importante que o tipo</h2>
+            <p>A posição do sensor no perfil de solo e no talhão determina a qualidade da informação tanto quanto o tipo de sensor escolhido. Os erros mais comuns:</p>
+            <ul>
+                <li><strong>Profundidade errada:</strong> instalar tudo a 20cm quando a zona radicular ativa da soja está a 40–60cm — o sensor lê a camada superficial que seca e molha rápido, não a zona que a planta realmente usa</li>
+                <li><strong>Posição em ponto atípico:</strong> instalar no baixio ou no ponto mais alto do talhão — a leitura não representa a média da área</li>
+                <li><strong>Muito próximo ao emissor de gotejamento:</strong> a leitura fica sempre úmida independente do status real do perfil</li>
+                <li><strong>Uma profundidade só:</strong> usar dois sensores em profundidades diferentes permite ver se a frente de molhamento está chegando onde deve — fundamental para calibrar a lâmina de irrigação</li>
+            </ul>
+
+            <div class="callout amber">
+                <div class="callout-label amber">⚠ Regra prática</div>
+                <p>Instale sempre dois sensores por ponto de monitoramento: um na zona de máxima absorção radicular (30–40 cm para a maioria das culturas) e um abaixo da zona radicular (60–80 cm). Quando o sensor mais fundo começar a ler umidade, você passou da lâmina ideal — está perdendo água por percolação.</p>
+            </div>
+
+            <h2>Conectividade e telemetria — do sensor ao celular</h2>
+            <p>Sensor sem leitura automatizada exige idas periódicas ao campo para coletar os dados — o que reduz a frequência de leitura e perde os eventos noturnos. As opções de conectividade para o Cerrado:</p>
+            <ul>
+                <li><strong>4G/LTE:</strong> funciona onde tem sinal de celular — cobre a maioria das fazendas próximas a centros urbanos em Goiás</li>
+                <li><strong>LoRaWAN:</strong> rádio de longo alcance (até 15 km sem obstáculos), baixo consumo de bateria — ideal para áreas sem cobertura celular</li>
+                <li><strong>Satélite:</strong> cobertura universal, custo mais alto — para fazendas em áreas remotas sem nenhuma cobertura terrestre</li>
+            </ul>
+
+            <div class="cta-inline">
+                <p>A Bonvolts especifica, instala e integra sensores de solo ao sistema de automação de irrigação — com telemetria e acesso pelo celular.</p>
+                <a href="https://wa.me/5562999050403" class="btn btn-p">Solicitar Especificação →</a>
+            </div>
+
+            <div class="post-tags">
+                <a href="blog.html" class="post-tag">Sensores</a>
+                <a href="blog.html" class="post-tag">Irrigação</a>
+                <a href="blog.html" class="post-tag">Cerrado</a>
+                <a href="blog.html" class="post-tag">Soja</a>
+                <a href="blog.html" class="post-tag">Agro Goiás</a>
+            </div>
+        </article>
+        <aside class="sidebar">
+            <div class="sb">
+                <div class="progress-label">PROGRESSO</div>
+                <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+                <div class="sbt">Neste artigo</div>
+                <ul class="sbl" id="toc"></ul>
+            </div>
+            <div class="sb">
+                <div class="sbt">Precisa de ajuda?</div>
+                <ul class="sbl">
+                    <li><a href="fazenda-inteligente.html">Bonvolts Agro →</a></li>
+                    <li><a href="https://wa.me/5562999050403">WhatsApp direto →</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+    <div class="related">
+        <div class="related-title">Leia também</div>
+        <div class="rg">
+            <a href="automacao-irrigacao-goias.html" class="rc"><div class="rc-cat">AUTOMAÇÃO RURAL</div><h4>Automação de irrigação em Goiás</h4><p>Custo e retorno real no Cerrado goiano.</p></a>
+            <a href="camera-termica-rebanho.html" class="rc"><div class="rc-cat">SAÚDE ANIMAL</div><h4>Câmera térmica no rebanho: como funciona na prática</h4><p>Mastite subclínica e detecção de cio antes dos sintomas.</p></a>
+            <a href="retorno-solar-goias.html" class="rc"><div class="rc-cat">SOLAR</div><h4>Retorno real do solar em Goiás</h4><p>Os números que o vendedor não mostra.</p></a>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="flogo">BONVOLTS</div>
+    <ul class="flinks">
+        <li><a href="index.html#servicos">Serviços</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+    <p>&copy; 2026 BONVOLTS — Energia, Automação e Monitoramento.</p>
+</footer>
+<script>
+    document.getElementById('hb').addEventListener('click',()=>document.getElementById('nl').classList.toggle('open'));
+    document.querySelectorAll('#nl a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nl').classList.remove('open')));
+    window.addEventListener('scroll',()=>{
+        const el=document.documentElement;
+        document.getElementById('pf').style.width=(el.scrollTop/(el.scrollHeight-el.clientHeight)*100)+'%';
+    });
+    const toc=document.getElementById('toc');
+    document.querySelectorAll('.post-content h2').forEach((h,i)=>{
+        h.id='sec-'+i;
+        const li=document.createElement('li');
+        const a=document.createElement('a');
+        a.href='#sec-'+i;
+        a.textContent=h.textContent;
+        li.appendChild(a);
+        toc.appendChild(li);
+    });
+</script>
+</body>
+</html>
