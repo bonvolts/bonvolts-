@@ -15,7 +15,12 @@ BONVOLTS é uma empresa técnica especializada em instalações elétricas, auto
 ## Ferramentas gratuitas
 - Calculadora de Quadro de Cargas NBR 5410: https://www.bonvolts.com.br/quadro-de-cargas.html
 
-## Artigos técnicos
+## Artigos técnicos e páginas de serviço
+- https://www.bonvolts.com.br/eletricista-anapolis.html
+- https://www.bonvolts.com.br/fazenda-inteligente.html
+- https://www.bonvolts.com.br/automacao-irrigacao-goias.html
+- https://www.bonvolts.com.br/camera-termica-rebanho.html
+- https://www.bonvolts.com.br/sensor-solo-cerrado.html
 - https://www.bonvolts.com.br/chuveiro-certo-para-sua-instalacao.html
 - https://www.bonvolts.com.br/clp-rede-corporativa.html
 - https://www.bonvolts.com.br/harmonicas-data-centers.html
@@ -24,5 +29,5 @@ BONVOLTS é uma empresa técnica especializada em instalações elétricas, auto
 - https://www.bonvolts.com.br/segmentacao-rede-ot.html
 
 ## Contato
-WhatsApp: +55 62 99905-0403
+WhatsApp: +55 62 99834-2336
 Localização: Anápolis, Goiás, Brasil

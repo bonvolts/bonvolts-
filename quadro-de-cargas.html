@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -252,7 +252,7 @@ footer p{font-family:var(--mono);font-size:0.62rem;color:#222;letter-spacing:1px
 
 <footer>
     <p>© 2026 BONVOLTS — Ferramenta gratuita. Valores calculados conforme NBR 5410. Sempre valide com profissional habilitado.</p>
-    <p>Anápolis-GO · (62) 99905-0403</p>
+    <p>Anápolis-GO · (62) 99834-2336</p>
 </footer>
 
 <script>
@@ -582,7 +582,7 @@ function gerarPDF(){
     fy += 18;
     doc.setDrawColor(26,26,46);doc.line(14,fy,406,fy);
     doc.setFontSize(7);doc.setTextColor(30,30,40);doc.setFont('helvetica','normal');
-    doc.text('Gerado por BONVOLTS — bonvolts.vercel.app — (62) 99905-0403 — Anápolis-GO | Bitolas conforme Tabela 36 NBR 5410:2004, método B1, 3 condutores, PVC 70°C, 30°C. DR conforme §5.1.3.2.2. Valores mínimos — sempre valide com profissional habilitado.',14,fy+5);
+    doc.text('Gerado por BONVOLTS — bonvolts.vercel.app — (62) 99834-2336 — Anápolis-GO | Bitolas conforme Tabela 36 NBR 5410:2004, método B1, 3 condutores, PVC 70°C, 30°C. DR conforme §5.1.3.2.2. Valores mínimos — sempre valide com profissional habilitado.',14,fy+5);
 
     var fname = (nome.replace(/[^a-z0-9]/gi,'_').toLowerCase()||'projeto')+'_quadro_cargas.pdf';
     doc.save(fname);
@@ -619,5 +619,23 @@ function carregarExemplo(){
 document.getElementById('projData').value = new Date().toISOString().split('T')[0];
 render();
 </script>
+<!-- WHATSAPP FLOATING BUTTON // BONVOLTS -->
+<style>
+.wa-float{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;align-items:center;gap:10px;background:#080808;border:1px solid #00ffcc;color:#00ffcc;padding:8px 16px 8px 12px;border-radius:50px;text-decoration:none;font-family:'Share Tech Mono',monospace;font-size:0.75rem;letter-spacing:1.5px;text-transform:uppercase;box-shadow:0 4px 20px rgba(0,255,204,0.25),0 0 10px rgba(0,0,0,0.8);transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275)}
+.wa-float:hover{background:#00ffcc;color:#080808;box-shadow:0 6px 30px rgba(0,255,204,0.6);transform:translateY(-3px) scale(1.03)}
+.wa-float-icon{width:34px;height:34px;border-radius:50%;background:rgba(0,255,204,0.12);display:flex;align-items:center;justify-content:center;transition:background 0.3s;position:relative}
+.wa-float:hover .wa-float-icon{background:#080808;color:#00ffcc}
+.wa-float-icon::before{content:'';position:absolute;inset:-3px;border-radius:50%;border:1.5px solid #00ffcc;opacity:0.6;animation:waPulse 2s infinite}
+@keyframes waPulse{0%{transform:scale(1);opacity:0.8}70%{transform:scale(1.4);opacity:0}100%{transform:scale(1.4);opacity:0}}
+@media(max-width:600px){.wa-float{bottom:20px;right:20px;padding:8px;border-radius:50%}.wa-float-text{display:none}.wa-float-icon{width:38px;height:38px}}
+</style>
+<a href="https://wa.me/5562998342336?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Bonvolts%20e%20gostaria%20de%20um%20or%C3%A7amento." class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp">
+    <span class="wa-float-text">WhatsApp</span>
+    <div class="wa-float-icon">
+        <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor">
+            <path d="M16 2a13.9 13.9 0 0 0-12 21l-1.9 6.9 7.1-1.8A13.9 13.9 0 1 0 16 2zm0 25.5a11.5 11.5 0 0 1-5.9-1.6l-.4-.3-4.4 1.1 1.2-4.3-.3-.4A11.5 11.5 0 1 1 16 27.5zm6.3-8.6c-.3-.2-2-.1-2.3-1.1-.3-.2-.5-.3-.7.1s-.8 1-.9 1.2c-.2.2-.4.2-.7.1a9 9 0 0 1-2.6-1.6 9.8 9.8 0 0 1-1.8-2.2c-.2-.3 0-.5.1-.7s.3-.4.5-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5s-.7-1.7-1-2.3c-.3-.6-.6-.5-.8-.5h-.7a1.4 1.4 0 0 0-1 .5 4.3 4.3 0 0 0-1.3 3.2c0 1.9 1.4 3.7 1.6 3.9.2.3 2.7 4.2 6.6 5.8 1 .4 1.7.6 2.3.8 1 .3 1.8.3 2.5.2.8-.1 2.4-1 2.8-1.9.3-1 .3-1.8.2-1.9-.1-.2-.3-.3-.6-.5z"/>
+        </svg>
+    </div>
+</a>
 </body>
 </html>
